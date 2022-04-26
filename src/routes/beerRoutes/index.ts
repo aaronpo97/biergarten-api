@@ -1,5 +1,6 @@
 import express from 'express';
-import getAllBeers from '../controllers/getAllBeers';
+
+import getAllBeers from '../../controllers/beers/read/getAllBeers';
 
 const beerRoutes = express.Router();
 

@@ -5,12 +5,24 @@ import Beer from '../model/Beer';
 import Brewery from '../model/Brewery';
 
 dotenv.config();
+const {
+  DATABASE_HOST: host,
+  DATABASE_USERNAME: username,
+  DATABASE_PASSWORD: password,
+  DATABASE_PORT,
+  DATABASE_NAME: database,
+} = process.env;
 
-const { DATABASE_URL: databaseURL } = process.env;
+const type = 'postgres';
+const port = parseInt(DATABASE_PORT as string, 10);
 
 const AppDataSource = new DataSource({
-  type: 'postgres',
-  url: databaseURL as string,
+  type,
+  host,
+  port,
+  username,
+  password,
+  database,
   synchronize: true,
   logging: false,
   entities: [Beer, Brewery],

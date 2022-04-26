@@ -29,6 +29,15 @@
       }
     ],
     "import/no-cycle": 0,
-    "camelcase": 0
+    "import/no-unresolved": 1,
+    "camelcase": 0,
+    "no-unused-vars": "warn"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
   }
 }
