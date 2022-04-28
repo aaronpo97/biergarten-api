@@ -5,7 +5,7 @@ export default class ErrorResponse extends Response {
 
   stack?: string;
 
-  constructor(message: string, status: number, stack: string | undefined) {
+  constructor(message: string, status: number, stack?: string) {
     super({ message, status });
     this.success = false;
     this.stack = stack;

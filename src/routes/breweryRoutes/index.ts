@@ -5,6 +5,6 @@ import getAllBreweries from '../../controllers/breweries/read/getAllBreweries';
 
 const breweryRoutes = express.Router();
 
-breweryRoutes.get('/', getAllBreweries).post('/', createNewBrewery);
+breweryRoutes.route('/').get(getAllBreweries).post(createNewBrewery);
 
 export default breweryRoutes;

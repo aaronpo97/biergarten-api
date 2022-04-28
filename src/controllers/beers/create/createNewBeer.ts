@@ -5,6 +5,7 @@ import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 import ICreateBeerReqBody from './types/ICreateBeerReqBody';
 import Beer from '../../../model/Beer';
+import Brewery from '../../../model/Brewery';
 
 /**
  * Business logic for creating a new brewery.
@@ -18,17 +19,21 @@ const createNewBeer: RequestHandler<ParamsDictionary, null, ICreateBeerReqBody, 
   next,
 ): Promise<void> => {
   try {
-    const { description, name, abv, ibu } = req.body;
+    const { description, name, abv, ibu, breweryId } = req.body;
 
-    if (!(name && description && abv && ibu)) {
+    if (!(name && description && abv && ibu && breweryId))
       throw new ServerError('Missing params in request body.', 400);
-    }
+
     const newBeer = Beer.create();
+    const brewery = await Brewery.findOneBy({ id: breweryId });
+
+    if (!brewery) throw new ServerError('Could not find that brewery.', 404);
 
     newBeer.description = description;
     newBeer.name = name;
     newBeer.abv = abv;
     newBeer.ibu = ibu;
+    newBeer.brewery = brewery;
 
     await newBeer.save();
 
