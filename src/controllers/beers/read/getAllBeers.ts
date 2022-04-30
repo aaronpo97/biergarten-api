@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-unresolved
 import { ParamsDictionary, RequestHandler } from 'express-serve-static-core';
-import Beer from '../../../model/Beer';
+import Beer from '../../../database/model/Beer';
 
 import ErrorResponse from '../../../util/response/ErrorResponse';
 import SuccessResponse from '../../../util/response/SuccessResponse';

@@ -1,6 +1,6 @@
 import { ParamsDictionary, RequestHandler } from 'express-serve-static-core';
 
-import Brewery from '../../../model/Brewery';
+import Brewery from '../../../database/model/Brewery';
 import ICreateBreweryReqBody from './types/ICreateBreweryReqBody';
 import ErrorResponse from '../../../util/response/ErrorResponse';
 import ServerError from '../../../util/error/ServerError';

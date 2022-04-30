@@ -20,7 +20,6 @@ export const sendSuccessResponse: SuccessResponseT = (data, req, res, next) => {
 };
 
 export const sendErrorResponse: ErrorResponseT = (err, req, res, next) => {
-  logger.error(err);
   const { status = 500, message = 'Oh no, something went wrong.', stack } = err;
   res.status(status).json(new ErrorResponse(message, status, !inProductionMode ? stack : undefined));
 };

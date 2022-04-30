@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 
 import SuccessResponse from '../../../util/response/SuccessResponse';
-import Brewery from '../../../model/Brewery';
+import Brewery from '../../../database/model/Brewery';
 import ErrorResponse from '../../../util/response/ErrorResponse';
 import ServerError from '../../../util/error/ServerError';
 

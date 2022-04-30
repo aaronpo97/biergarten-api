@@ -1,19 +1,19 @@
 import dotenv from 'dotenv';
-
 import 'reflect-metadata';
 
 import AppDataSource from './database/AppDataSource';
-
 import logger from './util/logger';
 import app from './app';
 
 dotenv.config();
 
-const { NODE_ENV, PORT, BASE_URL } = process.env;
+const { PORT, BASE_URL } = process.env;
 
-// if (!(NODE_ENV && PORT && BASE_URL)) throw new Error('Missing environment variables.');
+if (!(PORT && BASE_URL)) {
+  throw new Error('Missing environment variables.');
+}
 
-const port = parseInt(PORT || '3000', 10);
+const port = parseInt(PORT, 10);
 
 app.listen(port, () => {
   logger.info('Loading...');

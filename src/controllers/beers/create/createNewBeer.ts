@@ -4,8 +4,8 @@ import ErrorResponse from '../../../util/response/ErrorResponse';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 import ICreateBeerReqBody from './types/ICreateBeerReqBody';
-import Beer from '../../../model/Beer';
-import Brewery from '../../../model/Brewery';
+import Beer from '../../../database/model/Beer';
+import Brewery from '../../../database/model/Brewery';
 
 /**
  * Business logic for creating a new brewery.

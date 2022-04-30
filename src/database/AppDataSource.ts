@@ -1,8 +1,8 @@
 import { DataSource } from 'typeorm';
 import 'reflect-metadata';
 import dotenv from 'dotenv';
-import Beer from '../model/Beer';
-import Brewery from '../model/Brewery';
+import Beer from './model/Beer';
+import Brewery from './model/Brewery';
 
 dotenv.config();
 const {
