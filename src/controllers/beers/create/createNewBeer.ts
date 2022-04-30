@@ -1,23 +1,16 @@
-import { ParamsDictionary, RequestHandler } from 'express-serve-static-core';
-
 import ErrorResponse from '../../../util/response/ErrorResponse';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
-import ICreateBeerReqBody from './types/ICreateBeerReqBody';
+import { CreateBeerRequestHandler } from '../@types/RequestHandlers';
+
 import Beer from '../../../database/model/Beer';
 import Brewery from '../../../database/model/Brewery';
 
 /**
  * Business logic for creating a new brewery.
- * @type {RequestHandler}
- * @returns {Promise<void>}
  */
 
-const createNewBeer: RequestHandler<ParamsDictionary, null, ICreateBeerReqBody, null> = async (
-  req,
-  res,
-  next,
-): Promise<void> => {
+const createNewBeer: CreateBeerRequestHandler = async (req, res, next): Promise<void> => {
   try {
     const { description, name, abv, ibu, breweryId } = req.body;
 

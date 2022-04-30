@@ -1,14 +1,9 @@
-import { RequestHandler } from 'express-serve-static-core';
 import Beer from '../../../database/model/Beer';
 import ServerError from '../../../util/error/ServerError';
-import logger from '../../../util/logger';
 import SuccessResponse from '../../../util/response/SuccessResponse';
+import { BeerByIdRequestHandler } from '../@types/RequestHandlers';
 
-const getBeerById: RequestHandler<{ beerIdString: string }, null, null, null> = async (
-  req,
-  res,
-  next,
-) => {
+const getBeerById: BeerByIdRequestHandler = async (req, res, next) => {
   try {
     const beerId = parseInt(req.params.beerIdString, 10);
     const queriedBeer = await Beer.findOneBy({ id: beerId });

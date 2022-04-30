@@ -1,9 +1,9 @@
-import { RequestHandler } from 'express';
+import { BeerByIdRequestHandler } from '../@types/RequestHandlers';
 import Beer from '../../../database/model/Beer';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 
-const deleteBeerById: RequestHandler<{ beerIdString: string }, null, null> = async (req, res, next) => {
+const deleteBeerById: BeerByIdRequestHandler = async (req, res, next) => {
   try {
     const { beerIdString } = req.params;
     const beerId = parseInt(beerIdString, 10);

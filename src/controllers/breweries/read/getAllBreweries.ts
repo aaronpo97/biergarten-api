@@ -7,10 +7,8 @@ import ServerError from '../../../util/error/ServerError';
 
 /**
  *  Business logic for retrieving brewery data from the database and sending it to the client.
- * @type {RequestHandler}
- * @returns {Promise<void>}
  */
-const getAllBreweries: RequestHandler = async (req, res, next) => {
+const getAllBreweries: RequestHandler = async (req, res, next): Promise<void> => {
   try {
     const allBreweries = await Brewery.find();
     const routeResponse = new SuccessResponse('Sending all breweries', 200, allBreweries);
