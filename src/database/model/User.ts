@@ -5,7 +5,7 @@ import {
   BaseEntity,
   OneToOne,
   OneToMany,
-  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import Beer from './Beer';
 import Profile from './Profile';
@@ -21,15 +21,22 @@ export default class User extends BaseEntity {
   @Column()
   email!: string;
 
-  @Column()
-  dateOfBirth!: Date;
+  @Column({ type: 'date' })
+  dateOfBirth!: string;
+
+  @Column({ type: 'timestamp' })
+  joinedDate!: Date;
 
   @Column()
-  joinedDate!: Date;
+  passwordSalt!: string;
+
+  @Column()
+  passwordHash!: string;
 
   @OneToMany(() => Beer, (beer) => beer.postedBy)
   beerPosts!: Array<Beer>;
 
   @OneToOne(() => Profile, (profile) => profile.user)
+  @JoinColumn()
   profile!: Profile;
 }

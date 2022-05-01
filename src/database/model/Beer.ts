@@ -32,6 +32,7 @@ export default class Beer extends BaseEntity {
   @ManyToOne(() => Brewery, (brewery) => brewery.beers, { onDelete: 'CASCADE' })
   brewery!: Brewery;
 
+  @JoinColumn()
   @ManyToOne(() => User, (user) => user.beerPosts)
   postedBy!: User;
 

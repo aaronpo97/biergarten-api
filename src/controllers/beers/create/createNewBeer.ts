@@ -1,3 +1,4 @@
+import { validate as checkIfValidUuid } from 'uuid';
 import { CreateBeerRequestHandler } from '../@types/RequestHandlers';
 import ErrorResponse from '../../../util/response/ErrorResponse';
 import ServerError from '../../../util/error/ServerError';
@@ -17,6 +18,14 @@ const createNewBeer: CreateBeerRequestHandler = async (req, res, next): Promise<
     if (!(name && description && abv && ibu && breweryId))
       throw new ServerError('Missing params in request body.', 400);
 
+    const breweryIdIsValid = checkIfValidUuid(breweryId);
+
+    if (!breweryIdIsValid) {
+      throw new ServerError(
+        'Cannot create a new beer resource as the given brewery id is invalid.',
+        400,
+      );
+    }
     const newBeer = Beer.create();
     const brewery = await Brewery.findOneBy({ id: breweryId });
 
