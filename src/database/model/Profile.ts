@@ -3,8 +3,8 @@ import User from './User';
 
 @Entity()
 export default class Profile extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id!: number;
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
   @Column()
   about_me!: string;

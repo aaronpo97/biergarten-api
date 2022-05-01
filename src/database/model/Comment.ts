@@ -3,8 +3,8 @@ import Beer from './Beer';
 
 @Entity()
 export default class Comment extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id!: number;
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
   @Column()
   comment_body!: string;

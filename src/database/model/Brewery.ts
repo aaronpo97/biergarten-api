@@ -1,10 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity, JoinColumn } from 'typeorm';
 import Beer from './Beer';
 
 @Entity()
 export default class Brewery extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id!: number;
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
   @Column()
   name!: string;
@@ -15,6 +15,7 @@ export default class Brewery extends BaseEntity {
   @Column()
   description!: string;
 
-  @OneToMany(() => Beer, (beer) => beer.brewery)
+  @OneToMany(() => Beer, (beer) => beer.brewery, { onDelete: 'CASCADE', eager: true })
+  @JoinColumn()
   beers!: Array<Beer>;
 }

@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import 'reflect-metadata';
+import { exit } from 'process';
 
 import AppDataSource from './database/AppDataSource';
 import logger from './util/logger';
@@ -25,6 +26,7 @@ app.listen(port, () => {
     .catch((e) => {
       if (e instanceof Error) {
         logger.error(`Could not initialize app.\nReason:\n${e.message}\n${e.stack}`);
+        exit(1);
       }
     });
 });

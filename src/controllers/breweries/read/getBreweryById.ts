@@ -1,20 +1,19 @@
-import { RequestHandler } from 'express-serve-static-core';
+import { validate as isValidUuid } from 'uuid';
+
 import Brewery from '../../../database/model/Brewery';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
+import { BreweryByIdRequestHandler } from '../types/RequestHandlers';
 
-type BreweryRouteRequestHandler = RequestHandler<{ breweryIdString: string }, null, null>;
 /**
  * Business logic for getting a brewery by its id. The req.params will contain the brewery id as a string, called breweryIdString.
  */
-const getBreweryById: BreweryRouteRequestHandler = async (req, res, next) => {
+const getBreweryById: BreweryByIdRequestHandler = async (req, res, next) => {
   try {
-    const { breweryIdString } = req.params;
+    const { breweryId } = req.params;
 
-    const breweryId = parseInt(breweryIdString, 10);
-
-    if (Number.isNaN(breweryId)) {
-      throw new ServerError('Could not find a brewery with that id as it invalid. ', 404);
+    if (!isValidUuid(breweryId)) {
+      throw new ServerError('Could not get a brewery with that id as it is invalid', 400);
     }
 
     const queriedBrewery = await Brewery.findOneBy({ id: breweryId });

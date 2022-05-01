@@ -3,6 +3,9 @@ import 'reflect-metadata';
 import dotenv from 'dotenv';
 import Beer from './model/Beer';
 import Brewery from './model/Brewery';
+import User from './model/User';
+import Comment from './model/Comment';
+import Profile from './model/Profile';
 
 dotenv.config();
 const {
@@ -25,7 +28,7 @@ const AppDataSource = new DataSource({
   database,
   synchronize: true,
   logging: false,
-  entities: [Beer, Brewery],
+  entities: [Beer, Brewery, User, Profile, Comment],
   migrations: [],
   subscribers: [],
 });

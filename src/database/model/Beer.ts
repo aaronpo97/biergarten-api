@@ -1,12 +1,20 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  ManyToOne,
+  OneToMany,
+  JoinColumn,
+} from 'typeorm';
 import Brewery from './Brewery';
 import Comment from './Comment';
 import User from './User';
 
 @Entity()
 export default class Beer extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id!: number;
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
   @Column()
   name!: string;
@@ -14,13 +22,14 @@ export default class Beer extends BaseEntity {
   @Column()
   description!: string;
 
-  @Column()
+  @Column('float')
   abv!: number;
 
-  @Column()
+  @Column('float')
   ibu!: number;
 
-  @ManyToOne(() => Brewery, (brewery) => brewery.beers)
+  @JoinColumn()
+  @ManyToOne(() => Brewery, (brewery) => brewery.beers, { onDelete: 'CASCADE' })
   brewery!: Brewery;
 
   @ManyToOne(() => User, (user) => user.beerPosts)

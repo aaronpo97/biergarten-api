@@ -1,3 +1,4 @@
+import { validate as isValidUUID } from 'uuid';
 import { BeerByIdRequestHandler } from '../@types/RequestHandlers';
 import Beer from '../../../database/model/Beer';
 import ServerError from '../../../util/error/ServerError';
@@ -5,14 +6,16 @@ import SuccessResponse from '../../../util/response/SuccessResponse';
 
 const deleteBeerById: BeerByIdRequestHandler = async (req, res, next) => {
   try {
-    const { beerIdString } = req.params;
-    const beerId = parseInt(beerIdString, 10);
+    const { beerId } = req.params;
 
-    if (Number.isNaN(beerId)) {
-      throw new ServerError('Could not delete a beer with that id as it is invalid.', 400);
+    if (!isValidUUID(beerId)) {
+      throw new ServerError('Could not delete the beer with that id as it is invalid', 400);
     }
 
-    const beerToDelete = await Beer.findOneBy({ id: beerId });
+    const beerToDelete = await Beer.findOne({
+      where: { id: beerId },
+      join: { alias: 'beer', leftJoinAndSelect: { brewery: 'beer.brewery' } },
+    });
 
     if (!beerToDelete) {
       throw new ServerError(`Cannot delete the beer with id ${beerId} as it could not be found.`, 404);

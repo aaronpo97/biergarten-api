@@ -1,16 +1,17 @@
-import { RequestHandler } from 'express-serve-static-core';
+import { UpdateBeerRequestHandler } from '../@types/RequestHandlers';
 import Beer from '../../../database/model/Beer';
 import ServerError from '../../../util/error/ServerError';
 import logger from '../../../util/logger';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 
-const updateBeerById: RequestHandler<
-  { beerIdString: string },
-  null,
-  { description?: string; name?: string; abv?: number; ibu?: number }
-> = async (req, res, next) => {
+const updateBeerById: UpdateBeerRequestHandler = async (req, res, next) => {
   try {
-    const beerId = parseInt(req.params.beerIdString, 10);
+    const { beerId } = req.params;
+
+    if (Number.isNaN(beerId)) {
+      throw new ServerError('Could not update a beer with that id as it is invalid.', 400);
+    }
+
     const beerToUpdate = await Beer.findOneBy({ id: beerId });
     if (!beerToUpdate) {
       throw new ServerError('Could not update that beer as it could not be found.', 404);

@@ -1,7 +1,7 @@
+import { CreateBeerRequestHandler } from '../@types/RequestHandlers';
 import ErrorResponse from '../../../util/response/ErrorResponse';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
-import { CreateBeerRequestHandler } from '../@types/RequestHandlers';
 
 import Beer from '../../../database/model/Beer';
 import Brewery from '../../../database/model/Brewery';
@@ -20,7 +20,7 @@ const createNewBeer: CreateBeerRequestHandler = async (req, res, next): Promise<
     const newBeer = Beer.create();
     const brewery = await Brewery.findOneBy({ id: breweryId });
 
-    if (!brewery) throw new ServerError('Could not find that brewery.', 404);
+    if (!brewery) throw new ServerError('Could not find the brewery for posted beer.', 404);
 
     newBeer.description = description;
     newBeer.name = name;
@@ -30,7 +30,7 @@ const createNewBeer: CreateBeerRequestHandler = async (req, res, next): Promise<
 
     await newBeer.save();
 
-    const routeResponse = new SuccessResponse('Created a new brewery.', 201, newBeer);
+    const routeResponse = new SuccessResponse('Created a new beer.', 201, newBeer);
     next(routeResponse);
   } catch (e) {
     if (e instanceof Error) {

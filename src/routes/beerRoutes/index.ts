@@ -9,6 +9,6 @@ import updateBeerById from '../../controllers/beers/update/updateBeerById';
 const beerRoutes = express.Router();
 
 beerRoutes.route('/').get(getAllBeers).post(createNewBeer);
-beerRoutes.route('/:beerIdString/').get(getBeerById).put(updateBeerById).delete(deleteBeerById);
+beerRoutes.route('/:beerId/').get(getBeerById).put(updateBeerById).delete(deleteBeerById);
 
 export default beerRoutes;
