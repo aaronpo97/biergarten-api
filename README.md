@@ -4,7 +4,7 @@
 
 This is a 'revamped' version of my [Biergarten App](https://github.com/aaronpo97/biergarten-app).
 
-I am writing this app in an effort to continue learning about Typescript, Node, Express, and SQL. The idea of writing a beer related app comes from my current job working in the retail operations of a brewery. I also just so happen to really enjoy beer as well!
+I am writing this app in an effort to continue learning about Typescript, Node, Express, and Postgres/TypeORM. The idea of writing a beer related app comes from my current job working in the retail operations of a brewery. It just so happens that I really enjoy beer as well!
 
 I aim to rewrite the app using Postgres as my database rather than MongoDB as in the first version. I aim to only rewrite the server code with the aim of possibility of using this API for a mobile application sometime in the future.
 
@@ -28,15 +28,55 @@ The [International Bitterness Units](https://en.wikipedia.org/wiki/Beer_measurem
 
 ## How to run this application
 
-This `README` assumes that you have the current LTS version of Node.js (>=16.0), if that is not the case, go to <https://nodejs.org/en/> to install Node.js, then proceed with the following instructions.
+This `README` assumes that you have the current LTS version of Node.js (>=16.0), if that is not the case, go follow the instructions on the [Node.js website](https://nodejs.org/en/), then proceed with the following instructions.
 
 ### Step 1
+
+To install all dependencies required by the app (both dev and production), run the following script in a terminal set to this directory.
 
 ```bash
 npm install
 ```
 
 ### Step 2
+
+#### Environment variables
+
+In the same terminal, run the following script to define your development environment variables.
+
+```bash
+echo "
+DATABASE_HOST=''
+DATABASE_PORT=''
+DATABASE_USERNAME=''
+DATABASE_PASSWORD=''
+DATABASE_NAME=''
+
+NODE_ENV='dev'
+PORT=''
+BASE_URL='http://localhost'
+" > .env
+```
+
+Input the credentials to your database, as well as the port you wish to host the app on.
+
+##### Example
+
+```env
+DATABASE_HOST='localhost'
+DATABASE_PORT='5432'
+DATABASE_USERNAME='aaron'
+DATABASE_PASSWORD='password'
+DATABASE_NAME='biergarten'
+
+NODE_ENV='dev'
+PORT='8080'
+BASE_URL='http://localhost'
+```
+
+### Step 3
+
+Run the following scripts in the same terminal as before, depending on the application mode you wish to use.
 
 #### Developer mode
 
@@ -54,4 +94,4 @@ To run the application in `production` mode:
 npm start
 ```
 
-This will create a directory called `./dist` which contains the compiled Typescript code.
+- This will create a directory called `./dist` which contains the compiled Typescript code.
