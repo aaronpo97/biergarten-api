@@ -8,7 +8,7 @@ import { RequestHandler, ParamsDictionary } from 'express-serve-static-core';
  */
 export type BreweryRequestHandler = RequestHandler<
   /** Request params */
-  ParamsDictionary,
+  {},
   /** Request body */
   {},
   /** Response body */
@@ -51,7 +51,7 @@ export type UpdateBreweryRequestHandler = RequestHandler<
  */
 export type CreateBreweryRequestHandler = RequestHandler<
   /** Request params */
-  ParamsDictionary,
+  {},
   /** Request body */
   {},
   /** Response body */

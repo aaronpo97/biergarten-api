@@ -1,12 +1,21 @@
-import { RequestHandler, ParamsDictionary } from 'express-serve-static-core';
 import User from '../../../database/model/User';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
-import checkIfUserExists from './util/checkIfUserExists';
+import { checkIfUserExists } from './util/userChecks';
 import hashPassword from './util/hashPassword';
 
 import { RegisterUserRequestHandler } from '../types/RequestHandler';
 
+/**
+ * @description
+ * Business logic for registering a user.
+ * Will throw an error if it is not the case that the username,
+ * email, date of birth, and password are provided. Performs a
+ * check to see if whether or not the user exists, and will
+ * throw an error if true. Invokes a function to hash the given
+ * password with its returned value (i.e. the hashed password)
+ * being stored in the database.
+ */
 const registerUser: RegisterUserRequestHandler = async (req, res, next) => {
   try {
     const { username, email, dateOfBirth, password } = req.body;
@@ -23,15 +32,13 @@ const registerUser: RegisterUserRequestHandler = async (req, res, next) => {
 
     const userToRegister = new User();
 
-    const { hash, salt } = await hashPassword(password);
+    const hash = await hashPassword(password);
 
     userToRegister.username = username;
     userToRegister.email = email;
     userToRegister.dateOfBirth = dateOfBirth;
     userToRegister.joinedDate = new Date(Date.now());
-
-    userToRegister.passwordHash = hash;
-    userToRegister.passwordSalt = salt;
+    userToRegister.hash = hash;
 
     await userToRegister.save();
 

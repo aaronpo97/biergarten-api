@@ -5,6 +5,13 @@ import SuccessResponse from '../../../util/response/SuccessResponse';
 
 import { LoginUserRequestHandler } from '../types/RequestHandler';
 
+/**
+ * Business logic for logging in a user. The request body should contain the username
+ * and password. Will throw an error if the username and password is not provided, or
+ * if the provided username or password is incorrect. If a user if found with the given
+ * username, the server will use bcrypt.compare to compare the provided password and the
+ * hashed password in the database.
+ */
 const loginUser: LoginUserRequestHandler = async (req, res, next) => {
   try {
     const { username, password } = req.body;
@@ -18,9 +25,9 @@ const loginUser: LoginUserRequestHandler = async (req, res, next) => {
       throw new ServerError('Username or password was incorrect', 400);
     }
 
-    const { passwordHash } = userToLogin;
+    const { hash } = userToLogin;
 
-    const isValidPassword = await bcrypt.compare(password, passwordHash);
+    const isValidPassword = await bcrypt.compare(password, hash);
 
     if (!isValidPassword) {
       throw new ServerError('Username or password was incorrect', 400);

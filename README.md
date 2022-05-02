@@ -10,7 +10,7 @@ I aim to rewrite the app using Postgres as my database rather than MongoDB as in
 
 This application uses Typescript with the Express framework in addition to TypeORM for the data service layer.
 
-I am making this code public in the hopes that this content will be useful for anyone wanting to learn TypeORM, Typescript, or any other tools I use in this project.
+I am making this code public in the hopes that this content will be useful for anyone wanting to learn TypeORM, Typescript, or any other tools I use in this project. For those reading this code, I have annotated my files with JSDoc to describe exactly what I aim to do with each code snippet.
 
 ### Some beer terminology
 

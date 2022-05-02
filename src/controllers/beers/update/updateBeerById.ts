@@ -1,7 +1,6 @@
 import { UpdateBeerRequestHandler } from '../@types/RequestHandlers';
 import Beer from '../../../database/model/Beer';
 import ServerError from '../../../util/error/ServerError';
-import logger from '../../../util/logger';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 
 const updateBeerById: UpdateBeerRequestHandler = async (req, res, next) => {
@@ -16,8 +15,6 @@ const updateBeerById: UpdateBeerRequestHandler = async (req, res, next) => {
     if (!beerToUpdate) {
       throw new ServerError('Could not update that beer as it could not be found.', 404);
     }
-
-    logger.info(beerToUpdate);
 
     const {
       description: updatedDescription,
@@ -46,7 +43,15 @@ const updateBeerById: UpdateBeerRequestHandler = async (req, res, next) => {
 
     await beerToUpdate.save();
 
-    next(new SuccessResponse(`Updated beer id ${beerId}`, 200, beerToUpdate));
+    const successResponse = new SuccessResponse(`Updated beer id ${beerId}`, 200, {
+      updatedBeer: beerToUpdate,
+      descriptionUpdated: !!updatedDescription,
+      nameUpdated: !!updatedName,
+      abvUpdated: !!updatedAbv,
+      ibuUpdated: !!updatedIbu,
+    });
+
+    next(successResponse);
   } catch (e) {
     if (e instanceof Error) {
       next(e);

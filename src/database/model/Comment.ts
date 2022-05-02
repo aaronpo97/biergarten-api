@@ -7,10 +7,10 @@ export default class Comment extends BaseEntity {
   id!: string;
 
   @Column()
-  comment_body!: string;
+  commentBody!: string;
 
   @Column()
-  posted_date!: Date;
+  postedDate!: Date;
 
   @ManyToOne(() => Beer, (beer) => beer.comments)
   post!: Beer;

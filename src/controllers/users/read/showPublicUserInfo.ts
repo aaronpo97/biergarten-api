@@ -1,4 +1,5 @@
 import User from '../../../database/model/User';
+import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 import { UserRequestHandler } from '../types/RequestHandler';
 
@@ -9,6 +10,10 @@ const showPublicUserInfo: UserRequestHandler = async (req, res, next) => {
       where: { id: userId },
       select: ['username', 'beerPosts', 'dateOfBirth', 'joinedDate'],
     });
+
+    if (!queriedUser) {
+      throw new ServerError('Could not find a user with that id.', 404);
+    }
 
     const successResponse = new SuccessResponse(`Sending the user with id: ${userId}`, 200, queriedUser);
 

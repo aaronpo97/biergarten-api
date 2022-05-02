@@ -28,10 +28,7 @@ export default class User extends BaseEntity {
   joinedDate!: Date;
 
   @Column()
-  passwordSalt!: string;
-
-  @Column()
-  passwordHash!: string;
+  hash!: string;
 
   @OneToMany(() => Beer, (beer) => beer.postedBy)
   beerPosts!: Array<Beer>;

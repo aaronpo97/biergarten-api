@@ -1,13 +1,19 @@
 import bcrypt from 'bcrypt';
-import logger from '../../../../util/logger';
+import { hashPasswordFn } from '../../types/UtilTypes';
 
-const hashPassword: (password: string) => Promise<{ hash: string; salt: string }> = async (password) => {
+/**
+ * @description
+ * Basic helper function that will hash a password. Generates a random password salt
+ * and creates a password hash using the hash method from the bcrypt library.
+ *
+ * Returns the password hash.
+ *
+ */
+const hashPassword: hashPasswordFn = async (password) => {
   const salt = await bcrypt.genSalt(15);
   const hash = await bcrypt.hash(password, salt);
 
-  logger.info({ salt, hash });
-
-  return { salt, hash };
+  return hash;
 };
 
 export default hashPassword;

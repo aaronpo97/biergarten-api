@@ -2,9 +2,9 @@
   "name": "biergarten-app-v2",
   "version": "1.0.0",
   "description": "",
-  "main": "./dist/src/server.js",
+  "main": "./dist/server.js",
   "scripts": {
-    "prestart": "npx tsc",
+    "prestart": "npm run test && npx tsc",
     "start": "NODE_ENV=production node .",
     "dev": "nodemon ./src/server.ts",
     "test": "jest --coverage",
