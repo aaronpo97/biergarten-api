@@ -8,14 +8,12 @@ import { hashPassword } from './util/passwordFns';
 import { RegisterUserRequestHandler } from '../types/RequestHandler';
 
 /**
- * @description
  * Business logic for registering a user.
- * Will throw an error if it is not the case that the username,
- * email, date of birth, and password are provided. Performs a
- * check to see if whether or not the user exists, and will
- * throw an error if true. Invokes a function to hash the given
- * password with its returned value (i.e. the hashed password)
- * being stored in the database.
+ *
+ * Will throw an error if it is not the case that the username, email, date of birth, and password
+ * are provided. Performs a check to see if whether or not the user exists, and will throw an error
+ * if true. Invokes a function to hash the given password with its returned value (i.e. the hashed
+ * password) being stored in the database.
  */
 const registerUser: RegisterUserRequestHandler = async (req, res, next) => {
   try {

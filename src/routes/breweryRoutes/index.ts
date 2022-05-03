@@ -9,6 +9,10 @@ import updateBreweryById from '../../controllers/breweries/update/updateBreweryB
 const breweryRoutes = express.Router();
 
 breweryRoutes.route('/').get(getAllBreweries).post(createNewBrewery);
-breweryRoutes.route('/:breweryId/').get(getBreweryById).delete(deleteBreweryById).put(updateBreweryById);
+breweryRoutes
+  .route('/:breweryId/')
+  .get(getBreweryById)
+  .delete(deleteBreweryById)
+  .put(updateBreweryById);
 
 export default breweryRoutes;

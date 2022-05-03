@@ -15,7 +15,11 @@ const showPublicUserInfo: UserRequestHandler = async (req, res, next) => {
       throw new ServerError('Could not find a user with that id.', 404);
     }
 
-    const successResponse = new SuccessResponse(`Sending the user with id: ${userId}`, 200, queriedUser);
+    const successResponse = new SuccessResponse(
+      `Sending the user with id: ${userId}`,
+      200,
+      queriedUser,
+    );
 
     next(successResponse);
   } catch (e) {

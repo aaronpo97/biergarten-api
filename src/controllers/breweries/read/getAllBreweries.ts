@@ -5,9 +5,7 @@ import Brewery from '../../../database/model/Brewery';
 import ErrorResponse from '../../../util/response/ErrorResponse';
 import ServerError from '../../../util/error/ServerError';
 
-/**
- *  Business logic for retrieving brewery data from the database and sending it to the client.
- */
+/** Business logic for retrieving brewery data from the database and sending it to the client. */
 const getAllBreweries: BreweryRequestHandler = async (req, res, next): Promise<void> => {
   try {
     const allBreweries = await Brewery.find();

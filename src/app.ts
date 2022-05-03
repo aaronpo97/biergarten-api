@@ -1,6 +1,5 @@
 /**
- * @summary
- * Creates an express application and then configures
+ * @summary Creates an express application and then configures
  * routing to different middleware depending on the route.
  */
 

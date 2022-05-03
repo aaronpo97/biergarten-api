@@ -6,9 +6,7 @@ import Brewery from '../../../database/model/Brewery';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 
-/**
- * Business logic for deleting a beer by its id.
- */
+/** Business logic for deleting a beer by its id. */
 const deleteBreweryById: BreweryByIdRequestHandler = async (req, res, next) => {
   try {
     const { breweryId } = req.params;

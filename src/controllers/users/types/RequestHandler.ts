@@ -1,10 +1,9 @@
 import { ParamsDictionary, RequestHandler } from 'express-serve-static-core';
 
 /**
- * @description
  * Instance of RequestHandler.
- * For requests with the username and password in the request body.
- * Used for logging in.
+ *
+ * For requests with the username and password in the request body. Used for logging in.
  */
 export type LoginUserRequestHandler = RequestHandler<
   /** Request params */
@@ -16,10 +15,10 @@ export type LoginUserRequestHandler = RequestHandler<
 >;
 
 /**
- * @description
  * Instance of RequestHandler.
- * For requests with the username, email, dateOfBirth, and password in the request body.
- * Used for registering a user.
+ *
+ * For requests with the username, email, dateOfBirth, and password in the request body. Used for
+ * registering a user.
  */
 export type RegisterUserRequestHandler = RequestHandler<
   /** Request params */
@@ -36,10 +35,9 @@ export type RegisterUserRequestHandler = RequestHandler<
 >;
 
 /**
- * @description
  * Instance of RequestHandler.
- * For requests with the userId in the request body.
- * Used for GET /user/:userId
+ *
+ * For requests with the userId in the request body. Used for GET /user/:userId
  */
 export type UserRequestHandler = RequestHandler<
   /** Request params */

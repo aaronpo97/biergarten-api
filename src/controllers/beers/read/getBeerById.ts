@@ -15,7 +15,10 @@ const getBeerById: BeerByIdRequestHandler = async (req, res, next) => {
 
     const queriedBeer = await Beer.findOne({
       where: { id: beerId },
-      join: { alias: 'beer', leftJoinAndSelect: { brewery: 'beer.brewery', user: 'beer.postedBy' } },
+      join: {
+        alias: 'beer',
+        leftJoinAndSelect: { brewery: 'beer.brewery', user: 'beer.postedBy' },
+      },
     });
 
     if (!queriedBeer) {

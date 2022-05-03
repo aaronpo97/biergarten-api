@@ -7,9 +7,7 @@ import SuccessResponse from '../../../util/response/SuccessResponse';
 import Beer from '../../../database/model/Beer';
 import Brewery from '../../../database/model/Brewery';
 
-/**
- * Business logic for creating a new brewery.
- */
+/** Business logic for creating a new brewery. */
 
 const createNewBeer: CreateBeerRequestHandler = async (req, res, next): Promise<void> => {
   try {

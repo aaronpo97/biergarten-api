@@ -5,9 +5,7 @@ import ErrorResponse from '../../../util/response/ErrorResponse';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 
-/**
- *  Business logic for creating a new brewery.
- */
+/** Business logic for creating a new brewery. */
 const createNewBrewery: CreateBreweryRequestHandler = async (req, res, next): Promise<void> => {
   try {
     const { description, name, location } = req.body;

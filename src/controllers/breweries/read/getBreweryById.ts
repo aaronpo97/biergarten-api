@@ -6,7 +6,9 @@ import SuccessResponse from '../../../util/response/SuccessResponse';
 import { BreweryByIdRequestHandler } from '../types/RequestHandlers';
 
 /**
- * Business logic for getting a brewery by its id. The req.params will contain the brewery id as a string, called breweryIdString.
+ * Business logic for getting a brewery by its id.
+ *
+ * The req.params will contain the brewery id as a string, called breweryIdString.
  */
 const getBreweryById: BreweryByIdRequestHandler = async (req, res, next) => {
   try {

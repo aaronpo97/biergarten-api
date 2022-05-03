@@ -18,7 +18,10 @@ const deleteBeerById: BeerByIdRequestHandler = async (req, res, next) => {
     });
 
     if (!beerToDelete) {
-      throw new ServerError(`Cannot delete the beer with id ${beerId} as it could not be found.`, 404);
+      throw new ServerError(
+        `Cannot delete the beer with id ${beerId} as it could not be found.`,
+        404,
+      );
     }
 
     await Beer.remove([beerToDelete]);
