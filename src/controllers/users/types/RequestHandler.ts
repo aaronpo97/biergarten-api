@@ -8,7 +8,7 @@ import { ParamsDictionary, RequestHandler } from 'express-serve-static-core';
  */
 export type LoginUserRequestHandler = RequestHandler<
   /** Request params */
-  ParamsDictionary,
+  {},
   /** Response body */
   {},
   /** Request body */
@@ -23,7 +23,7 @@ export type LoginUserRequestHandler = RequestHandler<
  */
 export type RegisterUserRequestHandler = RequestHandler<
   /** Request params */
-  ParamsDictionary,
+  {},
   /** Response body */
   {},
   /** Request body */

@@ -5,6 +5,7 @@
  * Promise with the newly hashed password.
  */
 export type hashPasswordFn = (password: string) => Promise<string>;
+export type checkIfValidPasswordFn = (hash: string, password: string) => Promise<boolean>;
 
 /**
  * @description

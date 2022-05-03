@@ -1,8 +1,9 @@
 import User from '../../../database/model/User';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
-import { checkIfUserExists } from './util/userChecks';
-import hashPassword from './util/hashPassword';
+
+import { checkIfUserExists } from './util/checkUserFns';
+import { hashPassword } from './util/passwordFns';
 
 import { RegisterUserRequestHandler } from '../types/RequestHandler';
 
@@ -42,7 +43,11 @@ const registerUser: RegisterUserRequestHandler = async (req, res, next) => {
 
     await userToRegister.save();
 
-    const successResponse = new SuccessResponse('Successfully registered user.', 201, userToRegister);
+    const successResponse = new SuccessResponse<User>(
+      'Successfully registered user.',
+      201,
+      userToRegister,
+    );
 
     next(successResponse);
   } catch (e) {

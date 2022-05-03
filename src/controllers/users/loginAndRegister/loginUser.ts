@@ -1,4 +1,6 @@
-import bcrypt from 'bcrypt';
+import { checkIfValidPassword } from './util/passwordFns';
+
+import { generateRefreshToken, generateAccessToken } from '../../../util/auth/generateTokens';
 import ServerError from '../../../util/error/ServerError';
 import User from '../../../database/model/User';
 import SuccessResponse from '../../../util/response/SuccessResponse';
@@ -15,6 +17,7 @@ import { LoginUserRequestHandler } from '../types/RequestHandler';
 const loginUser: LoginUserRequestHandler = async (req, res, next) => {
   try {
     const { username, password } = req.body;
+
     if (!(username && password)) {
       throw new ServerError('Username and/or password was not provided.', 400);
     }
@@ -27,13 +30,19 @@ const loginUser: LoginUserRequestHandler = async (req, res, next) => {
 
     const { hash } = userToLogin;
 
-    const isValidPassword = await bcrypt.compare(password, hash);
-
+    const isValidPassword = await checkIfValidPassword(hash, password);
     if (!isValidPassword) {
       throw new ServerError('Username or password was incorrect', 400);
     }
 
-    const successResponse = new SuccessResponse('Successfully logged in.', 200, {});
+    const refreshToken = await generateRefreshToken(userToLogin);
+    const accessToken = await generateAccessToken(refreshToken);
+
+    const successResponse = new SuccessResponse('Successfully logged in.', 200, {
+      refreshToken,
+      accessToken,
+    });
+
     next(successResponse);
   } catch (e) {
     if (e instanceof Error) {
