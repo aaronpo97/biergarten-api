@@ -36,8 +36,8 @@ export type BeerByIdRequestHandler = RequestHandler<
 >;
 
 /**
- * Instance of interface RequestHandler. Used for routes that do not have content in the Request or
- * Response body. Mainly used for the GET /beers route.
+ * Instance of interface RequestHandler. Used for routes that do not have content in the
+ * Request or Response body. Mainly used for the GET /beers route.
  */
 export type BeerRequestHandler = RequestHandler<
   /** Request params */
@@ -49,8 +49,8 @@ export type BeerRequestHandler = RequestHandler<
 >;
 
 /**
- * Instance of interface RequestHandler. Used for routes that include an updated Beer description,
- * name, abv, and/or ibu. Mainly used for updating the Beer resource.
+ * Instance of interface RequestHandler. Used for routes that include an updated Beer
+ * description, name, abv, and/or ibu. Mainly used for updating the Beer resource.
  */
 export type UpdateBeerRequestHandler = RequestHandler<
   /** Request params */

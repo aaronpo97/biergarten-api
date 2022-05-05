@@ -25,7 +25,11 @@ const getBeerById: BeerByIdRequestHandler = async (req, res, next) => {
       throw new ServerError('Could not find a beer with that id.', 404);
     }
 
-    const successResponse = new SuccessResponse(`Sending beer id ${beerId}`, 200, queriedBeer);
+    const successResponse = new SuccessResponse(
+      `Sending beer id ${beerId}`,
+      200,
+      queriedBeer,
+    );
     next(successResponse);
   } catch (e) {
     if (e instanceof Error) {

@@ -7,8 +7,8 @@ import logger from '../../util/logger';
 import verifyAccessToken from './util/verifyAccessToken';
 
 /**
- * Middleware to first check an access token to see if it is valid, and if it is expired, will
- * trigger a function to regenerate the access token with the given refresh token.
+ * Middleware to first check an access token to see if it is valid, and if it is expired,
+ * will trigger a function to regenerate the access token with the given refresh token.
  */
 const checkTokens: RequestHandler<{}, {}, {}> = async (req, res, next) => {
   try {
@@ -19,9 +19,9 @@ const checkTokens: RequestHandler<{}, {}, {}> = async (req, res, next) => {
     const decodedAccessToken = await verifyAccessToken(accessToken);
 
     /**
-     * @todo Extend the request object to contain the decoded access token for subsequent middleware
-     *   in each route. To be used to create a req.currentUser param which will be used to verify
-     *   permissions for modifying resources.
+     * @todo Extend the request object to contain the decoded access token for subsequent
+     *   middleware in each route. To be used to create a req.currentUser param which will
+     *   be used to verify permissions for modifying resources.
      */
 
     // @ts-expect-error
@@ -31,7 +31,10 @@ const checkTokens: RequestHandler<{}, {}, {}> = async (req, res, next) => {
       if (error instanceof Error && error.name === 'TokenExpiredError') {
         const refreshToken = req.headers['x-auth-token'] as string | undefined;
         if (!refreshToken) {
-          throw new ServerError('No refresh token was provided. Authentication failed.', 400);
+          throw new ServerError(
+            'No refresh token was provided. Authentication failed.',
+            400,
+          );
         }
 
         const newAccessToken = await generateAccessToken(refreshToken);

@@ -28,7 +28,8 @@ const createNewBeer: CreateBeerRequestHandler = async (req, res, next): Promise<
     const newBeer = Beer.create();
     const brewery = await Brewery.findOneBy({ id: breweryId });
 
-    if (!brewery) throw new ServerError('Could not find the brewery for posted beer.', 404);
+    if (!brewery)
+      throw new ServerError('Could not find the brewery for posted beer.', 404);
 
     newBeer.description = description;
     newBeer.name = name;

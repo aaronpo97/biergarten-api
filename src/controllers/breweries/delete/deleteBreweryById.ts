@@ -12,7 +12,10 @@ const deleteBreweryById: BreweryByIdRequestHandler = async (req, res, next) => {
     const { breweryId } = req.params;
 
     if (!isValidUuid) {
-      throw new ServerError('Could not delete a brewery with that id as it is invalid', 400);
+      throw new ServerError(
+        'Could not delete a brewery with that id as it is invalid',
+        400,
+      );
     }
 
     const breweryToDelete = await Brewery.findOne({

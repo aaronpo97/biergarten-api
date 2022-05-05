@@ -3,10 +3,14 @@ import User from '../../database/model/User';
 import ServerError from '../../util/error/ServerError';
 import logger from '../../util/logger';
 
-const getCurrentUser: RequestHandler<unknown, unknown, unknown> = async (req, res, next) => {
+const getCurrentUser: RequestHandler<unknown, unknown, unknown> = async (
+  req,
+  res,
+  next,
+) => {
   /**
-   * @todo Append req.decoded and req.currentUser onto the request object to avoid any future type
-   *   errors from the typescript compiler.
+   * @todo Append req.decoded and req.currentUser onto the request object to avoid any
+   *   future type errors from the typescript compiler.
    */
 
   const currentUser = await User.findOne({

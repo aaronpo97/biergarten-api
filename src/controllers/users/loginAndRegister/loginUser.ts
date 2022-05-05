@@ -1,5 +1,8 @@
 import { checkIfValidPassword } from './util/passwordFns';
-import { generateRefreshToken, generateAccessToken } from '../../../util/auth/generateTokens';
+import {
+  generateRefreshToken,
+  generateAccessToken,
+} from '../../../util/auth/generateTokens';
 import ServerError from '../../../util/error/ServerError';
 import User from '../../../database/model/User';
 import SuccessResponse from '../../../util/response/SuccessResponse';
@@ -10,9 +13,9 @@ import { LoginUserRequestHandler } from '../types/RequestHandler';
  *
  * The request body should contain the username and password.
  *
- * Will throw an error if the username and password is not provided, or if the provided username or
- * password is incorrect. If a user if found with the given username, the server will compare the
- * provided password and the hashed password in the database.
+ * Will throw an error if the username and password is not provided, or if the provided
+ * username or password is incorrect. If a user if found with the given username, the
+ * server will compare the provided password and the hashed password in the database.
  */
 
 const loginUser: LoginUserRequestHandler = async (req, res, next) => {

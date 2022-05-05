@@ -3,8 +3,8 @@ import { RequestHandler, ParamsDictionary } from 'express-serve-static-core';
 /**
  * Instance of interface RequestHandler.
  *
- * Used for routes that do not have content in the Request or Response body. Mainly used for the GET
- * /breweries route.
+ * Used for routes that do not have content in the Request or Response body. Mainly used
+ * for the GET /breweries route.
  */
 export type BreweryRequestHandler = RequestHandler<
   /** Request params */
@@ -32,8 +32,8 @@ export type BreweryByIdRequestHandler = RequestHandler<
 /**
  * Instance of interface RequestHandler.
  *
- * Used for routes that optionally include an updated Brewery description, name, and/or location.
- * Mainly used for updating the Beer resource.
+ * Used for routes that optionally include an updated Brewery description, name, and/or
+ * location. Mainly used for updating the Beer resource.
  */
 export type UpdateBreweryRequestHandler = RequestHandler<
   /** Request params */

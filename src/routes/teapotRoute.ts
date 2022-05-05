@@ -2,8 +2,8 @@ import { RequestHandler } from 'express';
 import ServerError from '../util/error/ServerError';
 
 /**
- * Instance of RequestHandler with no request params, no request body, and no response body. Used
- * only for the teapot route.
+ * Instance of RequestHandler with no request params, no request body, and no response
+ * body. Used only for the teapot route.
  */
 type TeapotRequestHandler = RequestHandler<
   /** Request params */

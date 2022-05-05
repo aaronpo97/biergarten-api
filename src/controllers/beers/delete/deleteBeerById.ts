@@ -9,7 +9,10 @@ const deleteBeerById: BeerByIdRequestHandler = async (req, res, next) => {
     const { beerId } = req.params;
 
     if (!isValidUUID(beerId)) {
-      throw new ServerError('Could not delete the beer with that id as it is invalid', 400);
+      throw new ServerError(
+        'Could not delete the beer with that id as it is invalid',
+        400,
+      );
     }
 
     const beerToDelete = await Beer.findOne({

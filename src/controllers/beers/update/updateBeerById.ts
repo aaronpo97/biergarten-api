@@ -8,7 +8,10 @@ const updateBeerById: UpdateBeerRequestHandler = async (req, res, next) => {
     const { beerId } = req.params;
 
     if (Number.isNaN(beerId)) {
-      throw new ServerError('Could not update a beer with that id as it is invalid.', 400);
+      throw new ServerError(
+        'Could not update a beer with that id as it is invalid.',
+        400,
+      );
     }
 
     const beerToUpdate = await Beer.findOneBy({ id: beerId });

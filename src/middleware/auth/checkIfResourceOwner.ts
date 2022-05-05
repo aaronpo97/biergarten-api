@@ -2,7 +2,11 @@ import { RequestHandler } from 'express';
 
 import logger from '../../util/logger';
 
-const checkIfResourceOwner: RequestHandler<unknown, unknown, unknown> = async (req, res, next) => {
+const checkIfResourceOwner: RequestHandler<unknown, unknown, unknown> = async (
+  req,
+  res,
+  next,
+) => {
   // @ts-expect-error
   const { currentUser, path, baseUrl } = req;
 

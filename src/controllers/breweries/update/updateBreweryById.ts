@@ -8,12 +8,18 @@ const updateBreweryById: UpdateBreweryRequestHandler = async (req, res, next) =>
     const { breweryId } = req.params;
 
     if (Number.isNaN(breweryId)) {
-      throw new ServerError('Could not update the brewery with that id as it is invalid.', 400);
+      throw new ServerError(
+        'Could not update the brewery with that id as it is invalid.',
+        400,
+      );
     }
 
     const breweryToUpdate = await Brewery.findOneBy({ id: breweryId });
     if (!breweryToUpdate) {
-      throw new ServerError('Could not update that brewery as it could not be found.', 404);
+      throw new ServerError(
+        'Could not update that brewery as it could not be found.',
+        404,
+      );
     }
 
     const {

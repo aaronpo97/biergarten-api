@@ -17,7 +17,15 @@ export default class Response {
    * @class
    * @param {{ message: string; status: number }} { Message, status }
    */
-  constructor({ message, status, success }: { message: string; status: number; success: boolean }) {
+  constructor({
+    message,
+    status,
+    success,
+  }: {
+    message: string;
+    status: number;
+    success: boolean;
+  }) {
     this.message = message;
     this.status = status;
     this.success = success;

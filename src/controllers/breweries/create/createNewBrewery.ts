@@ -6,7 +6,11 @@ import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 
 /** Business logic for creating a new brewery. */
-const createNewBrewery: CreateBreweryRequestHandler = async (req, res, next): Promise<void> => {
+const createNewBrewery: CreateBreweryRequestHandler = async (
+  req,
+  res,
+  next,
+): Promise<void> => {
   try {
     const { description, name, location } = req.body;
 

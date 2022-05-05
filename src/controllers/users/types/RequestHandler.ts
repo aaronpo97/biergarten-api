@@ -17,8 +17,8 @@ export type LoginUserRequestHandler = RequestHandler<
 /**
  * Instance of RequestHandler.
  *
- * For requests with the username, email, dateOfBirth, and password in the request body. Used for
- * registering a user.
+ * For requests with the username, email, dateOfBirth, and password in the request body.
+ * Used for registering a user.
  */
 export type RegisterUserRequestHandler = RequestHandler<
   /** Request params */

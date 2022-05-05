@@ -10,10 +10,10 @@ import { RegisterUserRequestHandler } from '../types/RequestHandler';
 /**
  * Business logic for registering a user.
  *
- * Will throw an error if it is not the case that the username, email, date of birth, and password
- * are provided. Performs a check to see if whether or not the user exists, and will throw an error
- * if true. Invokes a function to hash the given password with its returned value (i.e. the hashed
- * password) being stored in the database.
+ * Will throw an error if it is not the case that the username, email, date of birth, and
+ * password are provided. Performs a check to see if whether or not the user exists, and
+ * will throw an error if true. Invokes a function to hash the given password with its
+ * returned value (i.e. the hashed password) being stored in the database.
  */
 const registerUser: RegisterUserRequestHandler = async (req, res, next) => {
   try {
@@ -26,7 +26,10 @@ const registerUser: RegisterUserRequestHandler = async (req, res, next) => {
     const userExists = await checkIfUserExists(username, email);
 
     if (userExists) {
-      throw new ServerError('A user with the given username or email is already registered.', 400);
+      throw new ServerError(
+        'A user with the given username or email is already registered.',
+        400,
+      );
     }
 
     const userToRegister = new User();
