@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 
 import process from 'process';
-import logger from '../../util/logger';
 import ErrorResponse from '../../util/response/ErrorResponse';
 import 'dotenv/config';
 import { ErrorResponseT, SuccessResponseT } from './types';

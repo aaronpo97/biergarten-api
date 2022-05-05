@@ -6,6 +6,7 @@ import SuccessResponse from '../../../util/response/SuccessResponse';
 
 import Beer from '../../../database/model/Beer';
 import Brewery from '../../../database/model/Brewery';
+import User from '../../../database/model/User';
 
 /** Business logic for creating a new brewery. */
 
@@ -34,6 +35,8 @@ const createNewBeer: CreateBeerRequestHandler = async (req, res, next): Promise<
     newBeer.abv = abv;
     newBeer.ibu = ibu;
     newBeer.brewery = brewery;
+    // @ts-expect-error
+    newBeer.postedBy = req.currentUser as User;
 
     await newBeer.save();
 

@@ -2,11 +2,32 @@ import express from 'express';
 import registerUser from '../../controllers/users/loginAndRegister/registerUser';
 import loginUser from '../../controllers/users/loginAndRegister/loginUser';
 import showPublicUserInfo from '../../controllers/users/read/showPublicUserInfo';
+import ServerError from '../../util/error/ServerError';
 
 const userRoutes = express.Router();
 
-userRoutes.route('/:userId').get(showPublicUserInfo);
-userRoutes.route('/register').post(registerUser);
-userRoutes.route('/login').post(loginUser);
+userRoutes
+  .route('/:userId')
+  .get(showPublicUserInfo)
+  .all((req, res, next) => {
+    res.set('Allow', 'GET, PUT, DELETE');
+    next(new ServerError('Not allowed', 405));
+  });
+
+userRoutes
+  .route('/register')
+  .post(registerUser)
+  .all((req, res, next) => {
+    res.set('Allow', 'POST');
+    next(new ServerError('Not allowed', 405));
+  });
+
+userRoutes
+  .route('/login')
+  .post(loginUser)
+  .all((req, res, next) => {
+    res.set('Allow', 'POST');
+    next(new ServerError('Not allowed', 405));
+  });
 
 export default userRoutes;

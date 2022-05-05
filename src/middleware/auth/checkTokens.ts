@@ -1,10 +1,15 @@
 import 'dotenv/config';
-import { RequestHandler } from 'express';
+import { RequestHandler, Request } from 'express-serve-static-core';
 
 import { generateAccessToken } from '../../util/auth/generateTokens';
 import ServerError from '../../util/error/ServerError';
-import verifyAccessToken from './verifyAccessToken';
+import logger from '../../util/logger';
+import verifyAccessToken from './util/verifyAccessToken';
 
+/**
+ * Middleware to first check an access token to see if it is valid, and if it is expired, will
+ * trigger a function to regenerate the access token with the given refresh token.
+ */
 const checkTokens: RequestHandler<{}, {}, {}> = async (req, res, next) => {
   try {
     const accessToken = req.headers['x-access-token'] as string | undefined;
@@ -12,6 +17,12 @@ const checkTokens: RequestHandler<{}, {}, {}> = async (req, res, next) => {
       throw new ServerError('The access token was not provided.', 401);
     }
     const decodedAccessToken = await verifyAccessToken(accessToken);
+
+    /**
+     * @todo Extend the request object to contain the decoded access token for subsequent middleware
+     *   in each route. To be used to create a req.currentUser param which will be used to verify
+     *   permissions for modifying resources.
+     */
 
     // @ts-expect-error
     req.decodedAccessToken = decodedAccessToken;
@@ -26,6 +37,7 @@ const checkTokens: RequestHandler<{}, {}, {}> = async (req, res, next) => {
         const newAccessToken = await generateAccessToken(refreshToken);
         const decodedAccessToken = await verifyAccessToken(newAccessToken);
 
+        /** @todo See above todo. */
         // @ts-expect-error
         req.decodedAccessToken = decodedAccessToken;
 

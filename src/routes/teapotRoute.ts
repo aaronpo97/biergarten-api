@@ -15,11 +15,14 @@ type TeapotRequestHandler = RequestHandler<
 >;
 
 /**
- * Teapot middleware. Will set the status code to 418 and trigger an error response. Mainly an
- * easter egg. Serves no actual purpose for the application other than being nice to have.
+ * Teapot middleware.
+ *
+ * Will set the status code to 418 and trigger an error response.
+ *
+ * Mainly an easter egg. Serves no actual purpose for the application other than being nice to have.
  */
-const teapotRoute: TeapotRequestHandler = (req, res, next) => {
-  next(new ServerError(`I cannot brew coffee, I'm a teapot!`, 418));
+const teapotRoute: TeapotRequestHandler = (): never => {
+  throw new ServerError(`I cannot brew coffee, I'm a teapot!`, 418);
 };
 
 export default teapotRoute;

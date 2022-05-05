@@ -5,10 +5,11 @@ import { UserRequestHandler } from '../types/RequestHandler';
 
 const showPublicUserInfo: UserRequestHandler = async (req, res, next) => {
   try {
+    /** @todo Join the user table with its associated beer posts */
     const { userId } = req.params;
     const queriedUser = await User.findOne({
       where: { id: userId },
-      select: ['username', 'beerPosts', 'dateOfBirth', 'joinedDate'],
+      select: ['username', 'dateOfBirth', 'joinedDate'],
     });
 
     if (!queriedUser) {

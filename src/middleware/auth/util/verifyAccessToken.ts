@@ -1,6 +1,6 @@
 import { env } from 'process';
 import jwt from 'jsonwebtoken';
-import ServerError from '../../util/error/ServerError';
+import ServerError from '../../../util/error/ServerError';
 
 const verifyAccessToken = async (accessToken: string) => {
   const { ACCESS_TOKEN_SECRET } = env;
