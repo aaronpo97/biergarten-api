@@ -50,13 +50,16 @@ DATABASE_USERNAME=''
 DATABASE_PASSWORD=''
 DATABASE_NAME=''
 
+REFRESH_TOKEN_SECRET=''
+ACCESS_TOKEN_SECRET=''
+
 NODE_ENV='dev'
 PORT=''
 BASE_URL='http://localhost'
 " > .env
 ```
 
-Input the credentials to your database, as well as the port you wish to host the app on.
+Input the credentials to your database, as well as the port you wish to host the app on. Generate a refresh token secret and an access token secret. I suggest using a password generator set to 64 characters for added security.
 
 ##### Example
 
@@ -66,6 +69,9 @@ DATABASE_PORT='5432'
 DATABASE_USERNAME='aaron'
 DATABASE_PASSWORD='password'
 DATABASE_NAME='biergarten'
+
+REFRESH_TOKEN_SECRET='this_is_a_bad_secret'
+ACCESS_TOKEN_SECRET='tHiS_1s_a_B3ttr_s3crt'
 
 NODE_ENV='dev'
 PORT='8080'

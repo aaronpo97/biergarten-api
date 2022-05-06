@@ -1,9 +1,8 @@
 import User from '../../../database/model/User';
+import { checkIfUserExists } from '../../../util/auth/checkUserFns';
+import { hashPassword } from '../../../util/auth/passwordFns';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
-
-import { checkIfUserExists } from './util/checkUserFns';
-import { hashPassword } from './util/passwordFns';
 
 import { RegisterUserRequestHandler } from '../types/RequestHandler';
 

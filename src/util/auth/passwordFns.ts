@@ -1,5 +1,5 @@
 import argon2 from 'argon2';
-import { checkIfValidPasswordFn, hashPasswordFn } from '../../types/UtilTypes';
+import { checkIfValidPasswordFn, hashPasswordFn } from './types';
 
 /**
  * Basic helper function that will hash a password.

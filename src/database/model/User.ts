@@ -30,6 +30,7 @@ export default class User extends BaseEntity {
   @Column()
   hash!: string;
 
+  @JoinColumn()
   @OneToMany(() => Beer, (beer) => beer.postedBy)
   beerPosts!: Array<Beer>;
 

@@ -1,5 +1,5 @@
-import { UsernameTakenCheckFn, userExistsCheckFn } from '../../types/UtilTypes';
-import User from '../../../../database/model/User';
+import { userExistsCheckFn, UsernameTakenCheckFn } from './types';
+import User from '../../database/model/User';
 
 /**
  * Helper function for checking whether or not a user with the client provided username

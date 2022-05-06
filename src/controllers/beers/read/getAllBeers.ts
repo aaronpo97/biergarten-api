@@ -3,6 +3,7 @@ import { BeerRequestHandler } from '../@types/RequestHandlers';
 import Beer from '../../../database/model/Beer';
 import ErrorResponse from '../../../util/response/ErrorResponse';
 import SuccessResponse from '../../../util/response/SuccessResponse';
+import AppDataSource from '../../../database/AppDataSource';
 
 /**
  * Business logic for retrieving beers from the database and sending it to the client.
@@ -16,14 +17,24 @@ import SuccessResponse from '../../../util/response/SuccessResponse';
 
 const getAllBeers: BeerRequestHandler = async (req, res, next): Promise<void> => {
   try {
-    const allBeers = await Beer.find({
-      join: {
-        alias: 'beer',
-        leftJoinAndSelect: { brewery: 'beer.brewery', user: 'beer.postedBy' },
-      },
-    });
+    const pageNum = Math.abs(parseInt(req.query.page_num, 10) || 1);
+    const pageSize = Math.abs(parseInt(req.query.page_size, 10) || 5);
 
-    const successResponse = new SuccessResponse('Sending all beers.', 200, allBeers);
+    /** @todo Fix this query so user details are not exposed. */
+    const allBeers = await AppDataSource.getRepository(Beer)
+      .createQueryBuilder('beer')
+      // .leftJoinAndSelect('beer.postedBy', 'user')
+      .leftJoinAndSelect('beer.brewery', 'brewery')
+      .take(pageSize)
+      .skip(pageNum === 1 ? 0 : pageNum * pageSize)
+      .getMany();
+
+    const successResponse = new SuccessResponse(
+      `Sending page ${pageNum} of beers.`,
+      200,
+      { pageNum, pageSize, allBeers },
+    );
+
     next(successResponse);
   } catch (e) {
     if (e instanceof Error) {

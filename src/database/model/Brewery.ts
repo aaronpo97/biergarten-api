@@ -22,7 +22,7 @@ export default class Brewery extends BaseEntity {
   @Column()
   description!: string;
 
-  @OneToMany(() => Beer, (beer) => beer.brewery, { onDelete: 'CASCADE', eager: true })
+  @OneToMany(() => Beer, (beer) => beer.brewery, { onDelete: 'CASCADE' })
   @JoinColumn()
   beers!: Array<Beer>;
 }
