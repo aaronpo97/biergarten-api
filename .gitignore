@@ -4,3 +4,6 @@ dist
 .DS_Store
 .vscode
 coverage
+
+seedData.ts
+seedData.json

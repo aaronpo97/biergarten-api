@@ -1,4 +1,5 @@
 import { validate as isValidUuid } from 'uuid';
+import AppDataSource from '../../../database/AppDataSource';
 
 import Brewery from '../../../database/model/Brewery';
 import ServerError from '../../../util/error/ServerError';
@@ -18,7 +19,13 @@ const getBreweryById: BreweryByIdRequestHandler = async (req, res, next) => {
       throw new ServerError('Could not get a brewery with that id as it is invalid', 400);
     }
 
-    const queriedBrewery = await Brewery.findOneBy({ id: breweryId });
+    const queriedBrewery = await AppDataSource.getRepository(Brewery)
+      .createQueryBuilder('brewery')
+      .leftJoinAndSelect('brewery.beers', 'beers')
+      .leftJoinAndSelect('brewery.postedBy', 'users')
+
+      .where('brewery.id = :breweryId', { breweryId })
+      .getOne();
 
     if (!queriedBrewery) {
       throw new ServerError('Could not find a brewery with that id.', 404);

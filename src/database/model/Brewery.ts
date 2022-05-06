@@ -5,8 +5,10 @@ import {
   OneToMany,
   BaseEntity,
   JoinColumn,
+  ManyToOne,
 } from 'typeorm';
 import Beer from './Beer';
+import User from './User';
 
 @Entity()
 export default class Brewery extends BaseEntity {
@@ -21,6 +23,10 @@ export default class Brewery extends BaseEntity {
 
   @Column()
   description!: string;
+
+  @JoinColumn()
+  @ManyToOne(() => User, (user) => user.breweryPosts)
+  postedBy!: User;
 
   @OneToMany(() => Beer, (beer) => beer.brewery, { onDelete: 'CASCADE' })
   @JoinColumn()

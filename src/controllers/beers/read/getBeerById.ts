@@ -1,4 +1,5 @@
 import { validate as isValidUuid } from 'uuid';
+import AppDataSource from '../../../database/AppDataSource';
 
 import Beer from '../../../database/model/Beer';
 import ServerError from '../../../util/error/ServerError';
@@ -13,13 +14,14 @@ const getBeerById: BeerByIdRequestHandler = async (req, res, next) => {
       throw new ServerError('Could not get a beer with that id as it is invalid.', 400);
     }
 
-    const queriedBeer = await Beer.findOne({
-      where: { id: beerId },
-      join: {
-        alias: 'beer',
-        leftJoinAndSelect: { brewery: 'beer.brewery', user: 'beer.postedBy' },
-      },
-    });
+    /** @todo Fix this query so user details are not exposed. */
+    const queriedBeer = await AppDataSource.getRepository(Beer)
+      .createQueryBuilder('beer')
+      .leftJoinAndSelect('beer.postedBy', 'user')
+
+      .where('beer.id = :beerId', { beerId })
+      .leftJoinAndSelect('beer.brewery', 'brewery')
+      .getOne();
 
     if (!queriedBeer) {
       throw new ServerError('Could not find a beer with that id.', 404);

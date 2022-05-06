@@ -24,6 +24,9 @@ export default class Beer extends BaseEntity {
   @Column()
   description!: string;
 
+  @Column()
+  type!: string;
+
   @Column('float')
   abv!: number;
 
