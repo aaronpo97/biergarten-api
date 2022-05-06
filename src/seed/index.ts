@@ -3,7 +3,7 @@ import logger from '../util/logger';
 
 import Beer from '../database/model/Beer';
 
-import seedData from './data/seedData';
+import seedData, {  } from './data/seedData';
 
 import createAdminUser from './util/createAdminUser';
 import createBrewery from './util/createBrewery';
@@ -21,13 +21,12 @@ import createBeer from './util/createBeer';
 
   seedData.forEach(async (brewery) => {
     const newBrewery = await createBrewery(brewery, adminUser);
-
+    
     const promises: Array<Promise<Beer>> = [];
-    brewery.beers.forEach((beer) => {
-      const beerToAdd = createBeer(beer, newBrewery, adminUser);
-      promises.push(beerToAdd);
-    });
-
+    brewery.beers.forEach((beer) => promises.push(createBeer(beer, newBrewery, adminUser)));
+    
     await Promise.all(promises);
+    logger.info(`Registered resource ${newBrewery.name} and its associated beers. \n`)
+
   });
 })();

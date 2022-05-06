@@ -59,7 +59,13 @@ BASE_URL='http://localhost'
 " > .env
 ```
 
-Input the credentials to your database, as well as the port you wish to host the app on. Generate a refresh token secret and an access token secret. I suggest using a password generator set to 64 characters for added security.
+- This will create a `.env` file to hold your environment variables.
+
+##### Additional steps
+
+- Input the credentials to your database, as well as the port you wish to host the app on. 
+- Generate a refresh token secret and an access token secret. 
+  - I suggest using a password generator set to 64 characters for added security.
 
 ##### Example
 
@@ -80,7 +86,33 @@ BASE_URL='http://localhost'
 
 ### Step 3
 
-Run the following scripts in the same terminal as before, depending on the application mode you wish to use.
+### Seeding the database
+
+#### Step 3.1
+
+First run this command (you only need to do this once).
+
+```bash
+cp ./src/seed/data/seedDataExample.ts ./src/seed/data/seedData.ts
+```
+
+- This will create a file called `seedData.ts` by copying the file `seedDataExample.ts`.
+- I have made my dataset private as I have not been given permission from breweries to make their data publicly available to this repo.
+- Append your seed data as you see fit.
+
+#### Step 3.2
+
+Run the following command in your terminal:
+
+```bash
+npm run seed
+```
+
+- This will reset the database by clearing each column. It will add your data to the database.
+
+### Step 4
+
+Run the following scripts, depending on the application mode you wish to use.
 
 #### Developer mode
 

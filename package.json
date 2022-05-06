@@ -9,7 +9,8 @@
     "dev": "nodemon ./src/server.ts",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
-    "format": "npx prettier --write ."
+    "format": "npx prettier --write .",
+    "seed": "npx ts-node ./src/seed/index.ts"
   },
   "keywords": [],
   "author": "",
