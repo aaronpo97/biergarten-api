@@ -26,7 +26,7 @@ The [International Bitterness Units](https://en.wikipedia.org/wiki/Beer_measurem
 
 ## How to run this application
 
-This `README` assumes that you have the current LTS version of Node.js (>=16.0), if that is not the case, go follow the instructions on the [Node.js website](https://nodejs.org/en/), then proceed with the following instructions.
+This `README` assumes that you have the current LTS version of Node.js (>=16.0), if that is not the case, go follow the instructions on the [Node.js website](https://nodejs.org/en/), then proceed with the following instructions. It also assumes that you have a bash shell installed on your system.
 
 ### Step 1
 

@@ -4,7 +4,7 @@
   "description": "",
   "main": "./dist/server.js",
   "scripts": {
-    "prestart": "npm run test && npx tsc",
+    "postinstall": "cp ./src/seed/data/seedDataExample.ts ./src/seed/data/seedData.ts && npx tsc",
     "start": "NODE_ENV=production node .",
     "dev": "nodemon ./src/server.ts",
     "test": "jest --coverage",

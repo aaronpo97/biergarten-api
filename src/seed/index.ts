@@ -21,12 +21,10 @@ import createBeer from './util/createBeer';
 
   seedData.forEach(async (brewery) => {
     const newBrewery = await createBrewery(brewery, adminUser);
-    
+
     const promises: Array<Promise<Beer>> = [];
     brewery.beers.forEach((beer) => promises.push(createBeer(beer, newBrewery, adminUser)));
-    
-    await Promise.all(promises);
-    logger.info(`Registered resource ${newBrewery.name} and its associated beers. \n`)
 
+    await Promise.all(promises);
   });
 })();
