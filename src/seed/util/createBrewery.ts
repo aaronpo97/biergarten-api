@@ -1,6 +1,6 @@
 import Brewery from '../../database/model/Brewery';
 import User from '../../database/model/User';
-import { IRawBreweryData } from '../data/seedData';
+import { IRawBreweryData } from '../data/types';
 
 const createBrewery = async (brewery: IRawBreweryData, adminUser: User) => {
   const breweryToAdd = new Brewery();

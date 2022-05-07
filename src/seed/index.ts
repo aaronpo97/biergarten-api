@@ -3,28 +3,44 @@ import logger from '../util/logger';
 
 import Beer from '../database/model/Beer';
 
-import seedData, {  } from './data/seedData';
+import seedData from './data/seedData';
 
 import createAdminUser from './util/createAdminUser';
 import createBrewery from './util/createBrewery';
 import createBeer from './util/createBeer';
+import fakeUserData from './data/fakeUserData';
+import User from '../database/model/User';
+import createFakeUser from './util/createFakeUser';
+
+const userPromises: Array<Promise<User>> = [];
+const beerPromises: Array<Promise<Beer>> = [];
 
 (async () => {
   await AppDataSource.initialize();
-  logger.info('Initialized database.');
 
   await AppDataSource.manager.query(
     `TRUNCATE TABLE "user", profile, beer, brewery, comment`,
   );
 
+  logger.info('Initialized database.');
+  logger.info('Seeding database. This will take a bit of time.');
+  logger.info('Creating resources...');
+
+  fakeUserData.forEach((rawUserData) => {
+    userPromises.push(createFakeUser(rawUserData));
+  });
+
   const adminUser = await createAdminUser();
 
-  seedData.forEach(async (brewery) => {
-    const newBrewery = await createBrewery(brewery, adminUser);
+  seedData.forEach((brewery) => {
+    (async () => {
+      const newBrewery = await createBrewery(brewery, adminUser);
+      logger.info(`Created ${newBrewery.name}.`);
 
-    const promises: Array<Promise<Beer>> = [];
-    brewery.beers.forEach((beer) => promises.push(createBeer(beer, newBrewery, adminUser)));
-
-    await Promise.all(promises);
+      brewery.beers.forEach((beer) => {
+        beerPromises.push(createBeer(beer, newBrewery, adminUser));
+      });
+    })();
   });
+  await Promise.all([...beerPromises, ...userPromises]);
 })();

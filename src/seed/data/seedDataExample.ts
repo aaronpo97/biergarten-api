@@ -1,17 +1,4 @@
-export interface IRawBeerData {
-  name: string;
-  type: string;
-  description: string;
-  abv?: number;
-  ibu?: number;
-}
-
-export interface IRawBreweryData {
-  name: string;
-  description: string;
-  location: string;
-  beers: Array<IRawBeerData>;
-}
+import { IRawBreweryData } from './types';
 
 const exampleBrewery: IRawBreweryData = {
   name: 'Lorem Ipsum Brewing Company',

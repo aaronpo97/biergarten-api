@@ -2,7 +2,7 @@ import Beer from '../../database/model/Beer';
 import Brewery from '../../database/model/Brewery';
 import User from '../../database/model/User';
 import logger from '../../util/logger';
-import { IRawBeerData } from '../data/seedData';
+import { IRawBeerData } from '../data/types';
 
 const createBeer = async (
   rawBeerData: IRawBeerData,
@@ -21,9 +21,8 @@ const createBeer = async (
   beerToAdd.brewery = brewery;
   beerToAdd.postedBy = adminUser;
 
+  logger.info(`creating ${beerToAdd.name}`);
   await beerToAdd.save();
-
-   logger.info(`Creating resource '${beerToAdd.name}' by ${beerToAdd.brewery.name}.`)
   return beerToAdd;
 };
 

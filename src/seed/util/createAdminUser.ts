@@ -12,7 +12,6 @@ const createAdminUser = async () => {
   adminUser.hash = await hashPassword('password');
   await adminUser.save();
 
-logger.info(`Created admin user: ${adminUser.username}\n`)
   return adminUser;
 };
 
