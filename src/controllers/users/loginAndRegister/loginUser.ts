@@ -31,7 +31,7 @@ const loginUser: LoginUserRequestHandler = async (req, res, next) => {
       throw new ServerError('Username or password was incorrect', 400);
     }
 
-    const { hash } = userToLogin;
+    const { hash, id } = userToLogin;
     const isValidPassword = await checkIfValidPassword(hash, password);
     if (!isValidPassword) {
       throw new ServerError('Username or password was incorrect', 400);
@@ -41,6 +41,7 @@ const loginUser: LoginUserRequestHandler = async (req, res, next) => {
     const accessToken = await generateAccessToken(refreshToken);
 
     const successResponse = new SuccessResponse('Successfully logged in.', 200, {
+      id,
       refreshToken,
       accessToken,
     });

@@ -1,6 +1,5 @@
 import User from '../../database/model/User';
 import { hashPassword } from '../../util/auth/passwordFns';
-import logger from '../../util/logger';
 
 const createAdminUser = async () => {
   const adminUser = new User();

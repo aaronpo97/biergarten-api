@@ -1,3 +1,4 @@
+import AppDataSource from '../../../database/AppDataSource';
 import User from '../../../database/model/User';
 import { checkIfUserExists } from '../../../util/auth/checkUserFns';
 import { hashPassword } from '../../../util/auth/passwordFns';
@@ -41,7 +42,7 @@ const registerUser: RegisterUserRequestHandler = async (req, res, next) => {
     userToRegister.joinedDate = new Date(Date.now());
     userToRegister.hash = hash;
 
-    await userToRegister.save();
+    await AppDataSource.manager.save(userToRegister);
 
     const successResponse = new SuccessResponse<User>(
       'Successfully registered user.',

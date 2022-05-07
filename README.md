@@ -63,8 +63,8 @@ BASE_URL='http://localhost'
 
 ##### Additional steps
 
-- Input the credentials to your database, as well as the port you wish to host the app on. 
-- Generate a refresh token secret and an access token secret. 
+- Input the credentials to your database, as well as the port you wish to host the app on.
+- Generate a refresh token secret and an access token secret.
   - I suggest using a password generator set to 64 characters for added security.
 
 ##### Example
