@@ -1,14 +1,14 @@
 import express from 'express';
 
-import createNewBeer from '../../controllers/beers/create/createNewBeer';
-import deleteBeerById from '../../controllers/beers/delete/deleteBeerById';
-import getAllBeers from '../../controllers/beers/read/getAllBeers';
-import getBeerById from '../../controllers/beers/read/getBeerById';
-import updateBeerById from '../../controllers/beers/update/updateBeerById';
-import checkIfResourceOwner from '../../middleware/auth/checkIfResourceOwner';
-import checkTokens from '../../middleware/auth/checkTokens';
-import getCurrentUser from '../../middleware/auth/getCurrentUser';
-import ServerError from '../../util/error/ServerError';
+import createNewBeer from '../controllers/beers/create/createNewBeer';
+import deleteBeerById from '../controllers/beers/delete/deleteBeerById';
+import getAllBeers from '../controllers/beers/read/getAllBeers';
+import getBeerById from '../controllers/beers/read/getBeerById';
+import updateBeerById from '../controllers/beers/update/updateBeerById';
+import checkIfResourceOwner from '../middleware/auth/checkIfResourceOwner';
+import checkTokens from '../middleware/auth/checkTokens';
+import getCurrentUser from '../middleware/auth/getCurrentUser';
+import ServerError from '../util/error/ServerError';
 
 /** Route handler for '/api/beers'. */
 const beerRoutes = express.Router();

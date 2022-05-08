@@ -12,7 +12,7 @@ import User from '../../../database/model/User';
 
 const createNewBeer: CreateBeerRequestHandler = async (req, res, next): Promise<void> => {
   try {
-    const { description, name, abv, ibu, breweryId } = req.body;
+    const { description, name, abv, ibu, breweryId, type } = req.body;
 
     if (!(name && description && abv && ibu && breweryId))
       throw new ServerError('Missing params in request body.', 400);
@@ -36,6 +36,7 @@ const createNewBeer: CreateBeerRequestHandler = async (req, res, next): Promise<
     newBeer.abv = abv;
     newBeer.ibu = ibu;
     newBeer.brewery = brewery;
+    newBeer.type = type;
     // @ts-expect-error
     newBeer.postedBy = req.currentUser as User;
 

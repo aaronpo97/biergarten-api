@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne } from 't
 import Beer from './Beer';
 
 @Entity()
-export default class Comment extends BaseEntity {
+export default class BeerComment extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
@@ -13,5 +13,5 @@ export default class Comment extends BaseEntity {
   postedDate!: Date;
 
   @ManyToOne(() => Beer, (beer) => beer.comments)
-  post!: Beer;
+  beerPost!: Beer;
 }

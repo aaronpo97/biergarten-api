@@ -4,8 +4,9 @@ import dotenv from 'dotenv';
 import Beer from './model/Beer';
 import Brewery from './model/Brewery';
 import User from './model/User';
-import Comment from './model/Comment';
+
 import Profile from './model/Profile';
+import BeerComment from './model/BeerComment';
 
 dotenv.config();
 const {
@@ -28,7 +29,7 @@ const AppDataSource = new DataSource({
   database,
   synchronize: true,
   logging: false,
-  entities: [Beer, Brewery, User, Profile, Comment],
+  entities: [Beer, Brewery, User, Profile, BeerComment],
   migrations: [],
   subscribers: [],
 });

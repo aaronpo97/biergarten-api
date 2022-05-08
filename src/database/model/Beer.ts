@@ -8,8 +8,9 @@ import {
   JoinColumn,
   ManyToMany,
 } from 'typeorm';
+import BeerComment from './BeerComment';
 import Brewery from './Brewery';
-import Comment from './Comment';
+
 import Profile from './Profile';
 import User from './User';
 
@@ -45,6 +46,6 @@ export default class Beer extends BaseEntity {
   @ManyToMany(() => Profile, (profile) => profile.likes)
   likedBy!: Array<Profile>;
 
-  @OneToMany(() => Comment, (comment) => comment.post)
-  comments!: Array<Comment>;
+  @OneToMany(() => BeerComment, (beerComment) => beerComment.beerPost)
+  comments!: Array<BeerComment>;
 }
