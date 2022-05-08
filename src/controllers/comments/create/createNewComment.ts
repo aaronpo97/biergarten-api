@@ -1,50 +1,55 @@
 import { validate as isValidUuid } from 'uuid';
 import Beer from '../../../database/model/Beer';
 import BeerComment from '../../../database/model/BeerComment';
+import User from '../../../database/model/User';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 import { createNewCommentT } from '../types/RequestHandlers';
 
 const createNewComment: createNewCommentT = async (req, res, next) => {
-   try {
-      const { beerId } = req.params;
-      const { comment } = req.body;
+  try {
+    const { beerId } = req.params;
+    const { comment } = req.body;
 
-      if (!isValidUuid(beerId)) {
-         throw new ServerError('Cannot post comment. The given beer id was invalid.', 400);
-      }
+    // @ts-expect-error
+    const currentUser = req.currentUser as User;
 
-      if (!comment) {
-         throw new ServerError('Comment must contain a value.', 400);
-      }
+    if (!isValidUuid(beerId)) {
+      throw new ServerError('Cannot post comment. The given beer id was invalid.', 400);
+    }
 
-      const beer = await Beer.findOne({ where: { id: beerId } });
+    if (!comment) {
+      throw new ServerError('Comment must contain a value.', 400);
+    }
 
-      if (!beer) {
-         throw new ServerError(
-            'Cannot post comment as a beer with the given id could not be found.',
-            404,
-         );
-      }
+    const beer = await Beer.findOne({ where: { id: beerId } });
 
-      const beerComment = new BeerComment();
+    if (!beer) {
+      throw new ServerError(
+        'Cannot post comment as a beer with the given id could not be found.',
+        404,
+      );
+    }
 
-      beerComment.beerPost = beer;
-      beerComment.commentBody = comment;
-      beerComment.postedDate = new Date(Date.now());
-      await beerComment.save();
+    const beerComment = new BeerComment();
 
-      const successResponse = new SuccessResponse('Comment created.', 200, beerComment);
+    beerComment.beerPost = beer;
+    beerComment.commentBody = comment;
+    beerComment.postedDate = new Date(Date.now());
 
-      next(successResponse);
-   } catch (error) {
-      if (error instanceof Error) {
-         next(error);
-         return;
-      }
+    beerComment.postedBy = currentUser;
+    await beerComment.save();
 
-      next(new ServerError('Something went wrong.', 400));
-   }
+    const successResponse = new SuccessResponse('Comment created.', 200, beerComment);
+
+    next(successResponse);
+  } catch (error) {
+    if (error instanceof Error) {
+      next(error);
+      return;
+    }
+    next(new ServerError('Something went wrong.', 400));
+  }
 };
 
 export default createNewComment;

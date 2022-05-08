@@ -8,6 +8,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import Beer from './Beer';
+import BeerComment from './BeerComment';
 import Brewery from './Brewery';
 import Profile from './Profile';
 
@@ -42,4 +43,8 @@ export default class User extends BaseEntity {
   @OneToOne(() => Profile, (profile) => profile.user)
   @JoinColumn()
   profile!: Profile;
+
+  @JoinColumn()
+  @OneToMany(() => BeerComment, (beerComment) => beerComment.postedBy)
+  beerComments!: Array<BeerComment>;
 }
