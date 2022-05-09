@@ -11,6 +11,11 @@ const createNewComment: createNewCommentT = async (req, res, next) => {
     const { beerId } = req.params;
     const { comment } = req.body;
 
+
+    /** 
+     * @todo
+     * Amend current user to the request object.
+     */
     // @ts-expect-error
     const currentUser = req.currentUser as User;
 

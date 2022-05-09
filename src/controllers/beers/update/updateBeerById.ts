@@ -2,12 +2,13 @@ import { UpdateBeerRequestHandler } from '../@types/RequestHandlers';
 import Beer from '../../../database/model/Beer';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
+import isValidUuid from '../../../util/validation/isValidUuid';
 
 const updateBeerById: UpdateBeerRequestHandler = async (req, res, next) => {
   try {
     const { beerId } = req.params;
 
-    if (Number.isNaN(beerId)) {
+    if (isValidUuid(beerId)) {
       throw new ServerError(
         'Could not update a beer with that id as it is invalid.',
         400,

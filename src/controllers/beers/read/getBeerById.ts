@@ -1,9 +1,9 @@
-import { validate as isValidUuid } from 'uuid';
 import AppDataSource from '../../../database/AppDataSource';
 
 import Beer from '../../../database/model/Beer';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
+import isValidUuid from '../../../util/validation/isValidUuid';
 import { BeerByIdRequestHandler } from '../@types/RequestHandlers';
 
 const getBeerById: BeerByIdRequestHandler = async (req, res, next) => {

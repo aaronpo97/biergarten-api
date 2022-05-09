@@ -22,9 +22,9 @@ const beerPromises: Array<Promise<Beer>> = [];
     `TRUNCATE TABLE "user", profile, beer, brewery, comment`,
   );
 
-  logger.info('Initialized database.');
-  logger.info('Seeding database. This will take a bit of time.');
-  logger.info('Creating resources...');
+  logger.info(
+    'Initialized database.\nSeeding database. This will take a bit of time.\nCreating resources...',
+  );
 
   fakeUserData.forEach((rawUserData) => {
     userPromises.push(createFakeUser(rawUserData));

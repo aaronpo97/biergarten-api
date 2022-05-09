@@ -7,3 +7,11 @@ export type createNewCommentT = RequestHandler<
 >;
 
 export type getAllCommentsT = RequestHandler<{ beerId: string }, {}, {}>;
+
+export type getCommentByIdT = RequestHandler<{ beerId: string; commentId: string }>;
+
+export type editCommentByIdT = RequestHandler<
+  { commentId: string },
+  {},
+  { commentEdits: string }
+>;

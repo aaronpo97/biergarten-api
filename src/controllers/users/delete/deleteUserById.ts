@@ -1,8 +1,8 @@
-import { validate as isValidUUID } from 'uuid';
 import AppDataSource from '../../../database/AppDataSource';
 import User from '../../../database/model/User';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
+import isValidUuid from '../../../util/validation/isValidUuid';
 import { UserRequestHandler } from '../types/RequestHandler';
 
 const deleteUserById: UserRequestHandler = async (req, res, next) => {
@@ -12,7 +12,7 @@ const deleteUserById: UserRequestHandler = async (req, res, next) => {
     if (!userId) {
       throw new ServerError('A user id was not provided.', 400);
     }
-    if (!isValidUUID(userId)) {
+    if (!isValidUuid(userId)) {
       throw new ServerError('The given user id is invalid.', 400);
     }
 

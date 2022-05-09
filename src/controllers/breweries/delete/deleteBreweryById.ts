@@ -1,26 +1,23 @@
-import { validate as isValidUuid } from 'uuid';
-
 import { BreweryByIdRequestHandler } from '../types/RequestHandlers';
 
 import Brewery from '../../../database/model/Brewery';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
+import isValidUuid from '../../../util/validation/isValidUuid';
 
 /** Business logic for deleting a beer by its id. */
 const deleteBreweryById: BreweryByIdRequestHandler = async (req, res, next) => {
   try {
     const { breweryId } = req.params;
 
-    if (!isValidUuid) {
+    if (!isValidUuid(breweryId)) {
       throw new ServerError(
         'Could not delete a brewery with that id as it is invalid',
         400,
       );
     }
 
-    const breweryToDelete = await Brewery.findOne({
-      where: { id: breweryId },
-    });
+    const breweryToDelete = await Brewery.findOne({ where: { id: breweryId } });
 
     if (!breweryToDelete) {
       throw new ServerError(

@@ -1,9 +1,9 @@
-import { validate as isValidUuid } from 'uuid';
 import AppDataSource from '../../../database/AppDataSource';
 
 import Brewery from '../../../database/model/Brewery';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
+import isValidUuid from '../../../util/validation/isValidUuid';
 import { BreweryByIdRequestHandler } from '../types/RequestHandlers';
 
 /**

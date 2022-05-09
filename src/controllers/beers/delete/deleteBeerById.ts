@@ -1,4 +1,4 @@
-import { validate as isValidUUID } from 'uuid';
+import isValidUuid from '../../../util/validation/isValidUuid';
 import { BeerByIdRequestHandler } from '../@types/RequestHandlers';
 import Beer from '../../../database/model/Beer';
 import ServerError from '../../../util/error/ServerError';
@@ -8,7 +8,7 @@ const deleteBeerById: BeerByIdRequestHandler = async (req, res, next) => {
   try {
     const { beerId } = req.params;
 
-    if (!isValidUUID(beerId)) {
+    if (!isValidUuid(beerId)) {
       throw new ServerError(
         'Could not delete the beer with that id as it is invalid',
         400,

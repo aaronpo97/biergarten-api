@@ -1,13 +1,16 @@
 import Brewery from '../../../database/model/Brewery';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
+import isValidUuid from '../../../util/validation/isValidUuid';
 import { UpdateBreweryRequestHandler } from '../types/RequestHandlers';
 
+
+/** Business logic for updating a brewery by its id. Takes in the brewery id as the req params. */
 const updateBreweryById: UpdateBreweryRequestHandler = async (req, res, next) => {
   try {
     const { breweryId } = req.params;
 
-    if (Number.isNaN(breweryId)) {
+    if (!isValidUuid(breweryId)) {
       throw new ServerError(
         'Could not update the brewery with that id as it is invalid.',
         400,

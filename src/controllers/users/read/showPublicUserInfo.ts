@@ -3,11 +3,19 @@ import Beer from '../../../database/model/Beer';
 import User from '../../../database/model/User';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
+import isValidUuid from '../../../util/validation/isValidUuid';
 import { UserRequestHandler } from '../types/RequestHandler';
 
 const showPublicUserInfo: UserRequestHandler = async (req, res, next) => {
   try {
     const { userId } = req.params;
+
+    if (!isValidUuid(userId)) {
+      throw new ServerError(
+        'Could not access the public user info for a user with that id as it is invalid.',
+        400,
+      );
+    }
     const queriedUser = await AppDataSource.getRepository(User)
       .createQueryBuilder()
       .select(['user.username', 'user.email'])
