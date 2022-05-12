@@ -8,7 +8,20 @@ import Beer from '../../../database/model/Beer';
 import Brewery from '../../../database/model/Brewery';
 import User from '../../../database/model/User';
 
-/** Business logic for creating a new brewery. */
+/**
+ * Business logic for creating a new brewery.
+ *
+ * The request body must contain a description, a name, an abv value, ibu value, the beer
+ * type, as well as the brewery id. If those are not provided, the server will send status
+ * code 400 with a message saying that not all required fields were given.
+ *
+ * In the case that the brewery id provided is not a valid UUID, the server will also
+ * return a code 400 saying that the id is invalid.
+ *
+ * In the case that the brewery id is valid, but a brewery could not be found with the id,
+ * the server will send code 404 saying that a brewery with the given id could not be
+ * found, and therefore it could not create the beer resource.
+ */
 
 const createNewBeer: CreateBeerRequestHandler = async (req, res, next): Promise<void> => {
   try {

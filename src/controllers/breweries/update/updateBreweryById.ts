@@ -4,8 +4,12 @@ import SuccessResponse from '../../../util/response/SuccessResponse';
 import isValidUuid from '../../../util/validation/isValidUuid';
 import { UpdateBreweryRequestHandler } from '../types/RequestHandlers';
 
-
-/** Business logic for updating a brewery by its id. Takes in the brewery id as the req params. */
+/**
+ * Business logic for updating a brewery by its id.
+ *
+ * Takes in the brewery id as the req params. If the brewery id is not a valid UUID it
+ * will throw ServerError with code 400.
+ */
 const updateBreweryById: UpdateBreweryRequestHandler = async (req, res, next) => {
   try {
     const { breweryId } = req.params;

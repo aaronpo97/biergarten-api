@@ -1,4 +1,3 @@
-
 import { getCommentByIdT } from '../types/RequestHandlers';
 
 import AppDataSource from '../../../database/AppDataSource';

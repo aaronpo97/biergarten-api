@@ -5,6 +5,12 @@ import SuccessResponse from '../../../util/response/SuccessResponse';
 import isValidUuid from '../../../util/validation/isValidUuid';
 import { UserRequestHandler } from '../types/RequestHandler';
 
+/**
+ * Business logic to delete a user by its id.
+ *
+ * Takes in the user id as a request parameter. Will throw an error if the user id is not
+ * provided, or if the user id is an invalid UUID.
+ */
 const deleteUserById: UserRequestHandler = async (req, res, next) => {
   try {
     const { userId } = req.params;

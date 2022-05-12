@@ -18,6 +18,9 @@ export default class BeerComment extends BaseEntity {
   commentBody!: string;
 
   @Column()
+  rating!: number;
+
+  @Column()
   postedDate!: Date;
 
   @ManyToOne(() => Beer, (beer) => beer.comments)

@@ -6,6 +6,13 @@ import SuccessResponse from '../../../util/response/SuccessResponse';
 import isValidUuid from '../../../util/validation/isValidUuid';
 import { UserRequestHandler } from '../types/RequestHandler';
 
+/**
+ * Business logic for showing the public information of a given user.
+ *
+ * The route takes the user id as a request parameter and will throw an error code 400 if
+ * the given id is not a valid UUID. If the given id is a valid UUID but a user could not
+ * be found, the server will return error status code 400.
+ */
 const showPublicUserInfo: UserRequestHandler = async (req, res, next) => {
   try {
     const { userId } = req.params;

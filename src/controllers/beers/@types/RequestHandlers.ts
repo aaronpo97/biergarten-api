@@ -42,13 +42,13 @@ export type BeerByIdRequestHandler = RequestHandler<
  */
 export type BeerRequestHandler = RequestHandler<
   /** Request params */
-  ParamsDictionary,
+  {},
   /** Response body */
   {},
   /** Request body */
   {},
   /** Request query */
-  { page_num: string; page_size: string }
+  { page_num?: string; page_size?: string }
 >;
 
 /**

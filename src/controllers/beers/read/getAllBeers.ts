@@ -17,8 +17,8 @@ import AppDataSource from '../../../database/AppDataSource';
 
 const getAllBeers: BeerRequestHandler = async (req, res, next): Promise<void> => {
   try {
-    const pageNum = Math.abs(parseInt(req.query.page_num, 10) || 1);
-    const pageSize = Math.abs(parseInt(req.query.page_size, 10) || 5);
+    const pageNum = Math.abs(parseInt(req.query.page_num || '1', 10));
+    const pageSize = Math.abs(parseInt(req.query.page_size || '5', 10));
 
     /** @todo Fix this query so user details are not exposed. */
     const allBeers = await AppDataSource.getRepository(Beer)

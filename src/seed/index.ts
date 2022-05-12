@@ -19,7 +19,7 @@ const beerPromises: Array<Promise<Beer>> = [];
   await AppDataSource.initialize();
 
   await AppDataSource.manager.query(
-    `TRUNCATE TABLE "user", profile, beer, brewery, comment`,
+    `TRUNCATE TABLE "user", profile, beer, brewery, beer_comment`,
   );
 
   logger.info(
