@@ -4,7 +4,7 @@ import User from '../../../database/model/User';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 import isValidUuid from '../../../util/validation/isValidUuid';
-import { UserRequestHandler } from '../types/RequestHandler';
+import { UserRequestHandler } from '../types/RequestHandlers';
 
 /**
  * Business logic for showing the public information of a given user.

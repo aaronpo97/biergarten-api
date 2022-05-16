@@ -12,13 +12,13 @@ export type CreateBeerRequestHandler = RequestHandler<
   {},
   /** Request body */
   {
-    beerId: string;
-    name: string;
-    description: string;
-    abv: number;
-    ibu: number;
-    breweryId: string;
-    type: string;
+    beerId?: string;
+    name?: string;
+    description?: string;
+    abv?: number;
+    ibu?: number;
+    breweryId?: string;
+    type?: string;
   }
 >;
 

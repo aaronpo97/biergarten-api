@@ -5,7 +5,7 @@ import {
 import ServerError from '../../../util/error/ServerError';
 import User from '../../../database/model/User';
 import SuccessResponse from '../../../util/response/SuccessResponse';
-import { LoginUserRequestHandler } from '../types/RequestHandler';
+import { LoginUserRequestHandler } from '../types/RequestHandlers';
 import { checkIfValidPassword } from '../../../util/auth/passwordFns';
 
 /**

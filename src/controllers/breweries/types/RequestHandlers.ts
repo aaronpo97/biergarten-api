@@ -1,4 +1,4 @@
-import { RequestHandler, ParamsDictionary } from 'express-serve-static-core';
+import { RequestHandler } from 'express-serve-static-core';
 
 /**
  * Instance of interface RequestHandler.
@@ -55,5 +55,5 @@ export type CreateBreweryRequestHandler = RequestHandler<
   /** Request body */
   {},
   /** Response body */
-  { description: string; name: string; location: string }
+  { description?: string; name?: string; location?: string }
 >;

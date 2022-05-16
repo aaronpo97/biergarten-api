@@ -27,7 +27,7 @@ const createNewBeer: CreateBeerRequestHandler = async (req, res, next): Promise<
   try {
     const { description, name, abv, ibu, breweryId, type } = req.body;
 
-    if (!(name && description && abv && ibu && breweryId))
+    if (!(name && description && abv && ibu && breweryId && type))
       throw new ServerError('Missing params in request body.', 400);
 
     const breweryIdIsValid = checkIfValidUuid(breweryId);

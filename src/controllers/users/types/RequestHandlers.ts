@@ -27,10 +27,10 @@ export type RegisterUserRequestHandler = RequestHandler<
   {},
   /** Request body */
   {
-    username: string;
-    email: string;
-    dateOfBirth: string;
-    password: string;
+    username?: string;
+    email?: string;
+    dateOfBirth?: string;
+    password?: string;
   }
 >;
 

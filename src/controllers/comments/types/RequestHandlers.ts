@@ -12,7 +12,7 @@ export type createNewCommentT = RequestHandler<
   /** Response body */
   {},
   /** Request body */
-  { comment: string }
+  { comment?: string }
 >;
 
 /**
@@ -53,5 +53,5 @@ export type editCommentByIdT = RequestHandler<
   /** Response body */
   {},
   /** Request body */
-  { commentEdits: string }
+  { commentEditBody?: string }
 >;
