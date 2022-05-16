@@ -7,6 +7,11 @@ import isValidUuid from '../../../util/validation/isValidUuid';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 
+/**
+ * Business logic for deleting a comment by its id. 
+ * 
+* Will throw an error 400 if the the given comment id is invalid or the comment could not be found.
+ */
 const deleteCommentById: getCommentByIdT = async (req, res, next) => {
   try {
     const { commentId } = req.params;

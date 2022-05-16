@@ -17,7 +17,7 @@ const createNewBrewery: CreateBreweryRequestHandler = async (
     if (!(name && description && location)) {
       throw new ServerError('Missing params in request body.', 400);
     }
-    const newBrewery = Brewery.create();
+    const newBrewery = new Brewery()
 
     newBrewery.description = description;
     newBrewery.name = name;

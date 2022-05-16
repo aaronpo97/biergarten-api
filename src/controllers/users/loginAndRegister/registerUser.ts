@@ -5,7 +5,7 @@ import { hashPassword } from '../../../util/auth/passwordFns';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 
-import { RegisterUserRequestHandler } from '../types/RequestHandler';
+import { RegisterUserRequestHandler } from '../types/RequestHandlers';
 
 /**
  * Business logic for registering a user.
@@ -15,6 +15,7 @@ import { RegisterUserRequestHandler } from '../types/RequestHandler';
  * will throw an error if true. Invokes a function to hash the given password with its
  * returned value (i.e. the hashed password) being stored in the database.
  */
+
 const registerUser: RegisterUserRequestHandler = async (req, res, next) => {
   try {
     const { username, email, dateOfBirth, password } = req.body;

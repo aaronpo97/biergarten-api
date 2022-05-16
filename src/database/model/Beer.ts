@@ -8,6 +8,7 @@ import {
   JoinColumn,
   ManyToMany,
 } from 'typeorm';
+
 import BeerComment from './BeerComment';
 import Brewery from './Brewery';
 

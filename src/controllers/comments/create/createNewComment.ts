@@ -1,10 +1,16 @@
-import { validate as isValidUuid } from 'uuid';
+
 import Beer from '../../../database/model/Beer';
 import BeerComment from '../../../database/model/BeerComment';
 import User from '../../../database/model/User';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
+import isValidUuid from '../../../util/validation/isValidUuid';
 import { createNewCommentT } from '../types/RequestHandlers';
+
+
+/**
+ * Business logic for creating a new beer post comment. Takes in the beer
+ */
 
 const createNewComment: createNewCommentT = async (req, res, next) => {
   try {
