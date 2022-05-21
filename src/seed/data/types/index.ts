@@ -9,7 +9,7 @@ export interface IRawBreweryData {
   name: string;
   description: string;
   location: string;
-  beers: readonly IRawBeerData[]
+  beers: readonly IRawBeerData[];
 }
 export interface IRawFakeUserData {
   username: string;

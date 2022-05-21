@@ -12,7 +12,7 @@ export type createNewCommentT = RequestHandler<
   /** Response body */
   {},
   /** Request body */
-  { comment?: string }
+  { comment?: string; rating?: number }
 >;
 
 /**
@@ -47,6 +47,11 @@ export type getCommentByIdT = RequestHandler<
   {}
 >;
 
+/**
+ * Instance of Request handler.
+ *
+ * Takes in the comment id and the comment edit body as part of the request body.
+ */
 export type editCommentByIdT = RequestHandler<
   /** Request params */
   { commentId: string },

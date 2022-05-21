@@ -23,6 +23,9 @@ export default class BeerComment extends BaseEntity {
   @Column()
   postedDate!: Date;
 
+  @Column({ nullable: true, type: 'timestamp' })
+  editedDate!: Date;
+
   @ManyToOne(() => Beer, (beer) => beer.comments)
   @JoinColumn()
   beerPost!: Beer;

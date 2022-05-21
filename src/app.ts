@@ -13,16 +13,15 @@ import teapotRoute from './routes/teapotRoute';
 
 import { sendErrorResponse, sendSuccessResponse } from './middleware/response';
 import userRoutes from './routes/userRoutes';
-import commentRoutes from './routes/commentRoutes';
+import beerCommentRoutes from './routes/beerCommentRoutes';
 
 const app = express();
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 
-app.get('/teapot', teapotRoute);
 app.get('/api/teapot', teapotRoute);
-app.use('/api/beers/:beerId/comments', commentRoutes);
+app.use('/api/beers/:beerId/comments', beerCommentRoutes);
 app.use('/api/beers/', beerRoutes);
 
 app.use('/api/breweries/', breweryRoutes);

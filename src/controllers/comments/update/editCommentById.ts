@@ -40,6 +40,7 @@ const editCommentById: editCommentByIdT = async (req, res, next) => {
     }
 
     commentToEdit.commentBody = commentEditBody;
+    commentToEdit.editedDate = new Date(Date.now());
 
     await commentToEdit.save();
   } catch (error) {
