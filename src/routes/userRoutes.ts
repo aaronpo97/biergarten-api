@@ -35,10 +35,10 @@ userRoutes
 userRoutes
   .route('/confirm-user')
   .put(checkTokens, getCurrentUser, confirmUser)
-  // .all((req, res, next) => {
-  //   res.set('Allow', 'PUT');
-  //   next(new ServerError('Not allowed', 405));
-  // });
+  .all((req, res, next) => {
+    res.set('Allow', 'PUT');
+    next(new ServerError('Not allowed', 405));
+  });
   
 userRoutes
   .route('/:userId')
