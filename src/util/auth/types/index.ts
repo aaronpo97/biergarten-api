@@ -1,5 +1,11 @@
 /* eslint-disable no-unused-vars */
 import User from '../../../database/model/User';
+
+/** This is the interface that represents the data that is encoded into each token. */
+export interface TokenInterface {
+  audience: string;
+}
+
 /**
  * Typing for the generateAccessToken function.
  *
@@ -14,9 +20,13 @@ export type generateAccessTokenFn = (refreshToken: string) => Promise<string>;
  */
 export type generateRefreshTokenFn = (user: User) => Promise<string>;
 
-export interface TokenInterface {
-  audience: string;
-}
+/**
+ * Typing for the generateConfirmationToken function.
+ *
+ * Takes in the user object as a parameter and returns a confirmationToken wrapped in a promise.
+ */
+
+export type generateConfirmationTokenFn = (user: User) => Promise<string>;
 
 /**
  * Typing for the hash password function.

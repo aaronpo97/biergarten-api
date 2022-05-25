@@ -10,6 +10,7 @@ const createFakeUser = async (rawUserData: IRawFakeUserData) => {
   fakeUser.email = email;
   fakeUser.dateOfBirth = dateOfBirth;
   fakeUser.joinedDate = new Date(Date.now());
+  fakeUser.accountConfirmed = true;
   fakeUser.hash = await hashPassword('password');
 
   await fakeUser.save();

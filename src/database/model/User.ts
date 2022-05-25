@@ -23,6 +23,9 @@ export default class User extends BaseEntity {
   @Column({ unique: true })
   email!: string;
 
+  @Column()
+  accountConfirmed!: boolean;
+
   @Column({ type: 'date' })
   dateOfBirth!: string;
 

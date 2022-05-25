@@ -8,6 +8,7 @@ const createAdminUser = async () => {
   adminUser.dateOfBirth = '01/01/2000';
   adminUser.joinedDate = new Date(Date.now());
   adminUser.username = 'admin';
+  adminUser.accountConfirmed = true;
   adminUser.hash = await hashPassword('password');
   await adminUser.save();
 
