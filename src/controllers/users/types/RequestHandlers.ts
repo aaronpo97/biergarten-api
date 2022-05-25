@@ -1,4 +1,4 @@
-import { ParamsDictionary, RequestHandler } from 'express-serve-static-core';
+import { RequestHandler } from 'express-serve-static-core';
 
 /**
  * Instance of RequestHandler.
@@ -46,4 +46,18 @@ export type UserRequestHandler = RequestHandler<
   {},
   /** Request body */
   {}
+>;
+
+/**
+ * Instance of RequestHandler.
+ *
+ * For the confirm user request. Expects a confirmation token in the request body.
+ */
+export type confirmUserFn = RequestHandler<
+  /** Request params */
+  {},
+  /** Response body */
+  {},
+  /** Request body */
+  { confirmationToken?: string }
 >;

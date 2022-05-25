@@ -3,6 +3,7 @@ import 'dotenv/config';
 import jwt from 'jsonwebtoken';
 import {
   generateAccessTokenFn,
+  generateConfirmationTokenFn,
   generateRefreshTokenFn,
   TokenInterface,
 } from './types/index';
@@ -10,7 +11,7 @@ import {
 import User from '../../database/model/User';
 import ServerError from '../error/ServerError';
 
-const { REFRESH_TOKEN_SECRET, ACCESS_TOKEN_SECRET } = env;
+const { REFRESH_TOKEN_SECRET, ACCESS_TOKEN_SECRET, CONFIRMATION_TOKEN_SECRET } = env;
 
 /**
  * Helper function to generate refresh tokens.
@@ -54,6 +55,26 @@ export const generateAccessToken: generateAccessTokenFn = async (refreshToken) =
   } catch (error) {
     if (error instanceof Error && error.name === 'TokenExpiredError') {
       throw new ServerError('Your refresh token is expired.', 401);
+    }
+    throw error;
+  }
+};
+
+export const generateConfirmationToken: generateConfirmationTokenFn = async (user) => {
+  try {
+    if (!CONFIRMATION_TOKEN_SECRET) {
+      throw new Error(
+        'A confirmation token secret was not found as an environment variable.',
+      );
+    }
+    const token = jwt.sign({ audience: user.id }, CONFIRMATION_TOKEN_SECRET, {
+      expiresIn: '30m',
+    });
+
+    return token;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new ServerError(error.message, 400);
     }
     throw error;
   }

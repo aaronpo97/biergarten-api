@@ -1,16 +1,15 @@
 import 'dotenv/config';
-import { RequestHandler, Request } from 'express-serve-static-core';
 
 import { generateAccessToken } from '../../util/auth/generateTokens';
 import ServerError from '../../util/error/ServerError';
-import logger from '../../util/logger';
-import verifyAccessToken from './util/verifyAccessToken';
+import { MiddlewareFn } from './types/authMiddlewareTypes';
+import { verifyAccessToken } from '../../util/auth/verifyTokenHelperFns';
 
 /**
  * Middleware to first check an access token to see if it is valid, and if it is expired,
  * will trigger a function to regenerate the access token with the given refresh token.
  */
-const checkTokens: RequestHandler<{}, {}, {}> = async (req, res, next) => {
+const checkTokens: MiddlewareFn = async (req, res, next) => {
   try {
     const accessToken = req.headers['x-access-token'] as string | undefined;
     if (!accessToken) {
@@ -26,6 +25,8 @@ const checkTokens: RequestHandler<{}, {}, {}> = async (req, res, next) => {
 
     // @ts-expect-error
     req.decodedAccessToken = decodedAccessToken;
+
+next()
   } catch (error) {
     try {
       if (error instanceof Error && error.name === 'TokenExpiredError') {

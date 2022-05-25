@@ -1,3 +1,4 @@
+import { generateConfirmationToken } from "../../../util/auth/generateTokens";
 import AppDataSource from '../../../database/AppDataSource';
 import User from '../../../database/model/User';
 import { checkIfUserExists } from '../../../util/auth/checkUserFns';
@@ -42,13 +43,16 @@ const registerUser: RegisterUserRequestHandler = async (req, res, next) => {
     userToRegister.dateOfBirth = dateOfBirth;
     userToRegister.joinedDate = new Date(Date.now());
     userToRegister.hash = hash;
+    userToRegister.accountConfirmed = false;
 
     await AppDataSource.manager.save(userToRegister);
 
-    const successResponse = new SuccessResponse<User>(
+    const confirmationToken = await generateConfirmationToken(userToRegister)
+
+    const successResponse = new SuccessResponse<{registeredUser: User, confirmationToken: string}>(
       'Successfully registered user.',
       201,
-      userToRegister,
+      {registeredUser: userToRegister, confirmationToken},
     );
 
     next(successResponse);

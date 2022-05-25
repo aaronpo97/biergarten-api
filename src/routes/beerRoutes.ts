@@ -5,7 +5,7 @@ import deleteBeerById from '../controllers/beers/delete/deleteBeerById';
 import getAllBeers from '../controllers/beers/read/getAllBeers';
 import getBeerById from '../controllers/beers/read/getBeerById';
 import updateBeerById from '../controllers/beers/update/updateBeerById';
-import checkIfResourceOwner from '../middleware/auth/checkIfResourceOwner';
+import checkIfUserIsConfirmed from '../middleware/auth/checkIfUserIsConfirmed';
 import checkTokens from '../middleware/auth/checkTokens';
 import getCurrentUser from '../middleware/auth/getCurrentUser';
 import ServerError from '../util/error/ServerError';
@@ -16,7 +16,7 @@ const beerRoutes = express.Router();
 beerRoutes
   .route('/')
   .get(getAllBeers)
-  .post(checkTokens, getCurrentUser, createNewBeer)
+  .post(checkTokens, getCurrentUser, checkIfUserIsConfirmed, createNewBeer)
   .all((req, res, next) => {
     res.set('Allow', 'GET, POST');
     next(new ServerError('Not allowed', 405));
@@ -24,7 +24,7 @@ beerRoutes
 
 beerRoutes
   .route('/:beerId/')
-  .get(checkTokens, getCurrentUser, checkIfResourceOwner, getBeerById)
+  .get(checkTokens, getCurrentUser, getBeerById)
   .put(updateBeerById)
   .delete(deleteBeerById)
   .all((req, res, next) => {
