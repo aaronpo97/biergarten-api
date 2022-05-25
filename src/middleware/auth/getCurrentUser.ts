@@ -13,7 +13,7 @@ const getCurrentUser: MiddlewareFn = async (req, res, next) => {
   const currentUser = await User.findOne({
     // @ts-expect-error
     where: { id: req.decodedAccessToken.audience },
-    select: ['id', 'username', 'email', 'joinedDate'],
+    select: ['id', 'username', 'email', 'joinedDate', 'accountConfirmed'],
   });
   if (!currentUser) {
     throw new ServerError(

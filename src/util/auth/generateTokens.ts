@@ -68,7 +68,7 @@ export const generateConfirmationToken: generateConfirmationTokenFn = async (use
       );
     }
     const token = jwt.sign({ audience: user.id }, CONFIRMATION_TOKEN_SECRET, {
-      expiresIn: '43200m',
+      expiresIn: '30m',
     });
 
     return token;
