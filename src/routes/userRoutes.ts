@@ -39,7 +39,7 @@ userRoutes
     res.set('Allow', 'PUT');
     next(new ServerError('Not allowed', 405));
   });
-  
+
 userRoutes
   .route('/:userId')
   .get(showPublicUserInfo)
