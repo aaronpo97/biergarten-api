@@ -26,7 +26,7 @@ const checkTokens: MiddlewareFn = async (req, res, next) => {
     // @ts-expect-error
     req.decodedAccessToken = decodedAccessToken;
 
-next()
+    next();
   } catch (error) {
     try {
       if (error instanceof Error && error.name === 'TokenExpiredError') {

@@ -29,6 +29,6 @@ export const verifyConfirmationToken = async (confirmationToken: string) => {
     confirmationToken,
     CONFIRMATION_TOKEN_SECRET,
   ) as string;
-  
+
   return decodedConfirmationToken;
 };

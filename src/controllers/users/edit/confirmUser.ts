@@ -26,10 +26,9 @@ const confirmUser: confirmUserFn = async (req, res, next) => {
         500,
       );
     }
-    
+
     // @ts-expect-error
     const currentUser = req.currentUser as User;
-
 
     if (currentUser.accountConfirmed) {
       throw new ServerError('Your account is already confirmed.', 400);
@@ -40,14 +39,17 @@ const confirmUser: confirmUserFn = async (req, res, next) => {
     currentUser.accountConfirmed = true;
     await currentUser.save();
 
-
-    const successResponse = new SuccessResponse("Successfully confirmed user.", 200, currentUser)
-    next(successResponse)
+    const successResponse = new SuccessResponse(
+      'Successfully confirmed user.',
+      200,
+      currentUser,
+    );
+    next(successResponse);
   } catch (err) {
     if (err instanceof Error) {
       next(err);
     }
-  
+
     next(new ServerError('Something went wrong', 500));
   }
 };

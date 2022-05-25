@@ -1,4 +1,4 @@
-import { generateConfirmationToken } from "../../../util/auth/generateTokens";
+import { generateConfirmationToken } from '../../../util/auth/generateTokens';
 import AppDataSource from '../../../database/AppDataSource';
 import User from '../../../database/model/User';
 import { checkIfUserExists } from '../../../util/auth/checkUserFns';
@@ -47,13 +47,15 @@ const registerUser: RegisterUserRequestHandler = async (req, res, next) => {
 
     await AppDataSource.manager.save(userToRegister);
 
-    const confirmationToken = await generateConfirmationToken(userToRegister)
+    const confirmationToken = await generateConfirmationToken(userToRegister);
 
-    const successResponse = new SuccessResponse<{registeredUser: User, confirmationToken: string}>(
-      'Successfully registered user.',
-      201,
-      {registeredUser: userToRegister, confirmationToken},
-    );
+    const successResponse = new SuccessResponse<{
+      registeredUser: User;
+      confirmationToken: string;
+    }>('Successfully registered user.', 201, {
+      registeredUser: userToRegister,
+      confirmationToken,
+    });
 
     next(successResponse);
   } catch (e) {
