@@ -42,6 +42,7 @@ const registerUser: RegisterUserRequestHandler = async (req, res, next) => {
     userToRegister.dateOfBirth = dateOfBirth;
     userToRegister.joinedDate = new Date(Date.now());
     userToRegister.hash = hash;
+    userToRegister.accountConfirmed = false;
 
     await AppDataSource.manager.save(userToRegister);
 

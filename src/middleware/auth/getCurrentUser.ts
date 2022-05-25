@@ -2,12 +2,9 @@ import { RequestHandler } from 'express-serve-static-core';
 import User from '../../database/model/User';
 import ServerError from '../../util/error/ServerError';
 import logger from '../../util/logger';
+import { MiddlewareFn } from './types/authMiddlewareTypes';
 
-const getCurrentUser: RequestHandler<unknown, unknown, unknown> = async (
-  req,
-  res,
-  next,
-) => {
+const getCurrentUser: MiddlewareFn = async (req, res, next) => {
   /**
    * @todo Append req.decoded and req.currentUser onto the request object to avoid any
    *   future type errors from the typescript compiler.
