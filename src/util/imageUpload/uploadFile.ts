@@ -1,16 +1,32 @@
 import multer from 'multer';
-import path from 'path';
 
-const localStorage = multer.diskStorage({
-  destination(req, file, cb) {
-    cb(null, `${__dirname}/../../../tmp`);
-  },
-  filename(req, file, cb) {
-    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 10000000)}`;
-    cb(null, `${file.fieldname}-${uniqueSuffix}${path.extname(file.originalname)}`);
-  },
-});
+/* eslint-disable camelcase */
+import { v2 as cloudinary } from 'cloudinary';
+import { CloudinaryStorage } from 'multer-storage-cloudinary';
 
-const uploadFile = multer({ storage: localStorage });
+import dotenv from 'dotenv';
+import ServerError from '../error/ServerError';
+
+dotenv.config();
+
+const {
+  CLOUDINARY_CLOUD_NAME: cloud_name,
+  CLOUDINARY_KEY: api_key,
+  CLOUDINARY_SECRET: api_secret,
+} = process.env;
+
+if (!(cloud_name && api_key && api_secret)) {
+  throw new ServerError(
+    'The cloudinary credentials were not found in the environment variables.',
+    500,
+  );
+}
+
+cloudinary.config({ cloud_name, api_key, api_secret });
+
+// @ts-expect-error
+const storage = new CloudinaryStorage({ cloudinary, params: { folder: 'BeerApp' } });
+
+const uploadFile = multer({ storage });
 
 export default uploadFile;

@@ -1,6 +1,7 @@
 import { Express } from 'express-serve-static-core';
 import Beer from '../../../database/model/Beer';
 import BeerImage from '../../../database/model/BeerImage';
+import User from '../../../database/model/User';
 import ServerError from '../../../util/error/ServerError';
 
 import SuccessResponse from '../../../util/response/SuccessResponse';
@@ -16,7 +17,7 @@ const processImageData: ProcessImageDataFn = async (req, res, next) => {
     }
     const files = req.files as Express.Multer.File[] | undefined;
 
-    if (!files || !files.length) {
+    if (!files?.length) {
       throw new ServerError('Nothing was provided to the file uploader.', 400);
     }
 
@@ -31,10 +32,13 @@ const processImageData: ProcessImageDataFn = async (req, res, next) => {
 
     const imagePromises: Array<Promise<BeerImage>> = [];
 
+    //  @ts-expect-error
+    const currentUser = req.currentUser as User;
     files.forEach((file) => {
       const beerImage = new BeerImage();
       beerImage.path = file.path;
       beerImage.beerPost = beerPost;
+      beerImage.author = currentUser;
       imagePromises.push(beerImage.save());
     });
 
