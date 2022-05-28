@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 
 import BeerComment from './BeerComment';
+import BeerImage from './BeerImage';
 import Brewery from './Brewery';
 
 import Profile from './Profile';
@@ -49,4 +50,7 @@ export default class Beer extends BaseEntity {
 
   @OneToMany(() => BeerComment, (beerComment) => beerComment.beerPost)
   comments!: Array<BeerComment>;
+
+  @OneToMany(() => BeerImage, (beerImage) => beerImage.beerPost)
+  images!: Array<BeerImage>;
 }

@@ -1,7 +1,6 @@
-import { RequestHandler } from 'express-serve-static-core';
 import User from '../../database/model/User';
 import ServerError from '../../util/error/ServerError';
-import logger from '../../util/logger';
+
 import { MiddlewareFn } from './types/authMiddlewareTypes';
 
 const getCurrentUser: MiddlewareFn = async (req, res, next) => {
@@ -24,8 +23,6 @@ const getCurrentUser: MiddlewareFn = async (req, res, next) => {
 
   // @ts-expect-error
   req.currentUser = currentUser;
-
-  logger.info(currentUser);
 
   next();
 };
