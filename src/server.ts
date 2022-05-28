@@ -26,7 +26,7 @@ app.listen(port, () => {
     .catch((e) => {
       if (e instanceof Error) {
         logger.error(`Could not initialize app.\nReason:\n${e.message}\n${e.stack}`);
-        exit(1);
       }
+      exit(1);
     });
 });
