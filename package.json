@@ -1,6 +1,6 @@
 {
-  "name": "biergarten-app-v2",
-  "version": "1.0.0",
+  "name": "biergarten-api",
+  "version": "0.0.1",
   "description": "",
   "main": "./dist/server.js",
   "scripts": {
@@ -14,9 +14,10 @@
     "format": "npx prettier --write .",
     "seed": "npx ts-node ./src/seed/index.ts"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["beer", "biergarten", "api", "rest"],
+  "author": "Aaron William Po",
+  "private":true,
+  "license": "LGPL-2.1",
   "engines": {
     "node": ">=16.0.0"
   },
@@ -33,15 +34,17 @@
   "dependencies": {
     "argon2": "^0.28.5",
     "body-parser": "^1.20.0",
+    "cloudinary": "^1.30.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
-    "express": "^4.18.1",
     "express-pino-logger": "^7.0.0",
+    "express": "^4.18.1",
     "jsonwebtoken": "^8.5.1",
-    "multer": "^1.4.4",
+    "multer-storage-cloudinary": "^4.0.0",
+    "multer": "1.4.4-lts.1",
     "pg": "^8.7.3",
-    "pino": "^7.11.0",
     "pino-pretty": "^7.6.1",
+    "pino": "^7.11.0",
     "reflect-metadata": "^0.1.13",
     "sparkpost": "^2.1.4",
     "typeorm": "^0.3.6",
@@ -49,9 +52,9 @@
   },
   "devDependencies": {
     "@jest/globals": "^28.0.2",
-    "@types/express": "^4.17.13",
     "@types/express-pino-logger": "^4.0.3",
     "@types/express-serve-static-core": "^4.17.28",
+    "@types/express": "^4.17.13",
     "@types/jest": "^27.4.1",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/morgan": "^1.9.3",
@@ -62,18 +65,26 @@
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.20.0",
     "@typescript-eslint/parser": "^5.20.0",
-    "eslint": "^8.13.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "eslint": "^8.13.0",
     "jest": "^28.1.0",
     "nodemon": "^2.0.15",
-    "prettier": "^2.6.2",
     "prettier-plugin-jsdoc": "^0.3.38",
+    "prettier": "^2.6.2",
     "supertest": "^6.2.3",
     "ts-jest": "^28.0.0",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.3"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aaronpo97/biergartenAPI-v2.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aaronpo97/biergartenAPI-v2/issues"
+  },
+  "homepage": "https://github.com/aaronpo97/biergartenAPI-v2#readme"
 }
