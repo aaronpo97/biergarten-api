@@ -5,9 +5,11 @@ import deleteBeerById from '../controllers/beers/delete/deleteBeerById';
 import getAllBeers from '../controllers/beers/read/getAllBeers';
 import getBeerById from '../controllers/beers/read/getBeerById';
 import updateBeerById from '../controllers/beers/update/updateBeerById';
+
 import checkIfUserIsConfirmed from '../middleware/auth/checkIfUserIsConfirmed';
 import checkTokens from '../middleware/auth/checkTokens';
 import getCurrentUser from '../middleware/auth/getCurrentUser';
+
 import ServerError from '../util/error/ServerError';
 
 /** Route handler for '/api/beers'. */
