@@ -10,29 +10,37 @@ import BeerComment from './model/BeerComment';
 import BeerImage from './model/BeerImage';
 
 dotenv.config();
-const {
-  DATABASE_HOST: host,
-  DATABASE_USERNAME: username,
-  DATABASE_PASSWORD: password,
-  DATABASE_PORT,
-  DATABASE_NAME: database,
-} = process.env;
+const { LOCAL_DB_CONNECTION_STRING, CLOUD_DB_CONNECTION_STRING, NODE_ENV } = process.env;
 
-const type = 'postgres';
-const port = parseInt(DATABASE_PORT as string, 10);
+const inProductionMode = NODE_ENV === 'production';
 
-const AppDataSource = new DataSource({
-  type,
-  host,
-  port,
-  username,
-  password,
-  database,
+if (!(CLOUD_DB_CONNECTION_STRING && LOCAL_DB_CONNECTION_STRING)) {
+  throw new Error(
+    'Your database credentials were not provided in the environment variables.',
+  );
+}
+
+const LocalAppDataSource = new DataSource({
+  type: 'postgres',
+  url: LOCAL_DB_CONNECTION_STRING,
   synchronize: true,
   logging: false,
   entities: [Beer, Brewery, User, Profile, BeerComment, BeerImage],
   migrations: [],
   subscribers: [],
 });
+
+const CloudAppDataSource = new DataSource({
+  type: 'cockroachdb',
+  url: CLOUD_DB_CONNECTION_STRING,
+  synchronize: false,
+  logging: false,
+  entities: [Beer, Brewery, User, Profile, BeerComment, BeerImage],
+  migrations: [],
+  subscribers: [],
+  ssl: true,
+});
+
+const AppDataSource = inProductionMode ? CloudAppDataSource : LocalAppDataSource;
 
 export default AppDataSource;
