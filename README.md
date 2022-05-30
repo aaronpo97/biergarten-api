@@ -6,7 +6,7 @@ This is a 'revamped' version of my [Biergarten App](https://github.com/aaronpo97
 
 I am writing this app in an effort to continue learning about Typescript, Node, Express, and Postgres/TypeORM. The idea of writing a beer related app comes from my current job working in the retail operations of a brewery. It just so happens that I really enjoy beer as well!
 
-I aim to rewrite the app using Postgres as my database rather than MongoDB as in the first version. I aim to only rewrite the server code with the aim of possibility of using this API for a mobile application sometime in the future.
+I aim to rewrite the app using Postgres as my database rather than MongoDB as in the first version. I aim to only rewrite the server code with the aim of possibility of using this API for a mobile application sometime in the future. 
 
 This application uses Typescript with the Express framework in addition to TypeORM for the data service layer.
 
@@ -44,11 +44,8 @@ In the same terminal, run the following script to define your development enviro
 
 ```bash
 echo "
-DATABASE_HOST=''
-DATABASE_PORT=''
-DATABASE_USERNAME=''
-DATABASE_PASSWORD=''
-DATABASE_NAME=''
+LOCAL_DB_CONNECTION_STRING=''
+CLOUD_DB_CONNECTION_STRING=''
 
 REFRESH_TOKEN_SECRET=''
 ACCESS_TOKEN_SECRET=''
@@ -65,16 +62,13 @@ BASE_URL='http://localhost'
 
 - Input the credentials to your database, as well as the port you wish to host the app on.
 - Generate a refresh token secret and an access token secret.
-  - I suggest using a password generator set to 64 characters for added security.
+- I suggest using a password generator set to 64 characters for added security.
 
 ##### Example
 
 ```env
-DATABASE_HOST='localhost'
-DATABASE_PORT='5432'
-DATABASE_USERNAME='aaron'
-DATABASE_PASSWORD='password'
-DATABASE_NAME='biergarten'
+LOCAL_DB_CONNECTION_STRING='postgres://{user}:{password}@{hostname}:{port}/{database-name}'
+CLOUD_DB_CONNECTION_STRING='postgres://{user}:{password}@{hostname}:{port}/{database-name}'
 
 REFRESH_TOKEN_SECRET='this_is_a_bad_secret'
 ACCESS_TOKEN_SECRET='tHiS_1s_a_B3ttr_s3crt'
