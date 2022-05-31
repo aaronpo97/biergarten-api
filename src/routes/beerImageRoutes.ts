@@ -4,6 +4,7 @@ import processImageData from '../controllers/beerImages/create/processImageData'
 
 import checkTokens from '../middleware/auth/checkTokens';
 import getCurrentUser from '../middleware/auth/getCurrentUser';
+import checkIfBeerPostOwner from '../middleware/auth/checkIfBeerPostOwner';
 
 import ServerError from '../util/error/ServerError';
 import uploadFile from '../util/imageUpload/uploadFile';
@@ -13,7 +14,13 @@ const beerImageRoutes = express.Router({ mergeParams: true });
 
 beerImageRoutes
   .route('/upload')
-  .post(checkTokens, getCurrentUser, uploadFile.array('beer-image'), processImageData)
+  .post(
+    checkTokens,
+    getCurrentUser,
+    checkIfBeerPostOwner,
+    uploadFile.array('beer-image'),
+    processImageData,
+  )
   .all((req, res, next) => {
     res.set('Allow', 'POST');
     next(new ServerError('Not allowed', 405));

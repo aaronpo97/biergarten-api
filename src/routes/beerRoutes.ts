@@ -18,7 +18,7 @@ const beerRoutes = express.Router();
 beerRoutes
   .route('/')
   .get(getAllBeers)
-  .post(checkTokens, getCurrentUser, checkIfUserIsConfirmed, createNewBeer)
+  .post(checkTokens, getCurrentUser, createNewBeer)
   .all((req, res, next) => {
     res.set('Allow', 'GET, POST');
     next(new ServerError('Not allowed', 405));
