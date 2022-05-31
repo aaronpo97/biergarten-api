@@ -4,6 +4,7 @@ import Brewery from '../../../database/model/Brewery';
 import ErrorResponse from '../../../util/response/ErrorResponse';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
+import User from '../../../database/model/User';
 
 /** Business logic for creating a new brewery. */
 const createNewBrewery: CreateBreweryRequestHandler = async (
@@ -17,11 +18,16 @@ const createNewBrewery: CreateBreweryRequestHandler = async (
     if (!(name && description && location)) {
       throw new ServerError('Missing params in request body.', 400);
     }
+
+    // @ts-expect-error
+    const currentUser = req.currentUser as User;
+
     const newBrewery = new Brewery();
 
     newBrewery.description = description;
     newBrewery.name = name;
     newBrewery.location = location;
+    newBrewery.postedBy = currentUser;
 
     await newBrewery.save();
 

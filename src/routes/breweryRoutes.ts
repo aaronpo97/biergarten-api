@@ -5,6 +5,8 @@ import deleteBreweryById from '../controllers/breweries/delete/deleteBreweryById
 import getAllBreweries from '../controllers/breweries/read/getAllBreweries';
 import getBreweryById from '../controllers/breweries/read/getBreweryById';
 import updateBreweryById from '../controllers/breweries/update/updateBreweryById';
+import checkIfUserIsConfirmed from '../middleware/auth/checkIfUserIsConfirmed';
+import getCurrentUser from '../middleware/auth/getCurrentUser';
 import ServerError from '../util/error/ServerError';
 
 const breweryRoutes = express.Router();
@@ -12,7 +14,7 @@ const breweryRoutes = express.Router();
 breweryRoutes
   .route('/')
   .get(getAllBreweries)
-  .post(createNewBrewery)
+  .post(getCurrentUser, checkIfUserIsConfirmed, createNewBrewery)
   .all((req, res, next) => {
     res.set('Allow', 'GET, POST');
     next(new ServerError('Not allowed', 405));
