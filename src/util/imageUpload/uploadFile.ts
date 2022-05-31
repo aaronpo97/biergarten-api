@@ -27,6 +27,17 @@ cloudinary.config({ cloud_name, api_key, api_secret });
 // @ts-expect-error
 const storage = new CloudinaryStorage({ cloudinary, params: { folder: 'BeerApp' } });
 
-const uploadFile = multer({ storage });
+const uploadFile = multer({
+  storage,
+  fileFilter: (req, file, cb) => {
+    if (!(file.mimetype === 'image/png' || file.mimetype === 'image/jpeg')) {
+      cb(
+        new ServerError('Invalid file type. Only .png and .jpg files are accepted.', 400),
+      );
+    }
+    // Upload the file to cloud service
+    cb(null, true);
+  },
+});
 
 export default uploadFile;
