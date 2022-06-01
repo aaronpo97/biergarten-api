@@ -11,6 +11,8 @@ import Beer from './Beer';
 import BeerComment from './BeerComment';
 import BeerImage from './BeerImage';
 import Brewery from './Brewery';
+import BreweryImage from './BreweryImage';
+import BreweryReview from './BreweryReview';
 import Profile from './Profile';
 
 @Entity()
@@ -51,8 +53,17 @@ export default class User extends BaseEntity {
   @JoinColumn()
   @OneToMany(() => BeerImage, (beerImage) => beerImage.author)
   beerImages!: Array<BeerImage>;
+  
+  @JoinColumn()
+  @OneToMany(() => BreweryImage, (breweryImage) => breweryImage.postedBy)
+  breweryImages!: Array<BreweryImage>;
 
   @JoinColumn()
   @OneToMany(() => BeerComment, (beerComment) => beerComment.postedBy)
   beerComments!: Array<BeerComment>;
+
+  @JoinColumn()
+  @OneToMany(() => BreweryReview, (breweryReview) => breweryReview.postedBy)
+  breweryReviews!: Array<BreweryReview>;
+
 }
