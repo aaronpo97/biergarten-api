@@ -1,10 +1,10 @@
 import { Router } from 'express';
 
-import createNewComment from '../controllers/comments/create/createNewComment';
-import deleteCommentById from '../controllers/comments/delete/deleteCommentById';
-import getAllComments from '../controllers/comments/read/getAllComments';
-import getCommentById from '../controllers/comments/read/getCommentById';
-import editCommentById from '../controllers/comments/update/editCommentById';
+import createNewComment from '../controllers/beer-comments/create/createNewBeerComment';
+import deleteCommentById from '../controllers/beer-comments/delete/deleteBeerCommentById';
+import getAllComments from '../controllers/beer-comments/read/getAllBeerComments';
+import getCommentById from '../controllers/beer-comments/read/getBeerCommentById';
+import editCommentById from '../controllers/beer-comments/update/editBeerCommentById';
 import checkTokens from '../middleware/auth/checkTokens';
 import getCurrentUser from '../middleware/auth/getCurrentUser';
 
