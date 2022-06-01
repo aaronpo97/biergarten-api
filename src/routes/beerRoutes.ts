@@ -27,7 +27,7 @@ beerRoutes
 
 beerRoutes
   .route('/:beerId/')
-  .get(checkTokens, getCurrentUser, getBeerById)
+  .get(getBeerById)
   .put(
     checkTokens,
     getCurrentUser,
