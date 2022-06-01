@@ -14,6 +14,7 @@ import { sendErrorResponse, sendSuccessResponse } from './middleware/response';
 import userRoutes from './routes/userRoutes';
 import beerCommentRoutes from './routes/beerCommentRoutes';
 import beerImageRoutes from './routes/beerImageRoutes';
+import ServerError from './util/error/ServerError';
 
 const app = express();
 
@@ -26,6 +27,10 @@ app.use('/api/beers/', beerRoutes);
 
 app.use('/api/breweries/', breweryRoutes);
 app.use('/api/users/', userRoutes);
+
+app.all('*', () => {
+  throw new ServerError('404 Not Found', 404);
+});
 
 app.use(sendSuccessResponse);
 app.use(sendErrorResponse);
