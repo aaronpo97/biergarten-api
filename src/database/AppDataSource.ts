@@ -10,6 +10,7 @@ import BeerComment from './model/BeerComment';
 import BeerImage from './model/BeerImage';
 import BreweryImage from './model/BreweryImage';
 import BreweryReview from './model/BreweryReview';
+import logger from '../util/logger';
 
 dotenv.config();
 const { LOCAL_DB_CONNECTION_STRING, CLOUD_DB_CONNECTION_STRING, NODE_ENV } = process.env;
@@ -22,7 +23,16 @@ if (!(CLOUD_DB_CONNECTION_STRING && LOCAL_DB_CONNECTION_STRING)) {
   );
 }
 
-const entities = [Beer, Brewery, User, Profile, BeerComment, BeerImage, BreweryImage, BreweryReview];
+const entities = [
+  Beer,
+  Brewery,
+  User,
+  Profile,
+  BeerComment,
+  BeerImage,
+  BreweryImage,
+  BreweryReview,
+];
 
 const LocalAppDataSource = new DataSource({
   type: 'postgres',
@@ -39,7 +49,7 @@ const CloudAppDataSource = new DataSource({
   entities,
   url: CLOUD_DB_CONNECTION_STRING,
   synchronize: false,
-  logging: true,
+  logging: false,
   migrations: [],
   subscribers: [],
   ssl: true,

@@ -35,7 +35,7 @@ export default class Brewery extends BaseEntity {
   beers!: Array<Beer>;
 
   @OneToMany(() => BreweryReview, (breweryReview) => breweryReview.breweryPost)
-  reviews!: Array<BreweryReview>;  
+  reviews!: Array<BreweryReview>;
 
   @JoinColumn()
   @OneToMany(() => BreweryImage, (breweryImage) => breweryImage.breweryPost)

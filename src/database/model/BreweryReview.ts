@@ -28,7 +28,7 @@ export default class BreweryReview extends BaseEntity {
 
   @ManyToOne(() => Brewery, (brewery) => brewery.reviews)
   @JoinColumn()
-  breweryPost!: Brewery
+  breweryPost!: Brewery;
 
   @ManyToOne(() => User, (user) => user.breweryReviews)
   @JoinColumn()

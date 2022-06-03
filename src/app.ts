@@ -14,6 +14,7 @@ import { sendErrorResponse, sendSuccessResponse } from './middleware/response';
 import userRoutes from './routes/userRoutes';
 import beerCommentRoutes from './routes/beerCommentRoutes';
 import beerImageRoutes from './routes/beerImageRoutes';
+import breweryReviewRoutes from './routes/breweryReviewRoutes';
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use('/api/beers/:beerId/comments', beerCommentRoutes);
 app.use('/api/beers/:beerId/images', beerImageRoutes);
 app.use('/api/beers/', beerRoutes);
 
+app.use('/api/breweries/:breweryId/reviews', breweryReviewRoutes);
 app.use('/api/breweries/', breweryRoutes);
 app.use('/api/users/', userRoutes);
 

@@ -1,4 +1,5 @@
 import Brewery from '../../database/model/Brewery';
+import BreweryReview from '../../database/model/BreweryReview';
 import User from '../../database/model/User';
 import { IRawBreweryData } from '../data/types';
 
@@ -10,8 +11,7 @@ const createBrewery = async (brewery: IRawBreweryData, adminUser: User) => {
   breweryToAdd.description = brewery.description;
   breweryToAdd.postedBy = adminUser;
 
-  await breweryToAdd.save();
-  return breweryToAdd;
+  return breweryToAdd.save();
 };
 
 export default createBrewery;

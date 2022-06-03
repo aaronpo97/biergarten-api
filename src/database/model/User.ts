@@ -53,7 +53,7 @@ export default class User extends BaseEntity {
   @JoinColumn()
   @OneToMany(() => BeerImage, (beerImage) => beerImage.author)
   beerImages!: Array<BeerImage>;
-  
+
   @JoinColumn()
   @OneToMany(() => BreweryImage, (breweryImage) => breweryImage.postedBy)
   breweryImages!: Array<BreweryImage>;
@@ -65,5 +65,4 @@ export default class User extends BaseEntity {
   @JoinColumn()
   @OneToMany(() => BreweryReview, (breweryReview) => breweryReview.postedBy)
   breweryReviews!: Array<BreweryReview>;
-
 }
