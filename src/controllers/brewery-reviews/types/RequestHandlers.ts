@@ -7,7 +7,18 @@ export type getAllBreweryReviewsFn = RequestHandler<
   { page_num?: string; page_size?: string }
 >;
 
-export type getBreweryReviewByIdFn = RequestHandler<{
+export type breweryReviewByIdFn = RequestHandler<{
   reviewId: string;
   breweryId: string;
 }>;
+
+export type editBreweryReviewByIdFn = RequestHandler<
+  {
+    reviewId: string;
+    breweryId: string;
+  },
+  {},
+  { reviewBody?: string; rating?: number }
+>;
+
+export type createBreweryReviewFn = editBreweryReviewByIdFn;

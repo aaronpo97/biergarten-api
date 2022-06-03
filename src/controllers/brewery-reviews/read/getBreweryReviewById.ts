@@ -1,16 +1,17 @@
-import { getBreweryReviewByIdFn } from '../types/RequestHandlers';
+import { breweryReviewByIdFn } from '../types/RequestHandlers';
 import BreweryReview from '../../../database/model/BreweryReview';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 import AppDataSource from '../../../database/AppDataSource';
 
-const getBreweryReviewById: getBreweryReviewByIdFn = async (req, res, next) => {
+const getBreweryReviewById: breweryReviewByIdFn = async (req, res, next) => {
   try {
     const { reviewId, breweryId } = req.params;
 
     const breweryReview = await AppDataSource.getRepository(BreweryReview)
       .createQueryBuilder('breweryReview')
       .leftJoinAndSelect('breweryReview.breweryPost', 'brewery')
+      .leftJoinAndSelect('breweryReview.postedBy', 'postedBy')
       .where('breweryReview.breweryPost = :breweryId', { breweryId })
       .andWhere('breweryReview.id = :reviewId', { reviewId })
       .getOne();

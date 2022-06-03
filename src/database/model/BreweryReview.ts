@@ -24,7 +24,7 @@ export default class BreweryReview extends BaseEntity {
   postedDate!: Date;
 
   @Column({ nullable: true, type: 'timestamp' })
-  editedDate!: Date;
+  editedDate!: Date | null;
 
   @ManyToOne(() => Brewery, (brewery) => brewery.reviews)
   @JoinColumn()
