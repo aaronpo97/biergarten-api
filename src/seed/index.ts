@@ -41,9 +41,8 @@ const seedDatabase = async () => {
         logger.info(`Creating brewery ${rawBreweryData.name}`);
         const newBrewery = await createBrewery(rawBreweryData, adminUser);
 
-        for (let i = 0; i < 30; i++) 
+        for (let i = 0; i < 30; i++)
           breweryReviewPromises.push(createBreweryReview(newBrewery, adminUser));
-        
 
         rawBreweryData.beers.forEach((beer) => {
           beerPromises.push(createBeer(beer, newBrewery, adminUser));
