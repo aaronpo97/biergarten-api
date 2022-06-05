@@ -48,9 +48,11 @@ export default class Beer extends BaseEntity {
   @ManyToMany(() => Profile, (profile) => profile.likes)
   likedBy!: Array<Profile>;
 
+  @JoinColumn()
   @OneToMany(() => BeerComment, (beerComment) => beerComment.beerPost)
   comments!: Array<BeerComment>;
 
+  @JoinColumn()
   @OneToMany(() => BeerImage, (beerImage) => beerImage.beerPost)
   images!: Array<BeerImage>;
 }
