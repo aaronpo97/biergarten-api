@@ -18,8 +18,9 @@ import BreweryReview from '../database/model/BreweryReview';
 const userPromises: Array<Promise<User>> = [];
 const beerPromises: Array<Promise<Beer>> = [];
 const breweryReviewPromises: Array<Promise<BreweryReview>> = [];
+const breweryPromises: Array<Promise<void>> = [];
 
-(async () => {
+const seedDatabase = (async () => {
   await AppDataSource.initialize();
 
   await AppDataSource.manager.query(
@@ -35,7 +36,7 @@ const breweryReviewPromises: Array<Promise<BreweryReview>> = [];
   const adminUser = await createAdminUser();
 
   seedData.forEach((rawBreweryData) => {
-    (async () => {
+    breweryPromises.push((async () => {
       logger.info(`Creating brewery ${rawBreweryData.name}`);
       const newBrewery = await createBrewery(rawBreweryData, adminUser);
 
@@ -46,10 +47,14 @@ const breweryReviewPromises: Array<Promise<BreweryReview>> = [];
       rawBreweryData.beers.forEach((beer) => {
         beerPromises.push(createBeer(beer, newBrewery, adminUser));
       });
-    })();
+    })());
   });
-  return Promise.all([...beerPromises, ...userPromises, ...breweryReviewPromises]);
-})().then(() => {
+
+await Promise.all(breweryPromises)
+await Promise.all([...beerPromises, ...userPromises, ...breweryReviewPromises]);
+})
+
+seedDatabase().then(() => {
   logger.info('Database seeded.');
   exit(0);
 });

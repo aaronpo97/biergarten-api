@@ -22,8 +22,8 @@ const createBeer = async (
   beerToAdd.postedBy = adminUser;
 
   logger.info(`creating ${beerToAdd.name}`);
-  await beerToAdd.save();
-  return beerToAdd;
+  return beerToAdd.save();
+
 };
 
 export default createBeer;
