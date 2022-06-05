@@ -23,7 +23,6 @@ const createBeer = async (
 
   logger.info(`creating ${beerToAdd.name}`);
   return beerToAdd.save();
-
 };
 
 export default createBeer;

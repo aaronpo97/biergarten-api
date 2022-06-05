@@ -20,7 +20,7 @@ const beerPromises: Array<Promise<Beer>> = [];
 const breweryReviewPromises: Array<Promise<BreweryReview>> = [];
 const breweryPromises: Array<Promise<void>> = [];
 
-const seedDatabase = (async () => {
+const seedDatabase = async () => {
   await AppDataSource.initialize();
 
   await AppDataSource.manager.query(
@@ -36,23 +36,25 @@ const seedDatabase = (async () => {
   const adminUser = await createAdminUser();
 
   seedData.forEach((rawBreweryData) => {
-    breweryPromises.push((async () => {
-      logger.info(`Creating brewery ${rawBreweryData.name}`);
-      const newBrewery = await createBrewery(rawBreweryData, adminUser);
+    breweryPromises.push(
+      (async () => {
+        logger.info(`Creating brewery ${rawBreweryData.name}`);
+        const newBrewery = await createBrewery(rawBreweryData, adminUser);
 
-      for (let i = 0; i < 30; i++) {
-        breweryReviewPromises.push(createBreweryReview(newBrewery, adminUser));
-      }
+        for (let i = 0; i < 30; i++) 
+          breweryReviewPromises.push(createBreweryReview(newBrewery, adminUser));
+        
 
-      rawBreweryData.beers.forEach((beer) => {
-        beerPromises.push(createBeer(beer, newBrewery, adminUser));
-      });
-    })());
+        rawBreweryData.beers.forEach((beer) => {
+          beerPromises.push(createBeer(beer, newBrewery, adminUser));
+        });
+      })(),
+    );
   });
 
-await Promise.all(breweryPromises)
-await Promise.all([...beerPromises, ...userPromises, ...breweryReviewPromises]);
-})
+  await Promise.all(breweryPromises);
+  await Promise.all([...beerPromises, ...userPromises, ...breweryReviewPromises]);
+};
 
 seedDatabase().then(() => {
   logger.info('Database seeded.');

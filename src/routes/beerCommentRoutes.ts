@@ -29,5 +29,5 @@ commentRoutes
     res.set('Allow', 'GET, DELETE, PUT');
     next(new ServerError('Not allowed', 405));
   });
-  
+
 export default commentRoutes;
