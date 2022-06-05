@@ -1,8 +1,9 @@
+import { exit } from 'process';
+
 import AppDataSource from '../database/AppDataSource';
 import logger from '../util/logger';
 
 import Beer from '../database/model/Beer';
-
 import seedData from './data/seedData';
 
 import createAdminUser from './util/createAdminUser';
@@ -11,9 +12,12 @@ import createBeer from './util/createBeer';
 import fakeUserData from './data/fakeUserData';
 import User from '../database/model/User';
 import createFakeUser from './util/createFakeUser';
+import createBreweryReview from './util/createBreweryReview';
+import BreweryReview from '../database/model/BreweryReview';
 
 const userPromises: Array<Promise<User>> = [];
 const beerPromises: Array<Promise<Beer>> = [];
+const breweryReviewPromises: Array<Promise<BreweryReview>> = [];
 
 (async () => {
   await AppDataSource.initialize();
@@ -22,9 +26,7 @@ const beerPromises: Array<Promise<Beer>> = [];
     `TRUNCATE TABLE "user", profile, beer, brewery, beer_comment, beer_image CASCADE`,
   );
 
-  logger.info(
-    'Initialized database.\nSeeding database. This will take a bit of time.\nCreating resources...',
-  );
+  logger.info('Seeding database. This will take a bit of time...');
 
   fakeUserData.forEach((rawUserData) => {
     userPromises.push(createFakeUser(rawUserData));
@@ -32,15 +34,22 @@ const beerPromises: Array<Promise<Beer>> = [];
 
   const adminUser = await createAdminUser();
 
-  seedData.forEach((brewery) => {
+  seedData.forEach((rawBreweryData) => {
     (async () => {
-      const newBrewery = await createBrewery(brewery, adminUser);
-      logger.info(`Created ${newBrewery.name}.`);
+      logger.info(`Creating brewery ${rawBreweryData.name}`);
+      const newBrewery = await createBrewery(rawBreweryData, adminUser);
 
-      brewery.beers.forEach((beer) => {
+      for (let i = 0; i < 30; i++) {
+        breweryReviewPromises.push(createBreweryReview(newBrewery, adminUser));
+      }
+
+      rawBreweryData.beers.forEach((beer) => {
         beerPromises.push(createBeer(beer, newBrewery, adminUser));
       });
     })();
   });
-  await Promise.all([...beerPromises, ...userPromises]);
-})();
+  return Promise.all([...beerPromises, ...userPromises, ...breweryReviewPromises]);
+})().then(() => {
+  logger.info('Database seeded.');
+  exit(0);
+});

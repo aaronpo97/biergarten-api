@@ -5,7 +5,7 @@
   "main": "./dist/main.js",
   "scripts": {
     "build": "npx tsc",
-    "postinstall": "cp ./src/seed/data/seedDataExample.ts ./src/seed/data/seedData.ts && npm run build",
+    "postinstall": "npm run build",
     "start": "NODE_ENV=production node .",
     "prestart": "tsc",
     "dev": "nodemon ./src/main.ts",
