@@ -20,11 +20,16 @@ app.listen(port, () => {
   (async () => {
     try {
       await AppDataSource.initialize();
+      logger.info('Application initialized');
       logger.info('Connected to database.');
       logger.info(`Connected to ${BASE_URL}:${port}`);
     } catch (e) {
       if (e instanceof Error) {
-        logger.error(`Could not initialize app.\nReason:\n${e.message}\n${e.stack}`);
+        logger.error(`Could not initialize app.`);
+        if (e.message) {
+          logger.error(`Reason: ${e.message}.`);
+        }
+        logger.error(e.stack);
       }
       exit(1);
     }
