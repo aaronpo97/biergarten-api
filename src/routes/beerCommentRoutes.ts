@@ -5,6 +5,7 @@ import deleteCommentById from '../controllers/beer-comments/delete/deleteBeerCom
 import getAllComments from '../controllers/beer-comments/read/getAllBeerComments';
 import getCommentById from '../controllers/beer-comments/read/getBeerCommentById';
 import editCommentById from '../controllers/beer-comments/update/editBeerCommentById';
+import checkIfBeerCommentOwner from '../middleware/auth/checkIfBeerCommentOwner';
 import checkTokens from '../middleware/auth/checkTokens';
 import getCurrentUser from '../middleware/auth/getCurrentUser';
 import ServerError from '../util/error/ServerError';
@@ -23,8 +24,8 @@ commentRoutes
 commentRoutes
   .route('/:commentId')
   .get(getCommentById)
-  .delete(deleteCommentById)
-  .put(editCommentById)
+  .delete(checkTokens, getCurrentUser, checkIfBeerCommentOwner, deleteCommentById)
+  .put(checkTokens, getCurrentUser, checkIfBeerCommentOwner, editCommentById)
   .all((req, res, next) => {
     res.set('Allow', 'GET, DELETE, PUT');
     next(new ServerError('Not allowed', 405));

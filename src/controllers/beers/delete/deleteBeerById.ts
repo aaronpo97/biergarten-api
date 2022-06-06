@@ -29,10 +29,14 @@ const deleteBeerById: BeerByIdRequestHandler = async (req, res, next) => {
 
     await Beer.remove([beerToDelete]);
 
+    // @ts-expect-error
+    const newAccessToken = req.newAccessToken as string | undefined;
+
     const successResponse = new SuccessResponse(
       `Successfully deleted the beer with id ${beerId}.`,
       200,
       { ...beerToDelete, deleted: true },
+      newAccessToken,
     );
 
     next(successResponse);

@@ -30,10 +30,14 @@ const deleteBreweryReviewById: breweryReviewByIdFn = async (req, res, next) => {
 
     await BreweryReview.remove([queriedBreweryReview]);
 
+    // @ts-expect-error
+    const newAccessToken = req.newAccessToken as string | undefined;
+
     const successResponse = new SuccessResponse<{ review: BreweryReview; deleted: true }>(
       `Deleted a brewery review with the id of ${reviewId}.`,
       200,
       { review: queriedBreweryReview, deleted: true },
+      newAccessToken,
     );
     next(successResponse);
   } catch (error) {

@@ -55,7 +55,15 @@ const createNewBeer: CreateBeerRequestHandler = async (req, res, next): Promise<
 
     await newBeer.save();
 
-    const routeResponse = new SuccessResponse('Created a new beer.', 201, newBeer);
+    // @ts-expect-error
+    const newAccessToken = req.newAccessToken as string | undefined;
+
+    const routeResponse = new SuccessResponse(
+      'Created a new beer.',
+      201,
+      newBeer,
+      newAccessToken,
+    );
     next(routeResponse);
   } catch (e) {
     if (e instanceof Error) {

@@ -39,10 +39,14 @@ const createNewBreweryReview: createBreweryReviewFn = async (req, res, next) => 
 
     await breweryReview.save();
 
+    // @ts-expect-error
+    const newAccessToken = req.newAccessToken as string | undefined;
+
     const successResponse = new SuccessResponse<BreweryReview>(
       `Created a new review for the brewery with id ${breweryId}`,
       201,
       breweryReview,
+      newAccessToken,
     );
 
     next(successResponse);

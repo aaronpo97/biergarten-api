@@ -1,5 +1,6 @@
 import BeerComment from '../../../database/model/BeerComment';
 import ServerError from '../../../util/error/ServerError';
+import SuccessResponse from '../../../util/response/SuccessResponse';
 import isValidUuid from '../../../util/validation/isValidUuid';
 import { editCommentByIdT } from '../types/RequestHandlers';
 
@@ -43,6 +44,17 @@ const editCommentById: editCommentByIdT = async (req, res, next) => {
     commentToEdit.editedDate = new Date(Date.now());
 
     await commentToEdit.save();
+    // @ts-expect-error
+    const newAccessToken = req.newAccessToken as string | undefined;
+
+    const response = new SuccessResponse(
+      'Successfully edited comment',
+      200,
+      { commentToEdit, edited: true },
+      newAccessToken,
+    );
+
+    next(response);
   } catch (error) {
     if (error instanceof Error) {
       next(error);

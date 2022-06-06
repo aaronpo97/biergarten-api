@@ -44,11 +44,15 @@ const processImageData: ProcessImageDataFn = async (req, res, next) => {
 
     const uploadedImages = await Promise.all(imagePromises);
 
+    // @ts-expect-error
+    const newAccessToken = req.newAccessToken as string | undefined;
+
     next(
       new SuccessResponse<{ uploadedImages: BeerImage[] }>(
         `Uploaded ${files.length} file${files.length === 1 ? '' : 's'}.`,
         200,
         { uploadedImages },
+        newAccessToken,
       ),
     );
   } catch (err) {

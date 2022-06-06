@@ -4,6 +4,7 @@ import deleteBreweryReviewById from '../controllers/brewery-reviews/delete/delet
 import getAllBreweryReviews from '../controllers/brewery-reviews/read/getAllBreweryReviews';
 import getBreweryReviewById from '../controllers/brewery-reviews/read/getBreweryReviewById';
 import editBreweryReviewById from '../controllers/brewery-reviews/update/editBreweryReviewById';
+import checkIfBreweryReviewOwner from '../middleware/auth/checkIfBreweryReviewOwner';
 import checkTokens from '../middleware/auth/checkTokens';
 import getCurrentUser from '../middleware/auth/getCurrentUser';
 import ServerError from '../util/error/ServerError';
@@ -23,8 +24,8 @@ breweryReviewRoutes
 breweryReviewRoutes
   .route('/:reviewId')
   .get(getBreweryReviewById)
-  .delete(deleteBreweryReviewById)
-  .put(editBreweryReviewById)
+  .delete(checkTokens, getCurrentUser, checkIfBreweryReviewOwner, deleteBreweryReviewById)
+  .put(checkTokens, getCurrentUser, checkIfBreweryReviewOwner, editBreweryReviewById)
   .all((req, res, next) => {
     res.set('Allow', 'GET, DELETE, PUT');
     next(new ServerError('Not allowed', 405));

@@ -47,13 +47,21 @@ const updateBeerById: UpdateBeerRequestHandler = async (req, res, next) => {
 
     await beerToUpdate.save();
 
-    const successResponse = new SuccessResponse(`Updated beer id ${beerId}`, 200, {
-      updatedBeer: beerToUpdate,
-      descriptionUpdated: !!updatedDescription,
-      nameUpdated: !!updatedName,
-      abvUpdated: !!updatedAbv,
-      ibuUpdated: !!updatedIbu,
-    });
+    // @ts-expect-error
+    const newAccessToken = req.newAccessToken as string | undefined;
+
+    const successResponse = new SuccessResponse(
+      `Updated beer id ${beerId}`,
+      200,
+      {
+        updatedBeer: beerToUpdate,
+        descriptionUpdated: !!updatedDescription,
+        nameUpdated: !!updatedName,
+        abvUpdated: !!updatedAbv,
+        ibuUpdated: !!updatedIbu,
+      },
+      newAccessToken,
+    );
 
     next(successResponse);
   } catch (e) {

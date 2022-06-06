@@ -51,7 +51,7 @@ export const generateAccessToken: generateAccessTokenFn = async (refreshToken) =
     const user = await User.findOneBy({ id: decoded.audience });
     if (!user) throw new ServerError('Invalid JWT.', 401);
 
-    return jwt.sign({ audience: user.id }, ACCESS_TOKEN_SECRET, { expiresIn: '30s' });
+    return jwt.sign({ audience: user.id }, ACCESS_TOKEN_SECRET, { expiresIn: '45s' });
   } catch (error) {
     if (error instanceof Error && error.name === 'TokenExpiredError') {
       throw new ServerError('Your refresh token is expired.', 401);

@@ -52,7 +52,15 @@ const createNewComment: createNewCommentT = async (req, res, next) => {
     beerComment.rating = rating;
     await beerComment.save();
 
-    const successResponse = new SuccessResponse('Comment created.', 200, beerComment);
+    // @ts-expect-error
+    const newAccessToken = req.newAccessToken as string | undefined;
+
+    const successResponse = new SuccessResponse(
+      'Comment created.',
+      200,
+      beerComment,
+      newAccessToken,
+    );
 
     next(successResponse);
   } catch (error) {

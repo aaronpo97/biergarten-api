@@ -47,11 +47,18 @@ const editBreweryReviewById: editBreweryReviewByIdFn = async (req, res, next) =>
     breweryReview.editedDate = new Date(Date.now());
 
     await breweryReview.save();
+    // @ts-expect-error
+    const newAccessToken = req.newAccessToken as string | undefined;
 
     const successResponse = new SuccessResponse<{
       breweryReview: BreweryReview;
       fieldsUpdated: typeof fieldsUpdated;
-    }>(`Updated the review with id ${reviewId}.`, 200, { breweryReview, fieldsUpdated });
+    }>(
+      `Updated the review with id ${reviewId}.`,
+      200,
+      { breweryReview, fieldsUpdated },
+      newAccessToken,
+    );
 
     next(successResponse);
   } catch (error) {

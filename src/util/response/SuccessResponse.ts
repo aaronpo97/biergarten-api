@@ -8,8 +8,16 @@ import Response from './Response';
 export default class SuccessResponse<PayloadType> extends Response {
   payload: PayloadType;
 
-  constructor(message: string, status: number, payload: PayloadType) {
+  newAccessToken?: string;
+
+  constructor(
+    message: string,
+    status: number,
+    payload: PayloadType,
+    newAccessToken?: string,
+  ) {
     super({ message, status, success: true });
     this.payload = payload;
+    this.newAccessToken = newAccessToken;
   }
 }
