@@ -17,10 +17,13 @@ import beerImageRoutes from './routes/beerImageRoutes';
 import breweryReviewRoutes from './routes/breweryReviewRoutes';
 
 import ServerError from './util/error/ServerError';
+import requestLogger from './util/logger/utils/requestLogger';
 
 const app = express();
 
 app.use(bodyParser.json());
+
+app.use(requestLogger);
 
 app.get('/api/teapot', teapotRoute);
 app.use('/api/beers/:beerId/comments', beerCommentRoutes);
