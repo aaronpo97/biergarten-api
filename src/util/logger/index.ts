@@ -1,8 +1,6 @@
 import { env } from 'process';
 
-import productionLogger from './productionLogger';
-import devLogger from './devLogger';
+import productionLogger from './utils/productionLogger';
+import devLogger from './utils/devLogger';
 
-const logger = env.NODE_ENV === 'production' ? productionLogger : devLogger;
-
-export default logger;
+export default env.NODE_ENV === 'production' ? productionLogger : devLogger;
