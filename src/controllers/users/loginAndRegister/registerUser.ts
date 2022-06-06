@@ -7,6 +7,7 @@ import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 
 import { RegisterUserRequestHandler } from '../types/RequestHandlers';
+import sendConfirmationEmail from '../../../util/userRegistration/sendConfirmationEmail';
 
 /**
  * Business logic for registering a user.
@@ -56,6 +57,8 @@ const registerUser: RegisterUserRequestHandler = async (req, res, next) => {
       registeredUser: userToRegister,
       confirmationToken,
     });
+
+    await sendConfirmationEmail(confirmationToken, userToRegister);
 
     next(successResponse);
   } catch (e) {
