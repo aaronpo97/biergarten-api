@@ -9,7 +9,7 @@ import checkIfBeerCommentOwner from '../middleware/auth/checkIfBeerCommentOwner'
 import checkIfUserIsConfirmed from '../middleware/auth/checkIfUserIsConfirmed';
 import checkTokens from '../middleware/auth/checkTokens';
 import getCurrentUser from '../middleware/auth/getCurrentUser';
-import ServerError from '../util/error/ServerError';
+import notAllowedError from '../util/error/notAllowedError';
 
 const commentRoutes = Router({ mergeParams: true });
 
@@ -19,7 +19,7 @@ commentRoutes
   .post(checkTokens, getCurrentUser, checkIfUserIsConfirmed, createNewComment)
   .all((req, res, next) => {
     res.set('Allow', 'GET, POST');
-    next(new ServerError('Not allowed', 405));
+    next(notAllowedError);
   });
 
 commentRoutes
@@ -41,7 +41,7 @@ commentRoutes
   )
   .all((req, res, next) => {
     res.set('Allow', 'GET, DELETE, PUT');
-    next(new ServerError('Not allowed', 405));
+    next(notAllowedError);
   });
 
 export default commentRoutes;

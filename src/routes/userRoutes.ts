@@ -1,4 +1,4 @@
-import express from 'express';
+import { Router } from 'express';
 
 /* Middleware */
 import getCurrentUser from '../middleware/auth/getCurrentUser';
@@ -13,15 +13,17 @@ import loginUser from '../controllers/users/loginAndRegister/loginUser';
 import registerUser from '../controllers/users/loginAndRegister/registerUser';
 import showPublicUserInfo from '../controllers/users/read/showPublicUserInfo';
 import checkTokens from '../middleware/auth/checkTokens';
+import resendConfirmationEmail from '../controllers/users/loginAndRegister/resendConfirmationEmail';
+import notAllowedError from '../util/error/notAllowedError';
 
-const userRoutes = express.Router();
+const userRoutes = Router();
 
 userRoutes
   .route('/register')
   .post(registerUser)
   .all((req, res, next) => {
     res.set('Allow', 'POST');
-    next(new ServerError('Not allowed', 405));
+    next(notAllowedError);
   });
 
 userRoutes
@@ -29,7 +31,7 @@ userRoutes
   .post(loginUser)
   .all((req, res, next) => {
     res.set('Allow', 'POST');
-    next(new ServerError('Not allowed', 405));
+    next(notAllowedError);
   });
 
 userRoutes
@@ -37,7 +39,15 @@ userRoutes
   .put(checkTokens, getCurrentUser, confirmUser)
   .all((req, res, next) => {
     res.set('Allow', 'PUT');
-    next(new ServerError('Not allowed', 405));
+    next(notAllowedError);
+  });
+
+userRoutes
+  .route('/resend-confirmation-email')
+  .get(checkTokens, getCurrentUser, resendConfirmationEmail)
+  .all((req, res, next) => {
+    res.set('Allow', 'GET');
+    next(notAllowedError);
   });
 
 userRoutes
@@ -47,7 +57,7 @@ userRoutes
   .put(() => new ServerError('Not implemented.', 501))
   .all((req, res, next) => {
     res.set('Allow', 'GET, PUT, DELETE');
-    next(new ServerError('Not allowed', 405));
+    next(notAllowedError);
   });
 
 export default userRoutes;

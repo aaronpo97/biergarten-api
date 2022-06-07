@@ -8,7 +8,7 @@ import checkIfBreweryReviewOwner from '../middleware/auth/checkIfBreweryReviewOw
 import checkIfUserIsConfirmed from '../middleware/auth/checkIfUserIsConfirmed';
 import checkTokens from '../middleware/auth/checkTokens';
 import getCurrentUser from '../middleware/auth/getCurrentUser';
-import ServerError from '../util/error/ServerError';
+import notAllowedError from '../util/error/notAllowedError';
 
 /** Route handler for '/api/beers'. */
 const breweryReviewRoutes = Router({ mergeParams: true });
@@ -19,7 +19,7 @@ breweryReviewRoutes
   .post(checkTokens, getCurrentUser, checkIfUserIsConfirmed, createNewBreweryReview)
   .all((req, res, next) => {
     res.set('Allow', 'GET, POST');
-    next(new ServerError('Not allowed', 405));
+    next(notAllowedError);
   });
 
 breweryReviewRoutes
@@ -41,7 +41,7 @@ breweryReviewRoutes
   )
   .all((req, res, next) => {
     res.set('Allow', 'GET, DELETE, PUT');
-    next(new ServerError('Not allowed', 405));
+    next(notAllowedError);
   });
 
 export default breweryReviewRoutes;

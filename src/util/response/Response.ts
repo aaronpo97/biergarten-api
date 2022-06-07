@@ -11,12 +11,6 @@ export default class Response {
 
   success: boolean;
 
-  /**
-   * Creates an instance of Response.
-   *
-   * @class
-   * @param {{ message: string; status: number }} { Message, status }
-   */
   constructor({
     message,
     status,

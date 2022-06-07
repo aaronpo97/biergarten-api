@@ -4,6 +4,7 @@ import process from 'process';
 import ErrorResponse from '../../util/response/ErrorResponse';
 import 'dotenv/config';
 import { ErrorResponseT, SuccessResponseT } from './types';
+import logger from '../../util/logger';
 
 const { NODE_ENV } = process.env;
 
@@ -20,6 +21,7 @@ export const sendSuccessResponse: SuccessResponseT = (data, req, res, next) => {
 
 export const sendErrorResponse: ErrorResponseT = (err, req, res, next) => {
   const { status = 500, message = 'Oh no, something went wrong.', stack } = err;
+  logger.error(err);
   res
     .status(status)
     .json(new ErrorResponse(message, status, !inProductionMode ? stack : undefined));

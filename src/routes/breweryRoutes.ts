@@ -1,4 +1,4 @@
-import express from 'express';
+import { Router } from 'express';
 
 import createNewBrewery from '../controllers/breweries/create/createNewBrewery';
 import deleteBreweryById from '../controllers/breweries/delete/deleteBreweryById';
@@ -9,9 +9,9 @@ import checkIfBreweryPostOwner from '../middleware/auth/checkIfBreweryPostOwner'
 import checkIfUserIsConfirmed from '../middleware/auth/checkIfUserIsConfirmed';
 import checkTokens from '../middleware/auth/checkTokens';
 import getCurrentUser from '../middleware/auth/getCurrentUser';
-import ServerError from '../util/error/ServerError';
+import notAllowedError from '../util/error/notAllowedError';
 
-const breweryRoutes = express.Router();
+const breweryRoutes = Router();
 
 breweryRoutes
   .route('/')
@@ -19,7 +19,7 @@ breweryRoutes
   .post(checkTokens, getCurrentUser, checkIfUserIsConfirmed, createNewBrewery)
   .all((req, res, next) => {
     res.set('Allow', 'GET, POST');
-    next(new ServerError('Not allowed', 405));
+    next(notAllowedError);
   });
 
 breweryRoutes
@@ -41,7 +41,7 @@ breweryRoutes
   )
   .all((req, res, next) => {
     res.set('Allow', 'GET, DELETE, PUT');
-    next(new ServerError('Not allowed', 405));
+    next(notAllowedError);
   });
 
 export default breweryRoutes;
