@@ -8,6 +8,7 @@ import checkIfBeerPostOwner from '../middleware/auth/checkIfBeerPostOwner';
 
 import ServerError from '../util/error/ServerError';
 import uploadFile from '../util/imageUpload/uploadFile';
+import checkIfUserIsConfirmed from '../middleware/auth/checkIfUserIsConfirmed';
 
 /** Route handler for '/api/beers/:beerId/image'. */
 const beerImageRoutes = express.Router({ mergeParams: true });
@@ -17,6 +18,7 @@ beerImageRoutes
   .post(
     checkTokens,
     getCurrentUser,
+    checkIfUserIsConfirmed,
     checkIfBeerPostOwner,
     uploadFile.array('beer-image'),
     processImageData,
