@@ -1,6 +1,6 @@
 import AppDataSource from '../../../database/AppDataSource';
 
-import Brewery from '../../../database/model/Brewery';
+import BreweryPost from '../../../database/model/BreweryPost';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 import isValidUuid from '../../../util/validation/isValidUuid';
@@ -19,7 +19,7 @@ const getBreweryById: BreweryByIdRequestHandler = async (req, res, next) => {
       throw new ServerError('Could not get a brewery with that id as it is invalid', 400);
     }
 
-    const queriedBrewery = await AppDataSource.getRepository(Brewery)
+    const queriedBrewery = await AppDataSource.getRepository(BreweryPost)
       .createQueryBuilder('brewery')
       .leftJoinAndSelect('brewery.beers', 'beers')
       .leftJoinAndSelect('brewery.postedBy', 'users')

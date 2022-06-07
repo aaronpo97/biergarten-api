@@ -1,4 +1,4 @@
-import Beer from '../../../database/model/Beer';
+import BeerPost from '../../../database/model/BeerPost';
 import BeerComment from '../../../database/model/BeerComment';
 import User from '../../../database/model/User';
 import ServerError from '../../../util/error/ServerError';
@@ -32,7 +32,7 @@ const createNewComment: createNewCommentT = async (req, res, next) => {
       throw new ServerError('Rating is required.', 400);
     }
 
-    const beer = await Beer.findOne({ where: { id: beerId } });
+    const beer = await BeerPost.findOne({ where: { id: beerId } });
 
     if (!beer) {
       throw new ServerError(

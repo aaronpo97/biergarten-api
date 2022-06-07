@@ -1,6 +1,6 @@
 import { BeerRequestHandler } from '../@types/RequestHandlers';
 
-import Beer from '../../../database/model/Beer';
+import BeerPost from '../../../database/model/BeerPost';
 import ErrorResponse from '../../../util/response/ErrorResponse';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 import AppDataSource from '../../../database/AppDataSource';
@@ -21,7 +21,7 @@ const getAllBeers: BeerRequestHandler = async (req, res, next): Promise<void> =>
     const pageSize = Math.abs(parseInt(req.query.page_size || '5', 10));
 
     /** @todo Fix this query so user details are not exposed. */
-    const allBeers = await AppDataSource.getRepository(Beer)
+    const allBeers = await AppDataSource.getRepository(BeerPost)
       .createQueryBuilder('beer')
       // .leftJoinAndSelect('beer.postedBy', 'user')
       .leftJoinAndSelect('beer.brewery', 'brewery')

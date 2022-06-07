@@ -1,5 +1,5 @@
 import AppDataSource from '../../../database/AppDataSource';
-import Beer from '../../../database/model/Beer';
+import BeerPost from '../../../database/model/BeerPost';
 import User from '../../../database/model/User';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
@@ -34,7 +34,7 @@ const showPublicUserInfo: UserRequestHandler = async (req, res, next) => {
       throw new ServerError('Could not find a user with that id.', 404);
     }
 
-    const queriedUserPosts = await AppDataSource.getRepository(Beer)
+    const queriedUserPosts = await AppDataSource.getRepository(BeerPost)
       .createQueryBuilder('beer')
       .where('beer.postedById = :id', { id: userId })
       .getMany();

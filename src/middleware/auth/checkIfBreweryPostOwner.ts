@@ -1,5 +1,5 @@
 import AppDataSource from '../../database/AppDataSource';
-import Brewery from '../../database/model/Brewery';
+import BreweryPost from '../../database/model/BreweryPost';
 import User from '../../database/model/User';
 import ServerError from '../../util/error/ServerError';
 import isValidUuid from '../../util/validation/isValidUuid';
@@ -16,7 +16,7 @@ const checkIfBreweryPostOwner: BreweryPostMiddlewareFn = async (req, res, next) 
       );
     }
 
-    const queriedBrewery = await AppDataSource.getRepository(Brewery)
+    const queriedBrewery = await AppDataSource.getRepository(BreweryPost)
       .createQueryBuilder('brewery')
       .where('brewery.id = :breweryId', { breweryId })
       .leftJoinAndSelect('brewery.postedBy', 'users')

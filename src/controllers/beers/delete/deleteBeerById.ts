@@ -1,6 +1,6 @@
 import isValidUuid from '../../../util/validation/isValidUuid';
 import { BeerByIdRequestHandler } from '../@types/RequestHandlers';
-import Beer from '../../../database/model/Beer';
+import BeerPost from '../../../database/model/BeerPost';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 
@@ -15,7 +15,7 @@ const deleteBeerById: BeerByIdRequestHandler = async (req, res, next) => {
       );
     }
 
-    const beerToDelete = await Beer.findOne({
+    const beerToDelete = await BeerPost.findOne({
       where: { id: beerId },
       join: { alias: 'beer', leftJoinAndSelect: { brewery: 'beer.brewery' } },
     });
@@ -27,7 +27,7 @@ const deleteBeerById: BeerByIdRequestHandler = async (req, res, next) => {
       );
     }
 
-    await Beer.remove([beerToDelete]);
+    await BeerPost.remove([beerToDelete]);
 
     // @ts-expect-error
     const newAccessToken = req.newAccessToken as string | undefined;

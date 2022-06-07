@@ -1,9 +1,9 @@
 import User from '../../database/model/User';
 import BreweryReview from '../../database/model/BreweryReview';
-import Brewery from '../../database/model/Brewery';
+import BreweryPost from '../../database/model/BreweryPost';
 
 const createBreweryReview = async (
-  newBrewery: Brewery,
+  newBrewery: BreweryPost,
   adminUser: User,
 ): Promise<BreweryReview> => {
   const breweryReview = new BreweryReview();

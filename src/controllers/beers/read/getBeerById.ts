@@ -1,6 +1,6 @@
 import AppDataSource from '../../../database/AppDataSource';
 
-import Beer from '../../../database/model/Beer';
+import BeerPost from '../../../database/model/BeerPost';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 import isValidUuid from '../../../util/validation/isValidUuid';
@@ -15,7 +15,7 @@ const getBeerById: BeerByIdRequestHandler = async (req, res, next) => {
     }
 
     /** @todo Fix this query so user details are not exposed. */
-    const queriedBeer = await AppDataSource.getRepository(Beer)
+    const queriedBeer = await AppDataSource.getRepository(BeerPost)
       .createQueryBuilder('beer')
       .leftJoinAndSelect('beer.postedBy', 'user')
 

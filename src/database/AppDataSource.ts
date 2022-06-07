@@ -1,8 +1,8 @@
 import { DataSource } from 'typeorm';
 import 'reflect-metadata';
 import dotenv from 'dotenv';
-import Beer from './model/Beer';
-import Brewery from './model/Brewery';
+import BeerPost from './model/BeerPost';
+import BreweryPost from './model/BreweryPost';
 import User from './model/User';
 
 import Profile from './model/Profile';
@@ -24,8 +24,8 @@ if (!(CLOUD_DB_CONNECTION_STRING && LOCAL_DB_CONNECTION_STRING)) {
 }
 
 const entities = [
-  Beer,
-  Brewery,
+  BeerPost,
+  BreweryPost,
   User,
   Profile,
   BeerComment,

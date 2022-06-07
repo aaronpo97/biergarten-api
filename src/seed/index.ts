@@ -3,7 +3,7 @@ import { exit } from 'process';
 import AppDataSource from '../database/AppDataSource';
 import logger from '../util/logger';
 
-import Beer from '../database/model/Beer';
+import BeerPost from '../database/model/BeerPost';
 import seedData from './data/seedData';
 
 import createAdminUser from './util/createAdminUser';
@@ -16,7 +16,7 @@ import createBreweryReview from './util/createBreweryReview';
 import BreweryReview from '../database/model/BreweryReview';
 
 const userPromises: Array<Promise<User>> = [];
-const beerPromises: Array<Promise<Beer>> = [];
+const beerPromises: Array<Promise<BeerPost>> = [];
 const breweryReviewPromises: Array<Promise<BreweryReview>> = [];
 const breweryPromises: Array<Promise<void>> = [];
 
@@ -24,7 +24,7 @@ const seedDatabase = async () => {
   await AppDataSource.initialize();
 
   await AppDataSource.manager.query(
-    `TRUNCATE TABLE "user", profile, beer, brewery, beer_comment, beer_image CASCADE`,
+    `TRUNCATE TABLE "user", profile, beer_post, brewery_post, beer_comment, beer_image CASCADE`,
   );
 
   logger.info('Seeding database. This will take a bit of time...');

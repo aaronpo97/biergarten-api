@@ -1,5 +1,5 @@
 import { UpdateBeerRequestHandler } from '../@types/RequestHandlers';
-import Beer from '../../../database/model/Beer';
+import BeerPost from '../../../database/model/BeerPost';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 import isValidUuid from '../../../util/validation/isValidUuid';
@@ -15,7 +15,7 @@ const updateBeerById: UpdateBeerRequestHandler = async (req, res, next) => {
       );
     }
 
-    const beerToUpdate = await Beer.findOneBy({ id: beerId });
+    const beerToUpdate = await BeerPost.findOneBy({ id: beerId });
     if (!beerToUpdate) {
       throw new ServerError('Could not update that beer as it could not be found.', 404);
     }
