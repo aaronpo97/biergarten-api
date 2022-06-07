@@ -1,4 +1,4 @@
-import Brewery from '../../../database/model/Brewery';
+import BreweryPost from '../../../database/model/BreweryPost';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 import isValidUuid from '../../../util/validation/isValidUuid';
@@ -21,7 +21,7 @@ const updateBreweryById: UpdateBreweryRequestHandler = async (req, res, next) =>
       );
     }
 
-    const breweryToUpdate = await Brewery.findOneBy({ id: breweryId });
+    const breweryToUpdate = await BreweryPost.findOneBy({ id: breweryId });
     if (!breweryToUpdate) {
       throw new ServerError(
         'Could not update that brewery as it could not be found.',

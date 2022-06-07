@@ -7,7 +7,7 @@ import {
   JoinColumn,
   ManyToMany,
 } from 'typeorm';
-import Beer from './Beer';
+import BeerPost from './BeerPost';
 import User from './User';
 
 @Entity()
@@ -18,9 +18,9 @@ export default class Profile extends BaseEntity {
   @Column()
   aboutMe!: string;
 
-  @ManyToMany(() => Beer, (beer) => beer.likedBy)
+  @ManyToMany(() => BeerPost, (beer) => beer.likedBy)
   @JoinColumn()
-  likes!: Array<Beer>;
+  likes!: Array<BeerPost>;
 
   @OneToOne(() => User, (user) => user.profile)
   @JoinColumn()

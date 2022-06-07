@@ -1,14 +1,14 @@
 import { BreweryRequestHandler } from '../types/RequestHandlers';
 
 import SuccessResponse from '../../../util/response/SuccessResponse';
-import Brewery from '../../../database/model/Brewery';
+import BreweryPost from '../../../database/model/BreweryPost';
 import ErrorResponse from '../../../util/response/ErrorResponse';
 import ServerError from '../../../util/error/ServerError';
 
 /** Business logic for retrieving brewery data from the database and sending it to the client. */
 const getAllBreweries: BreweryRequestHandler = async (req, res, next): Promise<void> => {
   try {
-    const allBreweries = await Brewery.find();
+    const allBreweries = await BreweryPost.find();
     const routeResponse = new SuccessResponse('Sending all breweries', 200, allBreweries);
     next(routeResponse);
   } catch (e) {

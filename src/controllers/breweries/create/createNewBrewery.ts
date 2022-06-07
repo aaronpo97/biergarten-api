@@ -1,6 +1,6 @@
 import { CreateBreweryRequestHandler } from '../types/RequestHandlers';
 
-import Brewery from '../../../database/model/Brewery';
+import BreweryPost from '../../../database/model/BreweryPost';
 import ErrorResponse from '../../../util/response/ErrorResponse';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
@@ -22,7 +22,7 @@ const createNewBrewery: CreateBreweryRequestHandler = async (
     // @ts-expect-error
     const currentUser = req.currentUser as User;
 
-    const newBrewery = new Brewery();
+    const newBrewery = new BreweryPost();
 
     newBrewery.description = description;
     newBrewery.name = name;

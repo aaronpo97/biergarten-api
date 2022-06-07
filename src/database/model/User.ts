@@ -7,10 +7,10 @@ import {
   OneToMany,
   JoinColumn,
 } from 'typeorm';
-import Beer from './Beer';
+import BeerPost from './BeerPost';
 import BeerComment from './BeerComment';
 import BeerImage from './BeerImage';
-import Brewery from './Brewery';
+import BreweryPost from './BreweryPost';
 import BreweryImage from './BreweryImage';
 import BreweryReview from './BreweryReview';
 import Profile from './Profile';
@@ -39,12 +39,12 @@ export default class User extends BaseEntity {
   hash!: string;
 
   @JoinColumn()
-  @OneToMany(() => Beer, (beer) => beer.postedBy)
-  beerPosts!: Array<Beer>;
+  @OneToMany(() => BeerPost, (beer) => beer.postedBy)
+  beerPosts!: Array<BeerPost>;
 
   @JoinColumn()
-  @OneToMany(() => Brewery, (brewery) => brewery.postedBy)
-  breweryPosts!: Array<Brewery>;
+  @OneToMany(() => BreweryPost, (brewery) => brewery.postedBy)
+  breweryPosts!: Array<BreweryPost>;
 
   @OneToOne(() => Profile, (profile) => profile.user)
   @JoinColumn()

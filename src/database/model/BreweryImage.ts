@@ -6,7 +6,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import Brewery from './Brewery';
+import BreweryPost from './BreweryPost';
 import User from './User';
 
 @Entity()
@@ -18,8 +18,8 @@ export default class BreweryImage extends BaseEntity {
   path!: string;
 
   @JoinColumn()
-  @ManyToOne(() => Brewery, (brewery) => brewery.images)
-  breweryPost!: Brewery;
+  @ManyToOne(() => BreweryPost, (brewery) => brewery.images)
+  breweryPost!: BreweryPost;
 
   @JoinColumn()
   @ManyToOne(() => User, (user) => user.breweryImages)

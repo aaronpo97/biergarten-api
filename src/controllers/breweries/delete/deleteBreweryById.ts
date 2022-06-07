@@ -1,6 +1,6 @@
 import { BreweryByIdRequestHandler } from '../types/RequestHandlers';
 
-import Brewery from '../../../database/model/Brewery';
+import BreweryPost from '../../../database/model/BreweryPost';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 import isValidUuid from '../../../util/validation/isValidUuid';
@@ -17,7 +17,7 @@ const deleteBreweryById: BreweryByIdRequestHandler = async (req, res, next) => {
       );
     }
 
-    const breweryToDelete = await Brewery.findOne({ where: { id: breweryId } });
+    const breweryToDelete = await BreweryPost.findOne({ where: { id: breweryId } });
 
     if (!breweryToDelete) {
       throw new ServerError(
@@ -26,7 +26,7 @@ const deleteBreweryById: BreweryByIdRequestHandler = async (req, res, next) => {
       );
     }
 
-    await Brewery.remove([breweryToDelete]);
+    await BreweryPost.remove([breweryToDelete]);
 
     const message = breweryToDelete.beers?.length
       ? `Deleted the brewery with the id ${breweryId} and its associated beer posts.`

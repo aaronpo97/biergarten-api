@@ -1,17 +1,17 @@
-import Beer from '../../database/model/Beer';
-import Brewery from '../../database/model/Brewery';
+import BeerPost from '../../database/model/BeerPost';
+import BreweryPost from '../../database/model/BreweryPost';
 import User from '../../database/model/User';
 import logger from '../../util/logger';
 import { IRawBeerData } from '../data/types';
 
 const createBeer = async (
   rawBeerData: IRawBeerData,
-  brewery: Brewery,
+  brewery: BreweryPost,
   adminUser: User,
 ) => {
   const { name, type, description, abv = 1, ibu = 1 } = rawBeerData;
 
-  const beerToAdd = new Beer();
+  const beerToAdd = new BeerPost();
 
   beerToAdd.name = name;
   beerToAdd.type = type;
