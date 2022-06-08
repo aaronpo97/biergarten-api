@@ -10,16 +10,17 @@ export const verifyAccessToken = async (accessToken: string) => {
   }
 
   const decodedAccessToken = jwt.verify(accessToken, ACCESS_TOKEN_SECRET) as JwtPayload;
-  console.log(decodedAccessToken)
   return decodedAccessToken;
-
 };
 export const verifyRefreshToken = async (refreshToken: string) => {
   if (!REFRESH_TOKEN_SECRET) {
     throw new ServerError('A refresh token secret was not found in .env', 500);
   }
 
-  const decodedRefreshToken = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET) as JwtPayload;
+  const decodedRefreshToken = jwt.verify(
+    refreshToken,
+    REFRESH_TOKEN_SECRET,
+  ) as JwtPayload;
   return decodedRefreshToken;
 };
 export const verifyConfirmationToken = async (confirmationToken: string) => {

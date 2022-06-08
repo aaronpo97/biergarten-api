@@ -13,6 +13,8 @@ import checkTokens from '../middleware/auth/checkTokens';
 import resendConfirmationEmail from '../controllers/users/loginAndRegister/resendConfirmationEmail';
 import notAllowedError from '../util/error/notAllowedError';
 import checkIfCurrentUser from '../middleware/auth/checkIfCurrentUser';
+import editUsername from '../controllers/users/edit/editUsername';
+import editEmail from '../controllers/users/edit/editEmail';
 
 const userRoutes = Router();
 
@@ -59,9 +61,17 @@ userRoutes
 
 userRoutes
   .route('/:userId/edit-username')
-  .put(checkTokens, getCurrentUser, checkIfCurrentUser)
+  .put(checkTokens, getCurrentUser, checkIfCurrentUser, editUsername)
   .all((req, res, next) => {
-    res.set('Allow', 'GET, DELETE');
+    res.set('Allow', 'PUT');
+    next(notAllowedError);
+  });
+
+userRoutes
+  .route('/:userId/edit-email')
+  .put(checkTokens, getCurrentUser, checkIfCurrentUser, editEmail)
+  .all((req, res, next) => {
+    res.set('Allow', 'GET, PUT');
     next(notAllowedError);
   });
 
