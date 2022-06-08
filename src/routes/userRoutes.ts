@@ -3,9 +3,6 @@ import { Router } from 'express';
 /* Middleware */
 import getCurrentUser from '../middleware/auth/getCurrentUser';
 
-/* Utils */
-import ServerError from '../util/error/ServerError';
-
 /* Controllers */
 import confirmUser from '../controllers/users/edit/confirmUser';
 import deleteUserById from '../controllers/users/delete/deleteUserById';
@@ -15,6 +12,7 @@ import showPublicUserInfo from '../controllers/users/read/showPublicUserInfo';
 import checkTokens from '../middleware/auth/checkTokens';
 import resendConfirmationEmail from '../controllers/users/loginAndRegister/resendConfirmationEmail';
 import notAllowedError from '../util/error/notAllowedError';
+import checkIfCurrentUser from '../middleware/auth/checkIfCurrentUser';
 
 const userRoutes = Router();
 
@@ -44,7 +42,7 @@ userRoutes
 
 userRoutes
   .route('/resend-confirmation-email')
-  .get(checkTokens, getCurrentUser, resendConfirmationEmail)
+  .get(checkTokens, getCurrentUser, checkIfCurrentUser, resendConfirmationEmail)
   .all((req, res, next) => {
     res.set('Allow', 'GET');
     next(notAllowedError);
@@ -53,10 +51,17 @@ userRoutes
 userRoutes
   .route('/:userId')
   .get(showPublicUserInfo)
-  .delete(deleteUserById)
-  .put(() => new ServerError('Not implemented.', 501))
+  .delete(checkTokens, getCurrentUser, checkIfCurrentUser, deleteUserById)
   .all((req, res, next) => {
-    res.set('Allow', 'GET, PUT, DELETE');
+    res.set('Allow', 'GET, DELETE');
+    next(notAllowedError);
+  });
+
+userRoutes
+  .route('/:userId/edit-username')
+  .put(checkTokens, getCurrentUser, checkIfCurrentUser)
+  .all((req, res, next) => {
+    res.set('Allow', 'GET, DELETE');
     next(notAllowedError);
   });
 
