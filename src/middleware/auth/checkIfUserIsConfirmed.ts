@@ -3,7 +3,6 @@ import ServerError from '../../util/error/ServerError';
 import { MiddlewareFn } from './types/authMiddlewareTypes';
 
 const checkIfUserIsConfirmed: MiddlewareFn = (req, res, next) => {
-  // @ts-expect-error
   const currentUser = req.currentUser as User;
 
   if (!currentUser.accountConfirmed) {

@@ -26,7 +26,6 @@ const checkIfBreweryPostOwner: BreweryPostMiddlewareFn = async (req, res, next) 
       throw new ServerError('Could not find a brewery with that id.', 404);
     }
 
-    // @ts-expect-error
     const currentUser = req.currentUser as User;
 
     const isBreweryPostOwner = currentUser.id === queriedBrewery.postedBy.id;

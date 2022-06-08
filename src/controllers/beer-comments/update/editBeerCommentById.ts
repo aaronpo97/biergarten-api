@@ -44,7 +44,7 @@ const editCommentById: editCommentByIdT = async (req, res, next) => {
     commentToEdit.editedDate = new Date(Date.now());
 
     await commentToEdit.save();
-    // @ts-expect-error
+
     const newAccessToken = req.newAccessToken as string | undefined;
 
     const response = new SuccessResponse(

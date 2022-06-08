@@ -22,8 +22,7 @@ const checkIfBeerCommentOwner: BeerCommentMiddlewareFn = async (req, res, next) 
     if (!queriedComment) {
       throw new ServerError('Could not find a comment that id.', 404);
     }
-
-    // @ts-expect-error
+    
     const currentUser = req.currentUser as User;
 
     if (queriedComment.postedBy.id !== currentUser.id) {

@@ -19,7 +19,6 @@ const createNewBrewery: CreateBreweryRequestHandler = async (
       throw new ServerError('Missing params in request body.', 400);
     }
 
-    // @ts-expect-error
     const currentUser = req.currentUser as User;
 
     const newBrewery = new BreweryPost();

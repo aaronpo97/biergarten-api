@@ -27,7 +27,6 @@ const confirmUser: confirmUserFn = async (req, res, next) => {
       );
     }
 
-    // @ts-expect-error
     const currentUser = req.currentUser as User;
 
     if (currentUser.accountConfirmed) {

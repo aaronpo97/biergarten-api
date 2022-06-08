@@ -16,9 +16,7 @@ const createNewComment: createNewCommentT = async (req, res, next) => {
   try {
     const { beerId } = req.params;
     const { comment, rating } = req.body;
-
-    /** @todo Amend current user to the request object. */
-    // @ts-expect-error
+    
     const currentUser = req.currentUser as User;
 
     if (!isValidUuid(beerId)) {
@@ -52,7 +50,6 @@ const createNewComment: createNewCommentT = async (req, res, next) => {
     beerComment.rating = rating;
     await beerComment.save();
 
-    // @ts-expect-error
     const newAccessToken = req.newAccessToken as string | undefined;
 
     const successResponse = new SuccessResponse(

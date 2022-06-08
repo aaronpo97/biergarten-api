@@ -39,7 +39,6 @@ const editUsername: EditUsernameRequestHandler = async (req, res, next) => {
       .where('id = :userId', { userId })
       .execute();
 
-    // @ts-expect-error
     const newAccessToken = req.newAccessToken as string | undefined;
 
     const response = new SuccessResponse(
