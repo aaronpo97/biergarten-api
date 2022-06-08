@@ -53,6 +53,22 @@ export type EditUsernameRequestHandler = RequestHandler<
 /**
  * Instance of RequestHandler.
  *
+ * For requests with the username in the request body. Used for editing a user.
+ */
+export type EditEmailRequestHandler = RequestHandler<
+  /** Request params */
+  { userId: string },
+  /** Response body */
+  {},
+  /** Request body */
+  {
+    email?: string;
+  }
+>;
+
+/**
+ * Instance of RequestHandler.
+ *
  * For requests with the userId in the request body. Used for GET, DELETE /user/:userId
  */
 export type UserRequestHandler = RequestHandler<
