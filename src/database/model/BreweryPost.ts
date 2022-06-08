@@ -7,13 +7,13 @@ import {
   JoinColumn,
   ManyToOne,
 } from 'typeorm';
-import Beer from './Beer';
+import BeerPost from './BeerPost';
 import BreweryImage from './BreweryImage';
 import BreweryReview from './BreweryReview';
 import User from './User';
 
 @Entity()
-export default class Brewery extends BaseEntity {
+export default class BreweryPost extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
@@ -31,8 +31,8 @@ export default class Brewery extends BaseEntity {
   postedBy!: User;
 
   @JoinColumn()
-  @OneToMany(() => Beer, (beer) => beer.brewery, { onDelete: 'CASCADE' })
-  beers!: Array<Beer>;
+  @OneToMany(() => BeerPost, (beer) => beer.brewery, { onDelete: 'CASCADE' })
+  beers!: Array<BeerPost>;
 
   @OneToMany(() => BreweryReview, (breweryReview) => breweryReview.breweryPost)
   reviews!: Array<BreweryReview>;

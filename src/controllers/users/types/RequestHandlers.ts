@@ -37,7 +37,23 @@ export type RegisterUserRequestHandler = RequestHandler<
 /**
  * Instance of RequestHandler.
  *
- * For requests with the userId in the request body. Used for GET /user/:userId
+ * For requests with the username in the request body. Used for editing a user.
+ */
+export type EditUsernameRequestHandler = RequestHandler<
+  /** Request params */
+  { userId: string },
+  /** Response body */
+  {},
+  /** Request body */
+  {
+    username?: string;
+  }
+>;
+
+/**
+ * Instance of RequestHandler.
+ *
+ * For requests with the userId in the request body. Used for GET, DELETE /user/:userId
  */
 export type UserRequestHandler = RequestHandler<
   /** Request params */

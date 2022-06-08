@@ -4,8 +4,8 @@ import ErrorResponse from '../../../util/response/ErrorResponse';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 
-import Beer from '../../../database/model/Beer';
-import Brewery from '../../../database/model/Brewery';
+import BeerPost from '../../../database/model/BeerPost';
+import BreweryPost from '../../../database/model/BreweryPost';
 import User from '../../../database/model/User';
 
 /**
@@ -38,8 +38,8 @@ const createNewBeer: CreateBeerRequestHandler = async (req, res, next): Promise<
         400,
       );
     }
-    const newBeer = Beer.create();
-    const brewery = await Brewery.findOneBy({ id: breweryId });
+    const newBeer = BeerPost.create();
+    const brewery = await BreweryPost.findOneBy({ id: breweryId });
 
     if (!brewery)
       throw new ServerError('Could not find the brewery for posted beer.', 404);
@@ -55,7 +55,15 @@ const createNewBeer: CreateBeerRequestHandler = async (req, res, next): Promise<
 
     await newBeer.save();
 
-    const routeResponse = new SuccessResponse('Created a new beer.', 201, newBeer);
+    // @ts-expect-error
+    const newAccessToken = req.newAccessToken as string | undefined;
+
+    const routeResponse = new SuccessResponse(
+      'Created a new beer.',
+      201,
+      newBeer,
+      newAccessToken,
+    );
     next(routeResponse);
   } catch (e) {
     if (e instanceof Error) {

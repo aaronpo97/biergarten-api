@@ -43,6 +43,10 @@ const checkTokens: MiddlewareFn = async (req, res, next) => {
 
         /** @todo See above todo. */
         // @ts-expect-error
+        req.newAccessToken = newAccessToken;
+
+        /** @todo See above todo. */
+        // @ts-expect-error
         req.decodedAccessToken = decodedAccessToken;
 
         next();

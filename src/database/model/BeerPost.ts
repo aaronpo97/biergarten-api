@@ -11,13 +11,13 @@ import {
 
 import BeerComment from './BeerComment';
 import BeerImage from './BeerImage';
-import Brewery from './Brewery';
+import BreweryPost from './BreweryPost';
 
 import Profile from './Profile';
 import User from './User';
 
 @Entity()
-export default class Beer extends BaseEntity {
+export default class BeerPost extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
@@ -37,8 +37,8 @@ export default class Beer extends BaseEntity {
   ibu!: number;
 
   @JoinColumn()
-  @ManyToOne(() => Brewery, (brewery) => brewery.beers, { onDelete: 'CASCADE' })
-  brewery!: Brewery;
+  @ManyToOne(() => BreweryPost, (brewery) => brewery.beers, { onDelete: 'CASCADE' })
+  brewery!: BreweryPost;
 
   @JoinColumn()
   @ManyToOne(() => User, (user) => user.beerPosts)

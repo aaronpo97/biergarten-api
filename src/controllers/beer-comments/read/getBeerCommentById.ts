@@ -1,5 +1,5 @@
 import AppDataSource from '../../../database/AppDataSource';
-import Beer from '../../../database/model/Beer';
+import BeerPost from '../../../database/model/BeerPost';
 import BeerComment from '../../../database/model/BeerComment';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
@@ -24,7 +24,7 @@ const getCommentById: getCommentByIdT = async (req, res, next) => {
       );
     }
 
-    const beerPost = await Beer.findOne({ where: { id: beerId } });
+    const beerPost = await BeerPost.findOne({ where: { id: beerId } });
 
     if (!beerPost) {
       throw new ServerError('Could not find a beer post with that id.', 404);

@@ -6,6 +6,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
+import { env } from 'process';
+
 import beerRoutes from './routes/beerRoutes';
 import breweryRoutes from './routes/breweryRoutes';
 import teapotRoute from './routes/teapotRoute';
@@ -23,7 +25,9 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.use(requestLogger);
+if (env.NODE_ENV === 'production') {
+  app.use(requestLogger);
+}
 
 app.get('/api/teapot', teapotRoute);
 app.use('/api/beers/:beerId/comments', beerCommentRoutes);

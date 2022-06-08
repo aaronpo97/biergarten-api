@@ -6,7 +6,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import Beer from './Beer';
+import BeerPost from './BeerPost';
 import User from './User';
 
 @Entity()
@@ -26,9 +26,9 @@ export default class BeerComment extends BaseEntity {
   @Column({ nullable: true, type: 'timestamp' })
   editedDate!: Date;
 
-  @ManyToOne(() => Beer, (beer) => beer.comments)
+  @ManyToOne(() => BeerPost, (beer) => beer.comments)
   @JoinColumn()
-  beerPost!: Beer;
+  beerPost!: BeerPost;
 
   @ManyToOne(() => User, (user) => user.beerComments)
   @JoinColumn()

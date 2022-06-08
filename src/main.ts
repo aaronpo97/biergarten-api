@@ -20,7 +20,7 @@ app.listen(port, () => {
   (async () => {
     try {
       await AppDataSource.initialize();
-      logger.info('Application initialized');
+      logger.info('Successfully started application.');
       logger.info('Connected to database.');
       logger.info(`Connected to ${BASE_URL}:${port}`);
     } catch (e) {

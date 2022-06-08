@@ -27,7 +27,7 @@ cloudinary.config({ cloud_name, api_key, api_secret });
 // @ts-expect-error
 const storage = new CloudinaryStorage({ cloudinary, params: { folder: 'BeerApp' } });
 
-const uploadFile = multer({
+const uploadImage = multer({
   storage,
   fileFilter: (req, file, cb) => {
     if (!(file.mimetype === 'image/png' || file.mimetype === 'image/jpeg')) {
@@ -40,4 +40,4 @@ const uploadFile = multer({
   },
 });
 
-export default uploadFile;
+export default uploadImage;

@@ -1,5 +1,5 @@
 import { Express } from 'express-serve-static-core';
-import Beer from '../../../database/model/Beer';
+import BeerPost from '../../../database/model/BeerPost';
 import BeerImage from '../../../database/model/BeerImage';
 import User from '../../../database/model/User';
 import ServerError from '../../../util/error/ServerError';
@@ -21,7 +21,7 @@ const processImageData: ProcessImageDataFn = async (req, res, next) => {
       throw new ServerError('Nothing was provided to the file uploader.', 400);
     }
 
-    const beerPost = await Beer.findOneBy({ id: beerId });
+    const beerPost = await BeerPost.findOneBy({ id: beerId });
 
     if (!beerPost) {
       throw new ServerError(
@@ -44,11 +44,15 @@ const processImageData: ProcessImageDataFn = async (req, res, next) => {
 
     const uploadedImages = await Promise.all(imagePromises);
 
+    // @ts-expect-error
+    const newAccessToken = req.newAccessToken as string | undefined;
+
     next(
       new SuccessResponse<{ uploadedImages: BeerImage[] }>(
         `Uploaded ${files.length} file${files.length === 1 ? '' : 's'}.`,
         200,
         { uploadedImages },
+        newAccessToken,
       ),
     );
   } catch (err) {

@@ -1,4 +1,4 @@
-import Brewery from '../../../database/model/Brewery';
+import BreweryPost from '../../../database/model/BreweryPost';
 import BreweryReview from '../../../database/model/BreweryReview';
 import User from '../../../database/model/User';
 import ServerError from '../../../util/error/ServerError';
@@ -19,7 +19,7 @@ const createNewBreweryReview: createBreweryReviewFn = async (req, res, next) => 
       throw new ServerError('The provided brewery id is invalid.', 400);
     }
 
-    const breweryPost = await Brewery.findOne({ where: { id: breweryId } });
+    const breweryPost = await BreweryPost.findOne({ where: { id: breweryId } });
 
     if (!breweryPost) {
       throw new ServerError('Could not find a brewery with that id', 404);
@@ -39,10 +39,14 @@ const createNewBreweryReview: createBreweryReviewFn = async (req, res, next) => 
 
     await breweryReview.save();
 
+    // @ts-expect-error
+    const newAccessToken = req.newAccessToken as string | undefined;
+
     const successResponse = new SuccessResponse<BreweryReview>(
       `Created a new review for the brewery with id ${breweryId}`,
       201,
       breweryReview,
+      newAccessToken,
     );
 
     next(successResponse);
