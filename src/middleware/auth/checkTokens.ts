@@ -17,13 +17,6 @@ const checkTokens: MiddlewareFn = async (req, res, next) => {
     }
     const decodedAccessToken = await verifyAccessToken(accessToken);
 
-    /**
-     * @todo Extend the request object to contain the decoded access token for subsequent
-     *   middleware in each route. To be used to create a req.currentUser param which will
-     *   be used to verify permissions for modifying resources.
-     */
-
-    // @ts-expect-error
     req.decodedAccessToken = decodedAccessToken;
 
     next();
@@ -41,12 +34,7 @@ const checkTokens: MiddlewareFn = async (req, res, next) => {
         const newAccessToken = await generateAccessToken(refreshToken);
         const decodedAccessToken = await verifyAccessToken(newAccessToken);
 
-        /** @todo See above todo. */
-        // @ts-expect-error
         req.newAccessToken = newAccessToken;
-
-        /** @todo See above todo. */
-        // @ts-expect-error
         req.decodedAccessToken = decodedAccessToken;
 
         next();

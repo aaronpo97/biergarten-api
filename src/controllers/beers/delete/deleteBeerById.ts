@@ -29,7 +29,6 @@ const deleteBeerById: BeerByIdRequestHandler = async (req, res, next) => {
 
     await BeerPost.remove([beerToDelete]);
 
-    // @ts-expect-error
     const newAccessToken = req.newAccessToken as string | undefined;
 
     const successResponse = new SuccessResponse(

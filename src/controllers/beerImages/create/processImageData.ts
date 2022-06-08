@@ -32,7 +32,7 @@ const processImageData: ProcessImageDataFn = async (req, res, next) => {
 
     const imagePromises: Array<Promise<BeerImage>> = [];
 
-    //  @ts-expect-error
+
     const currentUser = req.currentUser as User;
     files.forEach((file) => {
       const beerImage = new BeerImage();
@@ -43,8 +43,6 @@ const processImageData: ProcessImageDataFn = async (req, res, next) => {
     });
 
     const uploadedImages = await Promise.all(imagePromises);
-
-    // @ts-expect-error
     const newAccessToken = req.newAccessToken as string | undefined;
 
     next(

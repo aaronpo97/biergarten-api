@@ -37,7 +37,6 @@ const deleteCommentById: getCommentByIdT = async (req, res, next) => {
       );
     }
 
-    // @ts-expect-error
     const newAccessToken = req.newAccessToken as string | undefined;
 
     const response = new SuccessResponse(

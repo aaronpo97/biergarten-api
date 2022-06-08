@@ -23,7 +23,6 @@ const checkIfBreweryReviewOwner: BreweryReviewMiddlewareFn = async (req, res, ne
       throw new ServerError('Could not find a comment that id.', 404);
     }
 
-    // @ts-expect-error
     const currentUser = req.currentUser as User;
 
     if (queriedReview.postedBy.id !== currentUser.id) {

@@ -8,7 +8,6 @@ import User from '../../../database/model/User';
 
 const resendConfirmationEmail: RequestHandler = async (req, res, next) => {
   try {
-    // @ts-expect-error
     const currentUser = req.currentUser as User;
 
     const confirmationToken = await generateConfirmationToken(currentUser);

@@ -50,12 +50,10 @@ const createNewBeer: CreateBeerRequestHandler = async (req, res, next): Promise<
     newBeer.ibu = ibu;
     newBeer.brewery = brewery;
     newBeer.type = type;
-    // @ts-expect-error
     newBeer.postedBy = req.currentUser as User;
 
     await newBeer.save();
 
-    // @ts-expect-error
     const newAccessToken = req.newAccessToken as string | undefined;
 
     const routeResponse = new SuccessResponse(

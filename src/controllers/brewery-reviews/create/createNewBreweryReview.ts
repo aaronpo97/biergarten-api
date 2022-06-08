@@ -27,7 +27,6 @@ const createNewBreweryReview: createBreweryReviewFn = async (req, res, next) => 
 
     const breweryReview = new BreweryReview();
 
-    // @ts-expect-error
     const currentUser = req.currentUser as User;
 
     breweryReview.breweryPost = breweryPost;
@@ -39,7 +38,6 @@ const createNewBreweryReview: createBreweryReviewFn = async (req, res, next) => 
 
     await breweryReview.save();
 
-    // @ts-expect-error
     const newAccessToken = req.newAccessToken as string | undefined;
 
     const successResponse = new SuccessResponse<BreweryReview>(

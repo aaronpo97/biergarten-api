@@ -17,7 +17,6 @@ const checkIfBeerPostOwner: BeerPostMiddlewareFn = async (req, res, next) => {
       );
     }
 
-    // @ts-expect-error
     const currentUser = req.currentUser as User;
 
     if (!currentUser) {

@@ -47,7 +47,6 @@ const updateBeerById: UpdateBeerRequestHandler = async (req, res, next) => {
 
     await beerToUpdate.save();
 
-    // @ts-expect-error
     const newAccessToken = req.newAccessToken as string | undefined;
 
     const successResponse = new SuccessResponse(
