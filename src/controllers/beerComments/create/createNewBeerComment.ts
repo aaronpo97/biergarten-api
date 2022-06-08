@@ -16,7 +16,7 @@ const createNewComment: createNewCommentT = async (req, res, next) => {
   try {
     const { beerId } = req.params;
     const { comment, rating } = req.body;
-    
+
     const currentUser = req.currentUser as User;
 
     if (!isValidUuid(beerId)) {

@@ -4,7 +4,6 @@ import isValidUuid from '../../util/validation/isValidUuid';
 import { UserMiddlewareFn } from './types/authMiddlewareTypes';
 
 const checkIfCurrentUser: UserMiddlewareFn = (req, res, next) => {
-
   const currentUser = req.currentUser as User;
   const { userId: queriedUserId } = req.params;
 

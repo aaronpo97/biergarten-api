@@ -1,21 +1,25 @@
 import { Router } from 'express';
 
-import createNewBeer from '../controllers/beers/create/createNewBeer';
-import deleteBeerById from '../controllers/beers/delete/deleteBeerById';
-import getAllBeers from '../controllers/beers/read/getAllBeers';
-import getBeerById from '../controllers/beers/read/getBeerById';
-import updateBeerById from '../controllers/beers/update/updateBeerById';
-import checkIfBeerPostOwner from '../middleware/auth/checkIfBeerPostOwner';
+/* Controllers */
+import createNewBeer from '../controllers/beerPosts/create/createNewBeer';
+import deleteBeerById from '../controllers/beerPosts/delete/deleteBeerById';
+import getAllBeers from '../controllers/beerPosts/read/getAllBeers';
+import getBeerById from '../controllers/beerPosts/read/getBeerById';
+import updateBeerById from '../controllers/beerPosts/update/updateBeerById';
 
+/* Middleware */
+import checkIfBeerPostOwner from '../middleware/auth/checkIfBeerPostOwner';
 import checkIfUserIsConfirmed from '../middleware/auth/checkIfUserIsConfirmed';
 import checkTokens from '../middleware/auth/checkTokens';
 import getCurrentUser from '../middleware/auth/getCurrentUser';
+
+/* Utils */
 import notAllowedError from '../util/error/notAllowedError';
 
 /** Route handler for '/api/beers'. */
-const beerRoutes = Router();
+const beerPostRoutes = Router();
 
-beerRoutes
+beerPostRoutes
   .route('/')
   .get(getAllBeers)
   .post(checkTokens, getCurrentUser, checkIfUserIsConfirmed, createNewBeer)
@@ -24,7 +28,7 @@ beerRoutes
     next(notAllowedError);
   });
 
-beerRoutes
+beerPostRoutes
   .route('/:beerId/')
   .get(getBeerById)
   .put(
@@ -46,4 +50,4 @@ beerRoutes
     next(notAllowedError);
   });
 
-export default beerRoutes;
+export default beerPostRoutes;

@@ -1,19 +1,24 @@
 import { Router } from 'express';
 
+/* Controllers */
 import createNewBrewery from '../controllers/breweries/create/createNewBrewery';
 import deleteBreweryById from '../controllers/breweries/delete/deleteBreweryById';
 import getAllBreweries from '../controllers/breweries/read/getAllBreweries';
 import getBreweryById from '../controllers/breweries/read/getBreweryById';
 import updateBreweryById from '../controllers/breweries/update/updateBreweryById';
+
+/* Middleware */
 import checkIfBreweryPostOwner from '../middleware/auth/checkIfBreweryPostOwner';
 import checkIfUserIsConfirmed from '../middleware/auth/checkIfUserIsConfirmed';
 import checkTokens from '../middleware/auth/checkTokens';
 import getCurrentUser from '../middleware/auth/getCurrentUser';
+
+/* Utils */
 import notAllowedError from '../util/error/notAllowedError';
 
-const breweryRoutes = Router();
+const breweryPostRoutes = Router();
 
-breweryRoutes
+breweryPostRoutes
   .route('/')
   .get(getAllBreweries)
   .post(checkTokens, getCurrentUser, checkIfUserIsConfirmed, createNewBrewery)
@@ -22,7 +27,7 @@ breweryRoutes
     next(notAllowedError);
   });
 
-breweryRoutes
+breweryPostRoutes
   .route('/:breweryId/')
   .get(getBreweryById)
   .delete(
@@ -44,4 +49,4 @@ breweryRoutes
     next(notAllowedError);
   });
 
-export default breweryRoutes;
+export default breweryPostRoutes;

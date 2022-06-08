@@ -32,7 +32,6 @@ const processImageData: ProcessImageDataFn = async (req, res, next) => {
 
     const imagePromises: Array<Promise<BeerImage>> = [];
 
-
     const currentUser = req.currentUser as User;
     files.forEach((file) => {
       const beerImage = new BeerImage();

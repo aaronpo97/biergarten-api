@@ -8,8 +8,8 @@ import bodyParser from 'body-parser';
 
 import { env } from 'process';
 
-import beerRoutes from './routes/beerRoutes';
-import breweryRoutes from './routes/breweryRoutes';
+import beerPostRoutes from './routes/beerPostRoutes';
+import breweryPostRoutes from './routes/breweryPostRoutes';
 import teapotRoute from './routes/teapotRoute';
 
 import { sendErrorResponse, sendSuccessResponse } from './middleware/response';
@@ -32,10 +32,10 @@ if (env.NODE_ENV === 'production') {
 app.get('/api/teapot', teapotRoute);
 app.use('/api/beers/:beerId/comments', beerCommentRoutes);
 app.use('/api/beers/:beerId/images', beerImageRoutes);
-app.use('/api/beers/', beerRoutes);
+app.use('/api/beers/', beerPostRoutes);
 
 app.use('/api/breweries/:breweryId/reviews', breweryReviewRoutes);
-app.use('/api/breweries/', breweryRoutes);
+app.use('/api/breweries/', breweryPostRoutes);
 app.use('/api/users/', userRoutes);
 
 app.all('*', () => {
