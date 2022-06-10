@@ -1,13 +1,19 @@
 import { Router } from 'express';
+
+/* Controllers */
 import createNewBreweryReview from '../controllers/brewery-reviews/create/createNewBreweryReview';
 import deleteBreweryReviewById from '../controllers/brewery-reviews/delete/deleteBreweryReviewById';
+import editBreweryReviewById from '../controllers/brewery-reviews/update/editBreweryReviewById';
 import getAllBreweryReviews from '../controllers/brewery-reviews/read/getAllBreweryReviews';
 import getBreweryReviewById from '../controllers/brewery-reviews/read/getBreweryReviewById';
-import editBreweryReviewById from '../controllers/brewery-reviews/update/editBreweryReviewById';
+
+/* Middleware */
 import checkIfBreweryReviewOwner from '../middleware/auth/checkIfBreweryReviewOwner';
 import checkIfUserIsConfirmed from '../middleware/auth/checkIfUserIsConfirmed';
 import checkTokens from '../middleware/auth/checkTokens';
 import getCurrentUser from '../middleware/auth/getCurrentUser';
+
+/* Utils */
 import notAllowedError from '../util/error/notAllowedError';
 
 /** Route handler for '/api/beers'. */

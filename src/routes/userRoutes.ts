@@ -4,17 +4,19 @@ import { Router } from 'express';
 import getCurrentUser from '../middleware/auth/getCurrentUser';
 
 /* Controllers */
+import checkIfCurrentUser from '../middleware/auth/checkIfCurrentUser';
+import checkTokens from '../middleware/auth/checkTokens';
 import confirmUser from '../controllers/users/edit/confirmUser';
 import deleteUserById from '../controllers/users/delete/deleteUserById';
+import editEmail from '../controllers/users/edit/editEmail';
+import editUsername from '../controllers/users/edit/editUsername';
 import loginUser from '../controllers/users/loginAndRegister/loginUser';
 import registerUser from '../controllers/users/loginAndRegister/registerUser';
-import showPublicUserInfo from '../controllers/users/read/showPublicUserInfo';
-import checkTokens from '../middleware/auth/checkTokens';
 import resendConfirmationEmail from '../controllers/users/loginAndRegister/resendConfirmationEmail';
+import showPublicUserInfo from '../controllers/users/read/showPublicUserInfo';
+
+/* Utils */
 import notAllowedError from '../util/error/notAllowedError';
-import checkIfCurrentUser from '../middleware/auth/checkIfCurrentUser';
-import editUsername from '../controllers/users/edit/editUsername';
-import editEmail from '../controllers/users/edit/editEmail';
 
 const userRoutes = Router();
 

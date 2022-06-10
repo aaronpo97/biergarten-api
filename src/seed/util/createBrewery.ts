@@ -1,5 +1,4 @@
 import BreweryPost from '../../database/model/BreweryPost';
-import BreweryReview from '../../database/model/BreweryReview';
 import User from '../../database/model/User';
 import { IRawBreweryData } from '../data/types';
 

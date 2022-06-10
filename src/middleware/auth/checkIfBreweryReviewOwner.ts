@@ -1,6 +1,5 @@
 import AppDataSource from '../../database/AppDataSource';
 import BreweryReview from '../../database/model/BreweryReview';
-import User from '../../database/model/User';
 import ServerError from '../../util/error/ServerError';
 import isValidUuid from '../../util/validation/isValidUuid';
 import { BreweryReviewMiddlewareFn } from './types/authMiddlewareTypes';
@@ -23,9 +22,9 @@ const checkIfBreweryReviewOwner: BreweryReviewMiddlewareFn = async (req, res, ne
       throw new ServerError('Could not find a comment that id.', 404);
     }
 
-    const currentUser = req.currentUser as User;
+    const { currentUser } = req;
 
-    if (queriedReview.postedBy.id !== currentUser.id) {
+    if (queriedReview.postedBy.id !== currentUser?.id) {
       throw new ServerError('You are not authorized to modify this resource.', 403);
     }
 

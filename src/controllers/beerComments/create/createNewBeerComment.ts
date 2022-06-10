@@ -1,6 +1,5 @@
 import BeerPost from '../../../database/model/BeerPost';
 import BeerComment from '../../../database/model/BeerComment';
-import User from '../../../database/model/User';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 import isValidUuid from '../../../util/validation/isValidUuid';
@@ -16,8 +15,11 @@ const createNewComment: createNewCommentT = async (req, res, next) => {
   try {
     const { beerId } = req.params;
     const { comment, rating } = req.body;
-    
-    const currentUser = req.currentUser as User;
+
+    const { currentUser } = req;
+    if (!currentUser) {
+      throw new ServerError('Please reauthenticate your request.', 401);
+    }
 
     if (!isValidUuid(beerId)) {
       throw new ServerError('Cannot post comment. The given beer id was invalid.', 400);

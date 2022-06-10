@@ -24,7 +24,14 @@ const seedDatabase = async () => {
   await AppDataSource.initialize();
 
   await AppDataSource.manager.query(
-    `TRUNCATE TABLE "user", profile, beer_post, brewery_post, beer_comment, beer_image CASCADE`,
+    `--sql 
+    TRUNCATE TABLE profile,
+                   beer_post,
+                   brewery_post,
+                   beer_comment,
+                   beer_image,
+                   "user" CASCADE
+    `,
   );
 
   logger.info('Seeding database. This will take a bit of time...');

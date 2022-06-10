@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Request, Response, NextFunction } from 'express-serve-static-core';
 import ServerError from '../../../util/error/ServerError';
 import ErrorResponse from '../../../util/response/ErrorResponse';

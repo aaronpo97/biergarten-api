@@ -10,7 +10,6 @@ import BeerComment from './model/BeerComment';
 import BeerImage from './model/BeerImage';
 import BreweryImage from './model/BreweryImage';
 import BreweryReview from './model/BreweryReview';
-import logger from '../util/logger';
 
 dotenv.config();
 const { LOCAL_DB_CONNECTION_STRING, CLOUD_DB_CONNECTION_STRING, NODE_ENV } = process.env;

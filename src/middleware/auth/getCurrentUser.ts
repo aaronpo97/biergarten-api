@@ -4,7 +4,6 @@ import ServerError from '../../util/error/ServerError';
 import { MiddlewareFn } from './types/authMiddlewareTypes';
 
 const getCurrentUser: MiddlewareFn = async (req, res, next) => {
-
   const audience = req.decodedAccessToken?.audience as string;
   const currentUser = await User.findOne({
     where: { id: audience },

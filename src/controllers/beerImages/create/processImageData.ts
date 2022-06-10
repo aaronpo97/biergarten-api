@@ -1,13 +1,20 @@
 import { Express } from 'express-serve-static-core';
 import BeerPost from '../../../database/model/BeerPost';
 import BeerImage from '../../../database/model/BeerImage';
-import User from '../../../database/model/User';
 import ServerError from '../../../util/error/ServerError';
 
 import SuccessResponse from '../../../util/response/SuccessResponse';
 import isValidUuid from '../../../util/validation/isValidUuid';
 import { ProcessImageDataFn } from '../@types/RequestHandlers';
 
+/**
+ * Business logic for processing image data from multer into the database.
+ *
+ * Takes in the beer id as a request parameter. If the provided beer id is invalid, the
+ * server will throw status 400. Additionally, if no files are included in the request,
+ * the server will also throw status 400. If a beer post with the provided id could not be
+ * found, the server will throw status 401.
+ */
 const processImageData: ProcessImageDataFn = async (req, res, next) => {
   try {
     const { beerId } = req.params;
@@ -32,8 +39,10 @@ const processImageData: ProcessImageDataFn = async (req, res, next) => {
 
     const imagePromises: Array<Promise<BeerImage>> = [];
 
-
-    const currentUser = req.currentUser as User;
+    const { currentUser } = req;
+    if (!currentUser) {
+      throw new ServerError('Please reauthenticate your request.', 401);
+    }
     files.forEach((file) => {
       const beerImage = new BeerImage();
       beerImage.path = file.path;
@@ -45,14 +54,13 @@ const processImageData: ProcessImageDataFn = async (req, res, next) => {
     const uploadedImages = await Promise.all(imagePromises);
     const newAccessToken = req.newAccessToken as string | undefined;
 
-    next(
-      new SuccessResponse<{ uploadedImages: BeerImage[] }>(
-        `Uploaded ${files.length} file${files.length === 1 ? '' : 's'}.`,
-        200,
-        { uploadedImages },
-        newAccessToken,
-      ),
+    const successResponse = new SuccessResponse<{ uploadedImages: BeerImage[] }>(
+      `Uploaded ${files.length} file${files.length === 1 ? '' : 's'}.`,
+      200,
+      { uploadedImages },
+      newAccessToken,
     );
+    next(successResponse);
   } catch (err) {
     if (err instanceof Error) {
       next(err);

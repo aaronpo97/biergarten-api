@@ -48,7 +48,7 @@ const editUsername: EditUsernameRequestHandler = async (req, res, next) => {
       newAccessToken,
     );
 
-    next(response)
+    next(response);
   } catch (err) {
     next(err);
   }

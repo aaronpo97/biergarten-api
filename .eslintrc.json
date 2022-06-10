@@ -29,7 +29,7 @@
       }
     ],
     "import/no-cycle": 0,
-    "import/no-unresolved": 1,
+    "import/no-unresolved": 0,
     "camelcase": 0,
     "no-unused-vars": "warn",
     "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }]
