@@ -8,7 +8,7 @@
     "postinstall": "npm run build",
     "start": "NODE_ENV=production node .",
     "prestart": "tsc",
-    "dev": "nodemon ./src/main.ts",
+    "dev": "nodemon --transpile-only ./src/main.ts ",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "format": "npx prettier --write .",
