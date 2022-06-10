@@ -6,6 +6,13 @@ import SuccessResponse from '../../../util/response/SuccessResponse';
 import isValidUuid from '../../../util/validation/isValidUuid';
 import { getCommentByIdT } from '../types/RequestHandlers';
 
+/**
+ * Business logic for getting a comment by its id.
+ *
+ * Takes in the beer id and comment id as request params. If the beer id and comment id
+ * are invalid, the server will throw status code 400. If the server could not locate a
+ * beer post or comment with the provided ids, the server will throw error 404.
+ */
 const getCommentById: getCommentByIdT = async (req, res, next) => {
   try {
     const { beerId, commentId } = req.params;
