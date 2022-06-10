@@ -1,6 +1,6 @@
 import BreweryPost from '../../../database/model/BreweryPost';
 import BreweryReview from '../../../database/model/BreweryReview';
-import User from '../../../database/model/User';
+
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 import isValidUuid from '../../../util/validation/isValidUuid';
@@ -27,7 +27,10 @@ const createNewBreweryReview: createBreweryReviewFn = async (req, res, next) => 
 
     const breweryReview = new BreweryReview();
 
-    const currentUser = req.currentUser as User;
+    const { currentUser } = req;
+    if (!currentUser) {
+      throw new ServerError('Please reauthenticate your request.', 401);
+    }
 
     breweryReview.breweryPost = breweryPost;
     breweryReview.rating = rating;

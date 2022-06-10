@@ -1,10 +1,10 @@
 import { CreateBreweryRequestHandler } from '../types/RequestHandlers';
 
 import BreweryPost from '../../../database/model/BreweryPost';
+
 import ErrorResponse from '../../../util/response/ErrorResponse';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
-import User from '../../../database/model/User';
 
 /** Business logic for creating a new brewery. */
 const createNewBrewery: CreateBreweryRequestHandler = async (
@@ -19,7 +19,10 @@ const createNewBrewery: CreateBreweryRequestHandler = async (
       throw new ServerError('Missing params in request body.', 400);
     }
 
-    const currentUser = req.currentUser as User;
+    const { currentUser } = req;
+    if (!currentUser) {
+      throw new ServerError('Please reauthenticate your request.', 401);
+    }
 
     const newBrewery = new BreweryPost();
 

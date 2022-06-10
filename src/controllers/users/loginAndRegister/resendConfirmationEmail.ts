@@ -4,11 +4,15 @@ import { generateConfirmationToken } from '../../../util/auth/generateTokens';
 
 import SuccessResponse from '../../../util/response/SuccessResponse';
 import sendConfirmationEmail from '../../../util/userRegistration/sendConfirmationEmail';
-import User from '../../../database/model/User';
+
+import ServerError from '../../../util/error/ServerError';
 
 const resendConfirmationEmail: RequestHandler = async (req, res, next) => {
   try {
-    const currentUser = req.currentUser as User;
+    const { currentUser } = req;
+    if (!currentUser) {
+      throw new ServerError('Please reauthenticate your request.', 401);
+    }
 
     const confirmationToken = await generateConfirmationToken(currentUser);
 

@@ -1,5 +1,3 @@
-import { RequestHandler } from 'express-serve-static-core';
-
 import AppDataSource from '../../../database/AppDataSource';
 import BreweryReview from '../../../database/model/BreweryReview';
 import ServerError from '../../../util/error/ServerError';

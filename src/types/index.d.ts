@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { JwtPayload } from 'jsonwebtoken';
 import User from '../database/model/User';
 

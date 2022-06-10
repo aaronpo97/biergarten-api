@@ -1,6 +1,5 @@
 import AppDataSource from '../../database/AppDataSource';
 import BeerComment from '../../database/model/BeerComment';
-import User from '../../database/model/User';
 import ServerError from '../../util/error/ServerError';
 import isValidUuid from '../../util/validation/isValidUuid';
 import { BeerCommentMiddlewareFn } from './types/authMiddlewareTypes';
@@ -23,7 +22,10 @@ const checkIfBeerCommentOwner: BeerCommentMiddlewareFn = async (req, res, next) 
       throw new ServerError('Could not find a comment that id.', 404);
     }
 
-    const currentUser = req.currentUser as User;
+    const { currentUser } = req;
+    if (!currentUser) {
+      throw new ServerError('Please reauthenticate your request.', 401);
+    }
 
     if (queriedComment.postedBy.id !== currentUser.id) {
       throw new ServerError('You are not authorized to modify this beer comment.', 403);

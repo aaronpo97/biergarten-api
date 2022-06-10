@@ -1,7 +1,6 @@
 import { Express } from 'express-serve-static-core';
 import BeerPost from '../../../database/model/BeerPost';
 import BeerImage from '../../../database/model/BeerImage';
-import User from '../../../database/model/User';
 import ServerError from '../../../util/error/ServerError';
 
 import SuccessResponse from '../../../util/response/SuccessResponse';
@@ -32,7 +31,10 @@ const processImageData: ProcessImageDataFn = async (req, res, next) => {
 
     const imagePromises: Array<Promise<BeerImage>> = [];
 
-    const currentUser = req.currentUser as User;
+    const { currentUser } = req;
+    if (!currentUser) {
+      throw new ServerError('Please reauthenticate your request.', 401);
+    }
     files.forEach((file) => {
       const beerImage = new BeerImage();
       beerImage.path = file.path;

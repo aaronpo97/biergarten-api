@@ -1,6 +1,5 @@
 import AppDataSource from '../../database/AppDataSource';
 import BreweryPost from '../../database/model/BreweryPost';
-import User from '../../database/model/User';
 import ServerError from '../../util/error/ServerError';
 import isValidUuid from '../../util/validation/isValidUuid';
 import { BreweryPostMiddlewareFn } from './types/authMiddlewareTypes';
@@ -26,7 +25,10 @@ const checkIfBreweryPostOwner: BreweryPostMiddlewareFn = async (req, res, next) 
       throw new ServerError('Could not find a brewery with that id.', 404);
     }
 
-    const currentUser = req.currentUser as User;
+    const { currentUser } = req;
+    if (!currentUser) {
+      throw new ServerError('Please reauthenticate your request.', 401);
+    }
 
     const isBreweryPostOwner = currentUser.id === queriedBrewery.postedBy.id;
 

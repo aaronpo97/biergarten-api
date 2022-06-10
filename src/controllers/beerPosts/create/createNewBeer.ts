@@ -6,7 +6,6 @@ import SuccessResponse from '../../../util/response/SuccessResponse';
 
 import BeerPost from '../../../database/model/BeerPost';
 import BreweryPost from '../../../database/model/BreweryPost';
-import User from '../../../database/model/User';
 
 /**
  * Business logic for creating a new brewery.
@@ -41,8 +40,14 @@ const createNewBeer: CreateBeerRequestHandler = async (req, res, next): Promise<
     const newBeer = BeerPost.create();
     const brewery = await BreweryPost.findOneBy({ id: breweryId });
 
-    if (!brewery)
+    if (!brewery) {
       throw new ServerError('Could not find the brewery for posted beer.', 404);
+    }
+
+    const { currentUser } = req;
+    if (!currentUser) {
+      throw new ServerError('Please reauthenticate your request.', 401);
+    }
 
     newBeer.description = description;
     newBeer.name = name;
@@ -50,7 +55,7 @@ const createNewBeer: CreateBeerRequestHandler = async (req, res, next): Promise<
     newBeer.ibu = ibu;
     newBeer.brewery = brewery;
     newBeer.type = type;
-    newBeer.postedBy = req.currentUser as User;
+    newBeer.postedBy = currentUser;
 
     await newBeer.save();
 

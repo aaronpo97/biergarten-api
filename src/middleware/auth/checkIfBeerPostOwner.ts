@@ -1,7 +1,6 @@
-import { RequestHandler } from 'express-serve-static-core';
 import AppDataSource from '../../database/AppDataSource';
 import BeerPost from '../../database/model/BeerPost';
-import User from '../../database/model/User';
+
 import ServerError from '../../util/error/ServerError';
 import isValidUuid from '../../util/validation/isValidUuid';
 import { BeerPostMiddlewareFn } from './types/authMiddlewareTypes';
@@ -17,13 +16,9 @@ const checkIfBeerPostOwner: BeerPostMiddlewareFn = async (req, res, next) => {
       );
     }
 
-    const currentUser = req.currentUser as User;
-
+    const { currentUser } = req;
     if (!currentUser) {
-      throw new ServerError(
-        'The current user could not be determined, please reauthenticate.',
-        401,
-      );
+      throw new ServerError('Please reauthenticate your request.', 401);
     }
 
     const queriedBeer = await AppDataSource.getRepository(BeerPost)

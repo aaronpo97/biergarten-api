@@ -1,4 +1,3 @@
-import User from '../../../database/model/User';
 import { verifyConfirmationToken } from '../../../util/auth/verifyTokenHelperFns';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
@@ -27,7 +26,10 @@ const confirmUser: confirmUserFn = async (req, res, next) => {
       );
     }
 
-    const currentUser = req.currentUser as User;
+    const { currentUser } = req;
+    if (!currentUser) {
+      throw new ServerError('Please reauthenticate your request.', 401);
+    }
 
     if (currentUser.accountConfirmed) {
       throw new ServerError('Your account is already confirmed.', 400);

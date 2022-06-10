@@ -34,7 +34,10 @@ const editEmail: EditEmailRequestHandler = async (req, res, next) => {
 
     const newAccessToken = req.newAccessToken as string | undefined;
 
-    const currentUser = req.currentUser as User;
+    const { currentUser } = req;
+    if (!currentUser) {
+      throw new ServerError('Please reauthenticate your request.', 401);
+    }
 
     currentUser.email = email;
     currentUser.accountConfirmed = false;
