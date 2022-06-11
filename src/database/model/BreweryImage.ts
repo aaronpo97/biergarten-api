@@ -17,11 +17,17 @@ export default class BreweryImage extends BaseEntity {
   @Column()
   path!: string;
 
+  @Column()
+  filename!: string;
+
   @JoinColumn()
   @ManyToOne(() => BreweryPost, (brewery) => brewery.images)
   breweryPost!: BreweryPost;
 
   @JoinColumn()
   @ManyToOne(() => User, (user) => user.breweryImages)
-  postedBy!: User;
+  author!: User;
+
+  @Column()
+  caption!: string;
 }

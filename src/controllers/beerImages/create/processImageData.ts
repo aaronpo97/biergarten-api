@@ -46,13 +46,15 @@ const processImageData: ProcessImageDataFn = async (req, res, next) => {
     files.forEach((file) => {
       const beerImage = new BeerImage();
       beerImage.path = file.path;
+      beerImage.filename = file.filename;
       beerImage.beerPost = beerPost;
       beerImage.author = currentUser;
+      beerImage.caption = `Image of ${beerPost.name}.`;
       imagePromises.push(beerImage.save());
     });
 
     const uploadedImages = await Promise.all(imagePromises);
-    const newAccessToken = req.newAccessToken as string | undefined;
+    const {newAccessToken} = req;
 
     const successResponse = new SuccessResponse<{ uploadedImages: BeerImage[] }>(
       `Uploaded ${files.length} file${files.length === 1 ? '' : 's'}.`,

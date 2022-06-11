@@ -13,3 +13,5 @@ export type ProcessImageDataFn = RequestHandler<
   /** Request body */
   {}
 >;
+
+export type ImageByIdFn = RequestHandler<{ beerId: string; imageId: string }>;

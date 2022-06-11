@@ -21,7 +21,13 @@ export default class BeerImage extends BaseEntity {
   @ManyToOne(() => BeerPost, (beer) => beer.images)
   beerPost!: BeerPost;
 
+  @Column()
+  filename!: string;
+
   @JoinColumn()
   @ManyToOne(() => User, (user) => user.beerImages)
   author!: User;
+
+  @Column()
+  caption!: string 
 }
