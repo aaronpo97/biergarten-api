@@ -4,7 +4,7 @@ import BeerImage from '../../../database/model/BeerImage';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 import isValidUuid from '../../../util/validation/isValidUuid';
-import { ImageByIdFn } from '../@types/RequestHandlers';
+import { ImageByIdFn } from '../types/RequestHandlers';
 
 /** Business logic for getting an image by its id */
 const getBeerImageById: ImageByIdFn = async (req, res, next) => {

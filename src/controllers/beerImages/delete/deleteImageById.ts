@@ -4,7 +4,7 @@ import ServerError from '../../../util/error/ServerError';
 import deleteImageHelper from '../../../util/imageUpload/deleteImageHelper';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 import isValidUuid from '../../../util/validation/isValidUuid';
-import { ImageByIdFn } from '../@types/RequestHandlers';
+import { ImageByIdFn } from '../types/RequestHandlers';
 
 const deleteImageById: ImageByIdFn = async (req, res, next) => {
   try {

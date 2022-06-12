@@ -29,5 +29,5 @@ export default class BeerImage extends BaseEntity {
   author!: User;
 
   @Column()
-  caption!: string 
+  caption!: string;
 }

@@ -5,7 +5,7 @@ import ServerError from '../../../util/error/ServerError';
 
 import SuccessResponse from '../../../util/response/SuccessResponse';
 import isValidUuid from '../../../util/validation/isValidUuid';
-import { ProcessImageDataFn } from '../@types/RequestHandlers';
+import { ProcessNewImagesFn } from '../types/RequestHandlers';
 
 /**
  * Business logic for processing image data from multer into the database.
@@ -15,7 +15,7 @@ import { ProcessImageDataFn } from '../@types/RequestHandlers';
  * the server will also throw status 400. If a beer post with the provided id could not be
  * found, the server will throw status 401.
  */
-const processImageData: ProcessImageDataFn = async (req, res, next) => {
+const processImageData: ProcessNewImagesFn = async (req, res, next) => {
   try {
     const { beerId } = req.params;
 
@@ -54,7 +54,7 @@ const processImageData: ProcessImageDataFn = async (req, res, next) => {
     });
 
     const uploadedImages = await Promise.all(imagePromises);
-    const {newAccessToken} = req;
+    const { newAccessToken } = req;
 
     const successResponse = new SuccessResponse<{ uploadedImages: BeerImage[] }>(
       `Uploaded ${files.length} file${files.length === 1 ? '' : 's'}.`,

@@ -8,24 +8,25 @@ import bodyParser from 'body-parser';
 
 import { env } from 'process';
 
-import beerPostRoutes from './routes/beerPostRoutes';
-import breweryPostRoutes from './routes/breweryPostRoutes';
-import teapotRoute from './routes/teapotRoute';
-
-import { sendErrorResponse, sendSuccessResponse } from './middleware/response';
-import userRoutes from './routes/userRoutes';
 import beerCommentRoutes from './routes/beerCommentRoutes';
 import beerImageRoutes from './routes/beerImageRoutes';
+import beerPostRoutes from './routes/beerPostRoutes';
+import breweryPostRoutes from './routes/breweryPostRoutes';
 import breweryReviewRoutes from './routes/breweryReviewRoutes';
+import teapotRoute from './routes/teapotRoute';
+import userRoutes from './routes/userRoutes';
 
-import ServerError from './util/error/ServerError';
+import { sendErrorResponse, sendSuccessResponse } from './middleware/response';
+
+import inProductionMode from './util/environment/inProductionMode';
 import requestLogger from './util/logger/utils/requestLogger';
+import ServerError from './util/error/ServerError';
 
 const app = express();
 
 app.use(bodyParser.json());
 
-if (env.NODE_ENV === 'production') {
+if (inProductionMode) {
   app.use(requestLogger);
 }
 
