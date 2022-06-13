@@ -4,7 +4,7 @@ import BeerPost from '../../../database/model/BeerPost';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 import isValidUuid from '../../../util/validation/isValidUuid';
-import { BeerByIdRequestHandler } from '../@types/RequestHandlers';
+import { BeerByIdRequestHandler } from '../types/RequestHandlers';
 
 /**
  * Business logic for getting a beer post by its id.

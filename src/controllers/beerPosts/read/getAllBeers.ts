@@ -1,4 +1,4 @@
-import { BeerRequestHandler } from '../@types/RequestHandlers';
+import { BeerRequestHandler } from '../types/RequestHandlers';
 
 import BeerPost from '../../../database/model/BeerPost';
 import ErrorResponse from '../../../util/response/ErrorResponse';

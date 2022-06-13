@@ -1,5 +1,5 @@
 import isValidUuid from '../../../util/validation/isValidUuid';
-import { BeerByIdRequestHandler } from '../@types/RequestHandlers';
+import { BeerByIdRequestHandler } from '../types/RequestHandlers';
 import BeerPost from '../../../database/model/BeerPost';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';

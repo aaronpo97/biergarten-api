@@ -1,5 +1,5 @@
 import { validate as checkIfValidUuid } from 'uuid';
-import { CreateBeerRequestHandler } from '../@types/RequestHandlers';
+import { CreateBeerRequestHandler } from '../types/RequestHandlers';
 import ErrorResponse from '../../../util/response/ErrorResponse';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';

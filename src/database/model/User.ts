@@ -55,7 +55,7 @@ export default class User extends BaseEntity {
   beerImages!: Array<BeerImage>;
 
   @JoinColumn()
-  @OneToMany(() => BreweryImage, (breweryImage) => breweryImage.postedBy)
+  @OneToMany(() => BreweryImage, (breweryImage) => breweryImage.author)
   breweryImages!: Array<BreweryImage>;
 
   @JoinColumn()
