@@ -1,3 +1,4 @@
+import HTTPStatusCodes from '../types/HTTPStatusCodes';
 import Response from './Response';
 
 /**
@@ -12,11 +13,11 @@ export default class SuccessResponse<PayloadType> extends Response {
 
   constructor(
     message: string,
-    status: number,
+    status: HTTPStatusCodes,
     payload: PayloadType,
     newAccessToken?: string,
   ) {
-    super({ message, status, success: true });
+    super(message, status, true);
     this.payload = payload;
     this.newAccessToken = newAccessToken;
   }

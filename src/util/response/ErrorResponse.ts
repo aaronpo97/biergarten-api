@@ -1,3 +1,4 @@
+import HTTPStatusCodes from '../types/HTTPStatusCodes';
 import Response from './Response';
 
 /**
@@ -7,10 +8,10 @@ import Response from './Response';
  * the value of success to false, sends an error message as well as the error stack.
  */
 export default class ErrorResponse extends Response {
-  stack?: string;
+  details?: unknown;
 
-  constructor(message: string, status: number, stack?: string) {
-    super({ message, status, success: false });
-    this.stack = stack;
+  constructor(message: string, status: HTTPStatusCodes, stack?: unknown) {
+    super(message, status, false);
+    this.details = stack;
   }
 }

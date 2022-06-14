@@ -1,7 +1,9 @@
-export default class ServerError extends Error {
-  status: number;
+import HTTPStatusCodes from '../types/HTTPStatusCodes';
 
-  constructor(message: string, status: number) {
+export default class ServerError extends Error {
+  status: HTTPStatusCodes;
+
+  constructor(message: string, status: HTTPStatusCodes) {
     super();
     this.message = message;
     this.status = status;

@@ -4,22 +4,16 @@
  * Used for the HTTP Responses from Express.
  */
 
+import HTTPStatusCodes from '../types/HTTPStatusCodes';
+
 export default class Response {
   message: string;
 
-  status: number;
+  status: HTTPStatusCodes;
 
   success: boolean;
 
-  constructor({
-    message,
-    status,
-    success,
-  }: {
-    message: string;
-    status: number;
-    success: boolean;
-  }) {
+  constructor(message: string, status: HTTPStatusCodes, success: boolean) {
     this.message = message;
     this.status = status;
     this.success = success;
