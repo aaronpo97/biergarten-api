@@ -18,7 +18,7 @@ export type editBreweryReviewByIdFn = RequestHandler<
     breweryId: string;
   },
   {},
-  { reviewBody?: string; rating?: number }
+  { reviewBody?: string; rating?: 1 | 2 | 3 | 4 | 5 }
 >;
 
 export type createBreweryReviewFn = editBreweryReviewByIdFn;

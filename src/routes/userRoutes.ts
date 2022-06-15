@@ -17,12 +17,18 @@ import showPublicUserInfo from '../controllers/users/read/showPublicUserInfo';
 
 /* Utils */
 import notAllowedError from '../util/error/notAllowedError';
+import requestValidator from '../util/validation/requestValidator';
+import registerUserValidationSchema from '../util/joi/users/registerUserValidationSchema';
+import loginUserValidationSchema from '../util/joi/users/loginUserValidationSchema';
+import confirmUserValidationSchema from '../util/joi/users/confirmUserValidationSchema';
+import editUsernameValidationSchema from '../util/joi/users/editUsernameValidationSchema';
+import editEmailValidationSchema from '../util/joi/users/editEmailValidationSchema';
 
 const userRoutes = Router();
 
 userRoutes
   .route('/register')
-  .post(registerUser)
+  .post(requestValidator.body(registerUserValidationSchema), registerUser)
   .all((req, res, next) => {
     res.set('Allow', 'POST');
     next(notAllowedError);
@@ -30,7 +36,7 @@ userRoutes
 
 userRoutes
   .route('/login')
-  .post(loginUser)
+  .post(requestValidator.body(loginUserValidationSchema), loginUser)
   .all((req, res, next) => {
     res.set('Allow', 'POST');
     next(notAllowedError);
@@ -38,7 +44,12 @@ userRoutes
 
 userRoutes
   .route('/confirm-user')
-  .put(checkTokens, getCurrentUser, confirmUser)
+  .put(
+    requestValidator.body(confirmUserValidationSchema),
+    checkTokens,
+    getCurrentUser,
+    confirmUser,
+  )
   .all((req, res, next) => {
     res.set('Allow', 'PUT');
     next(notAllowedError);
@@ -63,7 +74,13 @@ userRoutes
 
 userRoutes
   .route('/:userId/edit-username')
-  .put(checkTokens, getCurrentUser, checkIfCurrentUser, editUsername)
+  .put(
+    requestValidator.body(editUsernameValidationSchema),
+    checkTokens,
+    getCurrentUser,
+    checkIfCurrentUser,
+    editUsername,
+  )
   .all((req, res, next) => {
     res.set('Allow', 'PUT');
     next(notAllowedError);
@@ -71,7 +88,13 @@ userRoutes
 
 userRoutes
   .route('/:userId/edit-email')
-  .put(checkTokens, getCurrentUser, checkIfCurrentUser, editEmail)
+  .put(
+    requestValidator.body(editEmailValidationSchema),
+    checkTokens,
+    getCurrentUser,
+    checkIfCurrentUser,
+    editEmail,
+  )
   .all((req, res, next) => {
     res.set('Allow', 'GET, PUT');
     next(notAllowedError);

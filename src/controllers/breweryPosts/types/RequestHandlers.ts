@@ -12,7 +12,9 @@ export type BreweryRequestHandler = RequestHandler<
   /** Request body */
   {},
   /** Response body */
-  {}
+  {},
+  /** Request query */
+  { page_num?: string; page_size?: string }
 >;
 
 /**

@@ -12,7 +12,7 @@ export type createNewCommentT = RequestHandler<
   /** Response body */
   {},
   /** Request body */
-  { comment?: string; rating?: number }
+  { comment?: string; rating?: 1 | 2 | 3 | 4 | 5 }
 >;
 
 /**
