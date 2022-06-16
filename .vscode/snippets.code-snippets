@@ -1,0 +1,35 @@
+{
+	"createValidator": {
+		"scope": "javascript, typescript",
+		"prefix": "joicreate",
+		"body": [
+			"import Joi from 'joi'",
+			"",
+			"const $TM_FILENAME_BASE = Joi.object({})", 
+			"",
+			"export default $TM_FILENAME_BASE"
+		]
+	},
+	"createMiddleware": {
+		"scope": "typescript",
+		"prefix": "middlewarecreate",
+		"body": [
+			"import { RequestHandler } from 'express-serve-static-core';",
+			"",
+			"const $TM_FILENAME_BASE: RequestHandler<{},{},{}> = async (req, res, next) => {", 
+			"",
+			"}",
+			"export default $TM_FILENAME_BASE"
+		]
+	},
+	"createUtilFunction": {
+		"scope": "typescript, javascript",
+		"prefix": "utilcreate",
+		"body": [
+			"const $TM_FILENAME_BASE = () => {", 
+			"",
+			"}",
+			"export default $TM_FILENAME_BASE"
+		]
+	},
+}

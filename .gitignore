@@ -2,7 +2,7 @@ node_modules
 dist
 .env
 .DS_Store
-.vscode
+.vscode/settings.json
 coverage
 seedData.ts
 todo.md
