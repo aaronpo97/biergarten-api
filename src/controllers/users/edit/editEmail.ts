@@ -32,7 +32,7 @@ const editEmail: EditEmailRequestHandler = async (req, res, next) => {
       );
     }
 
-    const newAccessToken = req.newAccessToken as string | undefined;
+    const { newAccessToken } = req;
 
     const { currentUser } = req;
     if (!currentUser) {

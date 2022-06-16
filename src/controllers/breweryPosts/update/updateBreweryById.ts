@@ -53,7 +53,14 @@ const updateBreweryById: UpdateBreweryRequestHandler = async (req, res, next) =>
 
     await breweryToUpdate.save();
 
-    next(new SuccessResponse(`Updated brewery id ${breweryId}`, 200, breweryToUpdate));
+    const { newAccessToken } = req;
+    const successResponse = new SuccessResponse(
+      `Updated brewery id ${breweryId}`,
+      200,
+      breweryToUpdate,
+      newAccessToken,
+    );
+    next(successResponse);
   } catch (e) {
     if (e instanceof Error) {
       next(e);

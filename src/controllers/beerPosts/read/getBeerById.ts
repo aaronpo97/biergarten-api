@@ -33,10 +33,13 @@ const getBeerById: BeerByIdRequestHandler = async (req, res, next) => {
       throw new ServerError('Could not find a beer with that id.', 404);
     }
 
+    const { newAccessToken } = req;
+
     const successResponse = new SuccessResponse(
       `Sending beer id ${beerId}`,
       200,
       queriedBeer,
+      newAccessToken,
     );
     next(successResponse);
   } catch (e) {

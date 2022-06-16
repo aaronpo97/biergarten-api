@@ -39,10 +39,13 @@ const showPublicUserInfo: UserRequestHandler = async (req, res, next) => {
       .where('beer.postedById = :id', { id: userId })
       .getMany();
 
+    const { newAccessToken } = req;
+
     const successResponse = new SuccessResponse(
       `Sending the user with id: ${userId}`,
       200,
       { ...queriedUser, beerPosts: queriedUserPosts },
+      newAccessToken,
     );
 
     next(successResponse);

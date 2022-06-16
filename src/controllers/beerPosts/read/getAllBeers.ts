@@ -29,10 +29,12 @@ const getAllBeers: BeerRequestHandler = async (req, res, next): Promise<void> =>
       .skip(pageNum === 1 ? 0 : pageNum * pageSize)
       .getMany();
 
+    const { newAccessToken } = req;
     const successResponse = new SuccessResponse(
       `Sending page ${pageNum} of beers.`,
       200,
       { pageNum, pageSize, allBeers },
+      newAccessToken,
     );
 
     next(successResponse);

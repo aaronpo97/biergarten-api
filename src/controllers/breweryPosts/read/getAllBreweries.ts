@@ -20,18 +20,16 @@ const getAllBreweries: BreweryRequestHandler = async (req, res, next): Promise<v
       .skip(pageNum === 1 ? 0 : pageNum * pageSize)
       .getMany();
 
-    const routeResponse = new SuccessResponse(`Getting page ${pageNum} of breweries.`, 200, allBreweries);
+    const { newAccessToken } = req;
+    const routeResponse = new SuccessResponse(
+      `Getting page ${pageNum} of breweries.`,
+      200,
+      allBreweries,
+      newAccessToken,
+    );
     next(routeResponse);
   } catch (e) {
-    if (e instanceof Error) {
-      const errorResponse = new ErrorResponse(
-        e.message,
-        e instanceof ServerError ? e.status : 500,
-        e.stack,
-      );
-      next(errorResponse);
-    }
-    next();
+    next(e);
   }
 };
 

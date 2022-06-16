@@ -25,10 +25,13 @@ const getAllBeerImages: getAllImagesFn = async (req, res, next) => {
       );
     }
 
+    const { newAccessToken } = req;
+
     const response = new SuccessResponse(
       `Getting all images for beer post with id ${beerId}.`,
       200,
-      { beerImages },
+      beerImages,
+      newAccessToken,
     );
     next(response);
   } catch (error) {
