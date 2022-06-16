@@ -12,7 +12,6 @@ export type CreateBeerRequestHandler = RequestHandler<
   {},
   /** Request body */
   {
-    beerId?: string;
     name?: string;
     description?: string;
     abv?: number;

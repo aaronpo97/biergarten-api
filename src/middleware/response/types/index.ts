@@ -1,3 +1,4 @@
+import { ExpressJoiError } from 'express-joi-validation';
 /* eslint-disable no-unused-vars */
 import { Request, Response, NextFunction } from 'express-serve-static-core';
 import ServerError from '../../../util/error/ServerError';
@@ -12,8 +13,8 @@ export type SuccessResponseT = (
 ) => void;
 
 export type ErrorResponseT = (
-  data: ServerError,
+  data: Error | ServerError | ExpressJoiError,
   req: Request,
-  res: Response<ErrorResponse>,
+  res: Response<unknown>,
   next: NextFunction,
 ) => void;

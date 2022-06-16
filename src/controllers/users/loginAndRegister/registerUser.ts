@@ -8,6 +8,7 @@ import SuccessResponse from '../../../util/response/SuccessResponse';
 
 import { RegisterUserRequestHandler } from '../types/RequestHandlers';
 import sendConfirmationEmail from '../../../util/userRegistration/sendConfirmationEmail';
+import inProductionMode from '../../../util/environment/inProductionMode';
 
 /**
  * Business logic for registering a user.
@@ -52,10 +53,10 @@ const registerUser: RegisterUserRequestHandler = async (req, res, next) => {
 
     const successResponse = new SuccessResponse<{
       registeredUser: User;
-      confirmationToken: string;
+      confirmationToken?: string;
     }>('Successfully registered user.', 201, {
       registeredUser: userToRegister,
-      confirmationToken,
+      confirmationToken: !inProductionMode ? confirmationToken : undefined,
     });
 
     await sendConfirmationEmail(confirmationToken, userToRegister);

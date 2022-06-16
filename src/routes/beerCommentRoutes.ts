@@ -15,13 +15,29 @@ import getCurrentUser from '../middleware/auth/getCurrentUser';
 
 /* Utils */
 import notAllowedError from '../util/error/notAllowedError';
+import requestValidator from '../util/validation/requestValidator';
+import createBeerCommentValidationSchema from '../util/joi/beerComments/createBeerCommentValidationSchema';
+import updateBeerCommentValidationSchema from '../util/joi/beerComments/updateBeerCommentValidationSchema';
+import getResourceQueryValidator from '../util/joi/getResourceQueryValidator';
 
 const commentRoutes = Router({ mergeParams: true });
 
 commentRoutes
   .route('/')
-  .get(getAllComments)
-  .post(checkTokens, getCurrentUser, checkIfUserIsConfirmed, createNewComment)
+  .get(
+    checkTokens,
+    getCurrentUser,
+    checkIfUserIsConfirmed,
+    requestValidator.query(getResourceQueryValidator),
+    getAllComments,
+  )
+  .post(
+    checkTokens,
+    getCurrentUser,
+    checkIfUserIsConfirmed,
+    requestValidator.body(createBeerCommentValidationSchema),
+    createNewComment,
+  )
   .all((req, res, next) => {
     res.set('Allow', 'GET, POST');
     next(notAllowedError);
@@ -29,20 +45,21 @@ commentRoutes
 
 commentRoutes
   .route('/:commentId')
-  .get(getCommentById)
+  .get(checkTokens, getCurrentUser, checkIfUserIsConfirmed, getCommentById)
+  .put(
+    checkTokens,
+    getCurrentUser,
+    checkIfUserIsConfirmed,
+    checkIfBeerCommentOwner,
+    requestValidator.body(updateBeerCommentValidationSchema),
+    editCommentById,
+  )
   .delete(
     checkTokens,
     getCurrentUser,
     checkIfUserIsConfirmed,
     checkIfBeerCommentOwner,
     deleteCommentById,
-  )
-  .put(
-    checkTokens,
-    getCurrentUser,
-    checkIfUserIsConfirmed,
-    checkIfBeerCommentOwner,
-    editCommentById,
   )
   .all((req, res, next) => {
     res.set('Allow', 'GET, DELETE, PUT');
