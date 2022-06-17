@@ -8,7 +8,7 @@ I am writing this app in an effort to continue learning about Typescript, Node, 
 
 I aim to rewrite the app using Postgres as my database rather than MongoDB as in the first version. I aim to only rewrite the server code with the aim of possibility of using this API for a mobile application sometime in the future.
 
-This application uses Typescript with the Express framework in addition to TypeORM for the data service layer.
+This application uses Typescript with the Express framework in addition to TypeORM for the data service layer. It incorporates the Cloudinary API for image upload to the cloud, as well as the Sparkpost API for email services.
 
 I am making this code public in the hopes that this content will be useful for anyone wanting to learn TypeORM, Typescript, or any other tools I use in this project. For those reading this code, I have annotated my files with JSDoc to describe exactly what I aim to do with each code snippet.
 
@@ -24,7 +24,7 @@ In this app you will encounter various beer related terms. Here is a list of ter
 
 The [International Bitterness Units](https://en.wikipedia.org/wiki/Beer_measurement#Bitterness) scale, or IBU, is used to approximately quantify the bitterness of beer. This scale is not measured on the perceived bitterness of the beer, but rather the amount of a component of beer known as iso-alpha acids.
 
-## How to run this application
+## How to run this application (from scratch)
 
 This `README` assumes that you have the current LTS version of Node.js (>=16.0), if that is not the case, go follow the instructions on the [Node.js website](https://nodejs.org/en/), then proceed with the following instructions. It also assumes that you have a bash shell installed on your system.
 
@@ -44,15 +44,22 @@ In the same terminal, run the following script to define your development enviro
 
 ```bash
 echo "
-LOCAL_DB_CONNECTION_STRING=''
-CLOUD_DB_CONNECTION_STRING=''
+LOCAL_DB_CONNECTION_STRING=
+CLOUD_DB_CONNECTION_STRING=
 
-REFRESH_TOKEN_SECRET=''
-ACCESS_TOKEN_SECRET=''
+REFRESH_TOKEN_SECRET=
+ACCESS_TOKEN_SECRET=
+CONFIRMATION_TOKEN_SECRET=
 
-NODE_ENV='dev'
-PORT=''
-BASE_URL='http://localhost'
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_KEY=
+CLOUDINARY_SECRET=
+
+NODE_ENV=
+PORT=
+BASE_URL=
+
+SPARKPOST_API_KEY=
 " > .env
 ```
 
@@ -61,7 +68,7 @@ BASE_URL='http://localhost'
 ##### Additional steps
 
 - Input the credentials to your database, as well as the port you wish to host the app on.
-- Generate a refresh token secret and an access token secret.
+- Generate a refresh token secret, access token secret, and a confirmation token secret.
 - I suggest using a password generator set to 64 characters for added security.
 
 ##### Example
@@ -72,10 +79,17 @@ CLOUD_DB_CONNECTION_STRING='postgres://{user}:{password}@{hostname}:{port}/{data
 
 REFRESH_TOKEN_SECRET='this_is_a_bad_secret'
 ACCESS_TOKEN_SECRET='tHiS_1s_a_B3ttr_s3crt'
+CONFIRMATION_TOKEN_SECRET='tHI$_!ss_3veN_bETter'
+
+CLOUDINARY_CLOUD_NAME='your_cloud_name'
+CLOUDINARY_KEY=
+CLOUDINARY_SECRET=
 
 NODE_ENV='dev'
 PORT='8080'
 BASE_URL='http://localhost'
+
+SPARKPOST_API_KEY=''
 ```
 
 ### Step 3
