@@ -3,6 +3,8 @@ import { BeerByIdRequestHandler } from '../types/RequestHandlers';
 import BeerPost from '../../../database/model/BeerPost';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
+import AppDataSource from '../../../database/AppDataSource';
+import logger from '../../../util/logger';
 
 /**
  * Business logic for deleting a beer post by its id.
@@ -22,26 +24,25 @@ const deleteBeerById: BeerByIdRequestHandler = async (req, res, next) => {
       );
     }
 
-    const beerToDelete = await BeerPost.findOne({
-      where: { id: beerId },
-      join: { alias: 'beer', leftJoinAndSelect: { brewery: 'beer.brewery' } },
-    });
+    const beerToDelete = await AppDataSource.createQueryBuilder()
+      .delete()
+      .from(BeerPost)
+      .where('id = :id', { id: beerId })
+      .execute();
 
-    if (!beerToDelete) {
+    if (!beerToDelete.affected) {
       throw new ServerError(
         `Cannot delete the beer with id ${beerId} as it could not be found.`,
         404,
       );
     }
 
-    await BeerPost.remove([beerToDelete]);
-
     const newAccessToken = req.newAccessToken as string | undefined;
 
     const successResponse = new SuccessResponse(
       `Successfully deleted the beer with id ${beerId}.`,
       200,
-      { ...beerToDelete, deleted: true },
+      undefined,
       newAccessToken,
     );
 

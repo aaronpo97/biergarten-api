@@ -29,10 +29,12 @@ const deleteImageById: ImageByIdFn = async (req, res, next) => {
 
     await deleteImageHelper(beerImage);
 
+    const { newAccessToken } = req;
     const response = new SuccessResponse(
       `Deleting the beer image with id ${imageId}`,
       200,
       beerImage,
+      newAccessToken,
     );
     next(response);
   } catch (error) {

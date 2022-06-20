@@ -28,7 +28,8 @@ const deleteUserById: UserRequestHandler = async (req, res, next) => {
       .where('id = :id', { id: userId })
       .execute();
 
-    const successResponse = new SuccessResponse('Deleted user.', 200, {});
+    const { newAccessToken } = req;
+    const successResponse = new SuccessResponse('Deleted user.', 200, {}, newAccessToken);
     next(successResponse);
   } catch (error) {
     if (error instanceof Error) {

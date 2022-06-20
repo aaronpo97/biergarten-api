@@ -27,10 +27,13 @@ const getBeerImageById: ImageByIdFn = async (req, res, next) => {
     if (!beerImage) {
       throw new ServerError('A beer image with that id could not be located.', 404);
     }
+
+    const { newAccessToken } = req;
     const response = new SuccessResponse(
       `Sending the beer image with id ${imageId}`,
       200,
       beerImage,
+      newAccessToken,
     );
     next(response);
   } catch (error) {

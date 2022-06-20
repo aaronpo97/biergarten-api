@@ -32,10 +32,16 @@ const deleteBreweryById: BreweryByIdRequestHandler = async (req, res, next) => {
       ? `Deleted the brewery with the id ${breweryId} and its associated beer posts.`
       : `Deleted the brewery with the id ${breweryId}`;
 
-    const successResponse = new SuccessResponse(message, 200, {
-      ...breweryToDelete,
-      deleted: true,
-    });
+    const { newAccessToken } = req;
+    const successResponse = new SuccessResponse(
+      message,
+      200,
+      {
+        ...breweryToDelete,
+        deleted: true,
+      },
+      newAccessToken,
+    );
 
     next(successResponse);
   } catch (e) {
