@@ -12,6 +12,7 @@ This application uses Typescript with the Express framework in addition to TypeO
 
 I am making this code public in the hopes that this content will be useful for anyone wanting to learn TypeORM, Typescript, or any other tools I use in this project. For those reading this code, I have annotated my files with JSDoc to describe exactly what I aim to do with each code snippet.
 
+
 ### Some beer terminology
 
 In this app you will encounter various beer related terms. Here is a list of terms used in this app and their definitions.
@@ -23,6 +24,10 @@ In this app you will encounter various beer related terms. Here is a list of ter
 #### IBU
 
 The [International Bitterness Units](https://en.wikipedia.org/wiki/Beer_measurement#Bitterness) scale, or IBU, is used to approximately quantify the bitterness of beer. This scale is not measured on the perceived bitterness of the beer, but rather the amount of a component of beer known as iso-alpha acids.
+
+## Database schema
+
+!["Database schema"](/documentationAssets/biergarten_schema.png "Database schema")
 
 ## How to run this application (from scratch)
 
