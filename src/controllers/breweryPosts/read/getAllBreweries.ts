@@ -20,7 +20,11 @@ const getAllBreweries: BreweryRequestHandler = async (req, res, next): Promise<v
       .skip(pageNum === 1 ? 0 : pageNum * pageSize)
       .getMany();
 
-    const routeResponse = new SuccessResponse(`Getting page ${pageNum} of breweries.`, 200, allBreweries);
+    const routeResponse = new SuccessResponse(
+      `Getting page ${pageNum} of breweries.`,
+      200,
+      allBreweries,
+    );
     next(routeResponse);
   } catch (e) {
     if (e instanceof Error) {

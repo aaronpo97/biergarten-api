@@ -56,6 +56,7 @@ const createNewBeer: CreateBeerRequestHandler = async (req, res, next): Promise<
     newBeer.brewery = brewery;
     newBeer.type = type;
     newBeer.postedBy = currentUser;
+    newBeer.postedDate = new Date(Date.now());
 
     await newBeer.save();
 

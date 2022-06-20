@@ -18,7 +18,7 @@ export default class BreweryReview extends BaseEntity {
   reviewBody!: string;
 
   @Column()
-  rating!: number;
+  rating!: 1 | 2 | 3 | 4 | 5;
 
   @Column()
   postedDate!: Date;

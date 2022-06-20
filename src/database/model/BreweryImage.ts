@@ -30,4 +30,10 @@ export default class BreweryImage extends BaseEntity {
 
   @Column()
   caption!: string;
+
+  @Column()
+  postedDate!: Date;
+
+  @Column({ nullable: true, type: 'timestamp' })
+  editedDate!: Date | null;
 }

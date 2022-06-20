@@ -18,7 +18,7 @@ export default class BeerComment extends BaseEntity {
   commentBody!: string;
 
   @Column()
-  rating!: number;
+  rating!: 1 | 2 | 3 | 4 | 5;
 
   @Column()
   postedDate!: Date;

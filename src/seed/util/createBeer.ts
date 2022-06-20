@@ -20,6 +20,7 @@ const createBeer = async (
   beerToAdd.ibu = ibu;
   beerToAdd.brewery = brewery;
   beerToAdd.postedBy = adminUser;
+  beerToAdd.postedDate = new Date(Date.now())
 
   logger.info(`creating ${beerToAdd.name}`);
   return beerToAdd.save();

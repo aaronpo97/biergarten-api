@@ -30,6 +30,8 @@ const updateImageById: EditBeerImageFn = async (req, res, next) => {
     }
 
     beerImage.caption = updatedCaption;
+
+    beerImage.editedDate = new Date(Date.now());
     await beerImage.save();
     const successResponse = new SuccessResponse(
       `Updated the beer image with id ${imageId}.`,
