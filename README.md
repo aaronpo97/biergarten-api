@@ -69,7 +69,15 @@ SPARKPOST_API_KEY=
 
 - Input the credentials to your database, as well as the port you wish to host the app on.
 - Generate a refresh token secret, access token secret, and a confirmation token secret.
-- I suggest using a password generator set to 64 characters for added security.
+  - I suggest using a password generator set to 64 characters for these secrets for added security.
+
+- [Create a Cloudinary account](https://cloudinary.com/users/register/free)
+  - Cloudinary is a cloud-based image and video management service used for storing all media found in this application.
+    - Once your account is created, navigate to the account dashboard and gather your required credentials. (CLOUDINARY_CLOUD_NAME, CLOUDINARY_KEY, CLOUDINARY_SECRET)
+
+- [Create a Sparkpost account](https://app.sparkpost.com/join)
+  - Sparkpost is an email sending platform used for sending emails for this application.
+    - Once your account is created, navigate to the account dashboard and gather your required credentials.
 
 ##### Example
 
@@ -82,14 +90,15 @@ ACCESS_TOKEN_SECRET='tHiS_1s_a_B3ttr_s3crt'
 CONFIRMATION_TOKEN_SECRET='tHI$_!ss_3veN_bETter'
 
 CLOUDINARY_CLOUD_NAME='your_cloud_name'
-CLOUDINARY_KEY=
-CLOUDINARY_SECRET=
+CLOUDINARY_KEY='your_clouidinary_key'
+CLOUDINARY_SECRET='your_cloudinary_secret'
+
+SPARKPOST_API_KEY='your_sparkpost_api_key'
 
 NODE_ENV='dev'
 PORT='8080'
 BASE_URL='http://localhost'
 
-SPARKPOST_API_KEY=''
 ```
 
 ### Step 3
