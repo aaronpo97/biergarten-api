@@ -23,25 +23,24 @@ const getBreweryById: BreweryByIdRequestHandler = async (req, res, next) => {
       .createQueryBuilder('brewery')
       .leftJoinAndSelect('brewery.beers', 'beers')
       .leftJoinAndSelect('brewery.postedBy', 'users')
-
       .where('brewery.id = :breweryId', { breweryId })
       .getOne();
 
     if (!queriedBrewery) {
       throw new ServerError('Could not find a brewery with that id.', 404);
     }
+
+    const { newAccessToken } = req;
     const successResponse = new SuccessResponse(
-      `Sending brewery with the id of ${breweryId}`,
+      `Sending brewery with the id ${breweryId}`,
       200,
       queriedBrewery,
+      newAccessToken,
     );
 
     next(successResponse);
   } catch (e) {
-    if (e instanceof Error) {
-      next(e);
-    }
-    next(new ServerError('Something went wrong.', 500));
+    next(e);
   }
 };
 

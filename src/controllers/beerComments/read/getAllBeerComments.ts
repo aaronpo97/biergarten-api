@@ -24,10 +24,12 @@ const getAllComments: getAllCommentsT = async (req, res, next) => {
       .skip(pageNum === 1 ? 0 : pageNum * pageSize)
       .getMany();
 
+    const { newAccessToken } = req;
     const successResponse = new SuccessResponse(
       'Getting all comments.',
       200,
       allComments,
+      newAccessToken,
     );
     next(successResponse);
   } catch (e) {

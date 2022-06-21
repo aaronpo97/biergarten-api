@@ -7,7 +7,7 @@ const registerUserValidationSchema = Joi.object({
   /**
    * @todo Password must have:
    *
-   *                            At least one digit [0-9]
+   *          At least one digit [0-9]
    *          At least one lowercase character [a-z]
    *          At least one uppercase character [A-Z]
    *          At least one special character [*.!@#$%^&(){}[]:;<>,.?/~_+-=|]

@@ -40,10 +40,12 @@ const confirmUser: confirmUserFn = async (req, res, next) => {
     currentUser.accountConfirmed = true;
     await currentUser.save();
 
+    const { newAccessToken } = req;
     const successResponse = new SuccessResponse(
       'Successfully confirmed user.',
       200,
       currentUser,
+      newAccessToken,
     );
     next(successResponse);
   } catch (err) {

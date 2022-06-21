@@ -7,11 +7,7 @@ import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 
 /** Business logic for creating a new brewery. */
-const createNewBrewery: CreateBreweryRequestHandler = async (
-  req,
-  res,
-  next,
-): Promise<void> => {
+const createNewBrewery: CreateBreweryRequestHandler = async (req, res, next) => {
   try {
     const { description, name, location } = req.body;
 
@@ -34,7 +30,14 @@ const createNewBrewery: CreateBreweryRequestHandler = async (
 
     await newBrewery.save();
 
-    const routeResponse = new SuccessResponse('Created a new brewery.', 201, newBrewery);
+    const { newAccessToken } = req;
+
+    const routeResponse = new SuccessResponse(
+      'Created a new brewery.',
+      201,
+      newBrewery,
+      newAccessToken,
+    );
     next(routeResponse);
   } catch (e) {
     if (e instanceof Error) {

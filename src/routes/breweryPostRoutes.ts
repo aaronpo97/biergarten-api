@@ -44,7 +44,7 @@ breweryPostRoutes
 
 breweryPostRoutes
   .route('/:breweryId/')
-  .get(getBreweryById)
+  .get(checkTokens, getCurrentUser, getBreweryById)
   .delete(
     checkTokens,
     getCurrentUser,

@@ -47,10 +47,12 @@ const getCommentById: getCommentByIdT = async (req, res, next) => {
       throw new ServerError('Sorry, a comment with that id could not be found.', 404);
     }
 
+    const { newAccessToken } = req;
     const successResponse = new SuccessResponse(
       `Getting the comment with the id ${commentId}`,
       200,
       comment,
+      newAccessToken,
     );
     next(successResponse);
   } catch (error) {

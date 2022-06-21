@@ -19,7 +19,7 @@ const updateBeerById: UpdateBeerRequestHandler = async (req, res, next) => {
   try {
     const { beerId } = req.params;
 
-    if (isValidUuid(beerId)) {
+    if (!isValidUuid(beerId)) {
       throw new ServerError(
         'Could not update a beer with that id as it is invalid.',
         400,

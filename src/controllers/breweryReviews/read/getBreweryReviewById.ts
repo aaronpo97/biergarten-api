@@ -20,10 +20,12 @@ const getBreweryReviewById: breweryReviewByIdFn = async (req, res, next) => {
       throw new ServerError('Could not locate a brewery review with that id.', 404);
     }
 
+    const { newAccessToken } = req;
     const successResponse = new SuccessResponse<BreweryReview>(
       `Sending the brewery review with the id ${breweryReview.id}.`,
       200,
       breweryReview,
+      newAccessToken,
     );
 
     next(successResponse);
