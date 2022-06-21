@@ -8,3 +8,5 @@ seedData.ts
 todo.md
 tmp
 logs
+*.bkp
+*.dtmp
