@@ -50,7 +50,7 @@ const updateBreweryById: UpdateBreweryRequestHandler = async (req, res, next) =>
     if (updatedLocation) {
       breweryToUpdate.location = updatedLocation;
     }
-    breweryToUpdate.editedDate = new Date(Date.now());
+    breweryToUpdate.modifiedAt = new Date(Date.now());
 
     await breweryToUpdate.save();
 

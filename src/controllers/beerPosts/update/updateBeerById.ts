@@ -56,7 +56,7 @@ const updateBeerById: UpdateBeerRequestHandler = async (req, res, next) => {
       beerToUpdate.ibu = updatedIbu;
     }
 
-    beerToUpdate.editedDate = new Date(Date.now());
+    beerToUpdate.modifiedAt = new Date(Date.now());
     await beerToUpdate.save();
 
     const newAccessToken = req.newAccessToken as string | undefined;

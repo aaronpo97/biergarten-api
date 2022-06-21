@@ -27,10 +27,10 @@ export default class BreweryPost extends BaseEntity {
   description!: string;
 
   @Column()
-  postedDate!: Date;
+  createdAt!: Date;
 
   @Column({ nullable: true, type: 'timestamp' })
-  editedDate!: Date | null;
+  modifiedAt!: Date | null;
 
   @JoinColumn()
   @ManyToOne(() => User, (user) => user.breweryPosts)

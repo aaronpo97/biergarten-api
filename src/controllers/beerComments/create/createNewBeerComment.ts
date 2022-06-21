@@ -46,7 +46,7 @@ const createNewComment: createNewCommentT = async (req, res, next) => {
     beerComment.beerPost = beer;
     beerComment.commentBody = comment;
 
-    beerComment.postedDate = new Date(Date.now());
+    beerComment.createdAt = new Date(Date.now());
 
     beerComment.postedBy = currentUser;
     beerComment.rating = rating;

@@ -32,8 +32,8 @@ export default class BeerImage extends BaseEntity {
   caption!: string;
 
   @Column()
-  postedDate!: Date;
+  createdAt!: Date;
 
   @Column({ nullable: true, type: 'timestamp' })
-  editedDate!: Date | null;
+  modifiedAt!: Date | null;
 }

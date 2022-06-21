@@ -57,8 +57,8 @@ export default class BeerPost extends BaseEntity {
   images!: Array<BeerImage>;
 
   @Column()
-  postedDate!: Date;
+  createdAt!: Date;
 
   @Column({ nullable: true, type: 'timestamp' })
-  editedDate!: Date | null;
+  modifiedAt!: Date | null;
 }

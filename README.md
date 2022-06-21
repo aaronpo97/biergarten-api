@@ -26,7 +26,7 @@ The [International Bitterness Units](https://en.wikipedia.org/wiki/Beer_measurem
 
 ## Database schema
 
-!["Database schema"](/documentationAssets/biergarten_schema.svg "Database schema")
+!["Database schema"](/documentationAssets/biergarten_schema.drawio.svg "Database schema")
 
 ## How to run this application (from scratch)
 

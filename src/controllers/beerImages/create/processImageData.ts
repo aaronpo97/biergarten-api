@@ -50,7 +50,7 @@ const processImageData: ProcessNewImagesFn = async (req, res, next) => {
       beerImage.beerPost = beerPost;
       beerImage.author = currentUser;
       beerImage.caption = `Image of ${beerPost.name}.`;
-      beerImage.postedDate = new Date(Date.now());
+      beerImage.createdAt = new Date(Date.now());
       imagePromises.push(beerImage.save());
     });
 

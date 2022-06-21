@@ -21,10 +21,10 @@ export default class BeerComment extends BaseEntity {
   rating!: 1 | 2 | 3 | 4 | 5;
 
   @Column()
-  postedDate!: Date;
+  createdAt!: Date;
 
   @Column({ nullable: true, type: 'timestamp' })
-  editedDate!: Date;
+  modifiedAt!: Date;
 
   @ManyToOne(() => BeerPost, (beer) => beer.comments)
   @JoinColumn()
