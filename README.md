@@ -24,6 +24,10 @@ In this app you will encounter various beer related terms. Here is a list of ter
 
 The [International Bitterness Units](https://en.wikipedia.org/wiki/Beer_measurement#Bitterness) scale, or IBU, is used to approximately quantify the bitterness of beer. This scale is not measured on the perceived bitterness of the beer, but rather the amount of a component of beer known as iso-alpha acids.
 
+## Database schema
+
+!["Database schema"](/documentationAssets/biergarten_schema.drawio.svg "Database schema")
+
 ## How to run this application (from scratch)
 
 This `README` assumes that you have the current LTS version of Node.js (>=16.0), if that is not the case, go follow the instructions on the [Node.js website](https://nodejs.org/en/), then proceed with the following instructions. It also assumes that you have a bash shell installed on your system.

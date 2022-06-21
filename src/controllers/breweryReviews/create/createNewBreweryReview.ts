@@ -35,9 +35,9 @@ const createNewBreweryReview: createBreweryReviewFn = async (req, res, next) => 
     breweryReview.breweryPost = breweryPost;
     breweryReview.rating = rating;
     breweryReview.reviewBody = reviewBody;
-    breweryReview.postedDate = new Date(Date.now());
+    breweryReview.createdAt = new Date(Date.now());
     breweryReview.postedBy = currentUser;
-    breweryReview.editedDate = null;
+    breweryReview.modifiedAt = null;
 
     await breweryReview.save();
 

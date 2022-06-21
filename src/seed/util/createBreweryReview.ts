@@ -13,7 +13,7 @@ const createBreweryReview = async (
   breweryReview.reviewBody =
     'Quia ad consequatur et doloribus tenetur voluptates non. Fuga odio magni.';
   breweryReview.postedBy = adminUser;
-  breweryReview.postedDate = new Date(Date.now());
+  breweryReview.createdAt = new Date(Date.now());
 
   return breweryReview.save();
 };

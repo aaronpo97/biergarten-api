@@ -41,7 +41,7 @@ const editCommentById: editCommentByIdT = async (req, res, next) => {
     }
 
     commentToEdit.commentBody = commentEditBody;
-    commentToEdit.editedDate = new Date(Date.now());
+    commentToEdit.modifiedAt = new Date(Date.now());
 
     await commentToEdit.save();
 

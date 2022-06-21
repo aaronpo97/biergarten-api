@@ -26,6 +26,7 @@ const createNewBrewery: CreateBreweryRequestHandler = async (req, res, next) => 
     newBrewery.name = name;
     newBrewery.location = location;
     newBrewery.postedBy = currentUser;
+    newBrewery.createdAt = new Date(Date.now());
 
     await newBrewery.save();
 

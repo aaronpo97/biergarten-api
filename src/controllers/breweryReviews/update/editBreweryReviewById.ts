@@ -44,7 +44,7 @@ const editBreweryReviewById: editBreweryReviewByIdFn = async (req, res, next) =>
       fieldsUpdated.reviewBody = true;
     }
 
-    breweryReview.editedDate = new Date(Date.now());
+    breweryReview.modifiedAt = new Date(Date.now());
 
     await breweryReview.save();
 

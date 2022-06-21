@@ -55,4 +55,10 @@ export default class BeerPost extends BaseEntity {
   @JoinColumn()
   @OneToMany(() => BeerImage, (beerImage) => beerImage.beerPost)
   images!: Array<BeerImage>;
+
+  @Column()
+  createdAt!: Date;
+
+  @Column({ nullable: true, type: 'timestamp' })
+  modifiedAt!: Date | null;
 }

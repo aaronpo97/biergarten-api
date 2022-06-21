@@ -6,8 +6,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
-import { env } from 'process';
-
 import beerCommentRoutes from './routes/beerCommentRoutes';
 import beerImageRoutes from './routes/beerImageRoutes';
 import beerPostRoutes from './routes/beerPostRoutes';

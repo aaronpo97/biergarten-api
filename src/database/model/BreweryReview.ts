@@ -18,13 +18,13 @@ export default class BreweryReview extends BaseEntity {
   reviewBody!: string;
 
   @Column()
-  rating!: number;
+  rating!: 1 | 2 | 3 | 4 | 5;
 
   @Column()
-  postedDate!: Date;
+  createdAt!: Date;
 
   @Column({ nullable: true, type: 'timestamp' })
-  editedDate!: Date | null;
+  modifiedAt!: Date | null;
 
   @ManyToOne(() => BreweryPost, (brewery) => brewery.reviews)
   @JoinColumn()
