@@ -23,8 +23,17 @@ import loginUserValidationSchema from '../util/joi/users/loginUserValidationSche
 import confirmUserValidationSchema from '../util/joi/users/confirmUserValidationSchema';
 import editUsernameValidationSchema from '../util/joi/users/editUsernameValidationSchema';
 import editEmailValidationSchema from '../util/joi/users/editEmailValidationSchema';
+import getAuthenticatedUser from '../controllers/users/read/getAuthenticatedUser';
 
 const userRoutes = Router();
+
+userRoutes
+  .route('/current-authenticated-user')
+  .get(checkTokens, getCurrentUser, getAuthenticatedUser)
+  .all((req, res, next) => {
+    res.set('Allow', 'GET');
+    next(notAllowedError);
+  });
 
 userRoutes
   .route('/register')

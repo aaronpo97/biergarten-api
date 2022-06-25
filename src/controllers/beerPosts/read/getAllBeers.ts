@@ -23,7 +23,7 @@ const getAllBeers: BeerRequestHandler = async (req, res, next): Promise<void> =>
     /** @todo Fix this query so user details are not exposed. */
     const allBeers = await AppDataSource.getRepository(BeerPost)
       .createQueryBuilder('beer')
-      // .leftJoinAndSelect('beer.postedBy', 'user')
+      .leftJoinAndSelect('beer.postedBy', 'user')
       .leftJoinAndSelect('beer.brewery', 'brewery')
       .take(pageSize)
       .skip(pageNum === 1 ? 0 : pageNum * pageSize)
