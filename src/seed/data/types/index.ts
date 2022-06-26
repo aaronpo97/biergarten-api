@@ -10,6 +10,7 @@ export interface IRawBreweryData {
   description: string;
   location: string;
   beers: readonly IRawBeerData[];
+  phone_number: string;
 }
 export interface IRawFakeUserData {
   username: string;

@@ -9,9 +9,9 @@ import SuccessResponse from '../../../util/response/SuccessResponse';
 /** Business logic for creating a new brewery. */
 const createNewBrewery: CreateBreweryRequestHandler = async (req, res, next) => {
   try {
-    const { description, name, location } = req.body;
+    const { description, name, location, phoneNumber } = req.body;
 
-    if (!(name && description && location)) {
+    if (!(name && description && location && phoneNumber)) {
       throw new ServerError('Missing params in request body.', 400);
     }
 
@@ -27,6 +27,7 @@ const createNewBrewery: CreateBreweryRequestHandler = async (req, res, next) => 
     newBrewery.location = location;
     newBrewery.postedBy = currentUser;
     newBrewery.createdAt = new Date(Date.now());
+    newBrewery.phoneNumber = phoneNumber;
 
     await newBrewery.save();
 

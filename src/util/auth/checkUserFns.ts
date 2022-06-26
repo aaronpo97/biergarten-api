@@ -15,9 +15,6 @@ export const checkIfUserExists: userExistsCheckFn = async (username, email) => {
 /**
  * Helper function for checking whether or not a user with the given username already
  * exists in the database.
- *
- * Returns a value of true if a user is found and a value of false if it is not if the
- * promise is resolved.
  */
 export const checkIfUsernameTaken: UsernameTakenCheckFn = async (username) => {
   const userToLocate = await User.findOne({ where: { username } });

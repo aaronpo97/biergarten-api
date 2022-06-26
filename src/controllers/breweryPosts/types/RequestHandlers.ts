@@ -57,5 +57,5 @@ export type CreateBreweryRequestHandler = RequestHandler<
   /** Request body */
   {},
   /** Response body */
-  { description?: string; name?: string; location?: string }
+  { description?: string; name?: string; location?: string; phoneNumber?: string }
 >;

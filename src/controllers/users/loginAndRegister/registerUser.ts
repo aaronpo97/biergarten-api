@@ -50,7 +50,7 @@ const registerUser: RegisterUserRequestHandler = async (req, res, next) => {
     const accessToken = await generateAccessToken(refreshToken);
 
     const successResponse = new SuccessResponse('Successfully registered user.', 201, {
-      user: { id: userToRegister.id },
+      user: { id: userToRegister.id, username: userToRegister.username },
       refreshToken,
       accessToken,
       confirmationToken: !inProductionMode ? confirmationToken : undefined,

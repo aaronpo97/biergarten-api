@@ -4,7 +4,6 @@ dist
 .DS_Store
 .vscode/settings.json
 coverage
-seedData.ts
 todo.md
 tmp
 logs

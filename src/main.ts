@@ -5,6 +5,7 @@ import { exit, env } from 'process';
 import AppDataSource from './database/AppDataSource';
 import logger from './util/logger';
 import app from './app';
+import inProductionMode from './util/environment/inProductionMode';
 
 dotenv.config();
 
@@ -19,6 +20,10 @@ const port = parseInt(PORT, 10);
 app.listen(port, () => {
   (async () => {
     try {
+      if (!inProductionMode) {
+        // eslint-disable-next-line no-console
+        console.clear();
+      }
       await AppDataSource.initialize();
       logger.info('Successfully started application.');
       logger.info('Connected to database.');
