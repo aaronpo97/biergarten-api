@@ -20,6 +20,8 @@ const generateUserData = (userCount: number): IRawFakeUserData[] => {
       dateOfBirth: dateOfBirth.toISOString(),
       username,
       email,
+      firstName,
+      lastName,
     });
   }
 

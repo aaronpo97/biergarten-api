@@ -5,13 +5,11 @@ import SuccessResponse from '../../../util/response/SuccessResponse';
 const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
   try {
     const { currentUser } = req;
-    if (!currentUser) {
-      throw new ServerError('Something went wrong.', 400);
-    }
+    const payload = currentUser ?? null;
     const successResponse = new SuccessResponse(
       'Sending the currently authenticated user.',
       200,
-      currentUser,
+      payload,
     );
 
     next(successResponse);

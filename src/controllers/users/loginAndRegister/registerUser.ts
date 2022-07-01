@@ -17,9 +17,9 @@ import inProductionMode from '../../../util/environment/inProductionMode';
 /** Business logic for registering a user. */
 const registerUser: RegisterUserRequestHandler = async (req, res, next) => {
   try {
-    const { username, email, dateOfBirth, password } = req.body;
+    const { username, email, dateOfBirth, password, firstName, lastName } = req.body;
 
-    if (!(username && email && dateOfBirth && password)) {
+    if (!(username && email && dateOfBirth && password && firstName && lastName)) {
       throw new ServerError('Missing parameters.', 400);
     }
 
@@ -42,6 +42,8 @@ const registerUser: RegisterUserRequestHandler = async (req, res, next) => {
     userToRegister.joinedDate = new Date(Date.now());
     userToRegister.hash = hash;
     userToRegister.accountConfirmed = false;
+    userToRegister.firstName = firstName;
+    userToRegister.lastName = lastName;
 
     await AppDataSource.manager.save(userToRegister);
 

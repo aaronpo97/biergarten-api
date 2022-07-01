@@ -16,4 +16,6 @@ export interface IRawFakeUserData {
   username: string;
   email: string;
   dateOfBirth: string;
+  firstName: string;
+  lastName: string;
 }

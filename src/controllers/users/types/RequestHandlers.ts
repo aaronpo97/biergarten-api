@@ -31,6 +31,8 @@ export type RegisterUserRequestHandler = RequestHandler<
     email?: string;
     dateOfBirth?: string;
     password?: string;
+    firstName?: string;
+    lastName?: string;
   }
 >;
 
@@ -93,3 +95,17 @@ export type confirmUserFn = RequestHandler<
   /** Request body */
   { confirmationToken?: string }
 >;
+
+/**
+ * Instance of Request Handler.
+ *
+ * For a username checker GET route.
+ */
+export type CheckIfUsernameExistsFn = RequestHandler<{}, {}, {}, { username?: string }>;
+
+/**
+ * Instance of Request Handler.
+ *
+ * For a email checker GET route.
+ */
+export type CheckIfEmailExistsFn = RequestHandler<{}, {}, {}, { email?: string }>;

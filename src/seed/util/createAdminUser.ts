@@ -10,6 +10,8 @@ const createAdminUser = async () => {
   adminUser.username = 'admin';
   adminUser.accountConfirmed = true;
   adminUser.hash = await hashPassword('password');
+  adminUser.firstName = 'Jane';
+  adminUser.lastName = 'Doe';
   await adminUser.save();
 
   return adminUser;
