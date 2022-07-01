@@ -1,4 +1,4 @@
-import { userExistsCheckFn, UsernameTakenCheckFn } from './types';
+import { EmailTakenCheckFn, userExistsCheckFn, UsernameTakenCheckFn } from './types';
 import User from '../../database/model/User';
 
 /**
@@ -18,6 +18,17 @@ export const checkIfUserExists: userExistsCheckFn = async (username, email) => {
  */
 export const checkIfUsernameTaken: UsernameTakenCheckFn = async (username) => {
   const userToLocate = await User.findOne({ where: { username } });
+  const userExists = !!userToLocate;
+
+  return userExists;
+};
+
+/**
+ * Helper function for checking whether or not a user with the given email already exists
+ * in the database.
+ */
+export const checkIfEmailTaken: EmailTakenCheckFn = async (email) => {
+  const userToLocate = await User.findOne({ where: { email } });
   const userExists = !!userToLocate;
 
   return userExists;

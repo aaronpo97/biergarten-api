@@ -51,3 +51,4 @@ export type userExistsCheckFn = (username: string, email: string) => Promise<boo
  * or not that the given username is already taken.
  */
 export type UsernameTakenCheckFn = (username: string) => Promise<boolean>;
+export type EmailTakenCheckFn = (email: string) => Promise<boolean>;
