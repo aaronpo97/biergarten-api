@@ -4,7 +4,8 @@ import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 
 /**
- *  
+ * Business logic to check whether a username is already registered in the database. Takes
+ * in the username as a request query.
  */
 const checkIfUsernameExists: CheckIfUsernameExistsFn = async (req, res, next) => {
   try {

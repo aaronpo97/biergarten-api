@@ -8,36 +8,47 @@ import { getAllCommentsT } from '../types/RequestHandlers';
 /**
  * Business logic for getting all comments for the client.
  *
- * Takes the page number and page size as an optional request query. If no page number is
- * provided, it will default to 1. Additionally, if no page size is defined, it will default to 5.
+ * Takes the page number, page size, and paginated (boolean) as an optional request query.
  */
 const getAllComments: getAllCommentsT = async (req, res, next) => {
   try {
-    const pageNum = Math.abs(parseInt(req.query.page_num || '1', 10));
-    const pageSize = Math.abs(parseInt(req.query.page_size || '5', 10));
+    const { page_num, page_size, paginated = false } = req.query;
 
-    const allComments = await AppDataSource.getRepository(BeerComment)
+    const queryBase = AppDataSource.getRepository(BeerComment)
       .createQueryBuilder('beerComment')
-      .leftJoin('beerComment.beerPost', 'beerPost')
-      .where('beerPost.id = :beerId', { beerId: req.params.beerId })
-      .take(pageSize)
-      .skip(pageNum === 1 ? 0 : pageNum * pageSize)
-      .getMany();
+      .select([
+        'beerComment',
+        'beerPost.name',
+        'beerPost.id',
+        'postedBy.username',
+        'postedBy.id',
+      ])
+      .innerJoin('beerComment.beerPost', 'beerPost')
+      .innerJoin('beerComment.postedBy', 'postedBy')
+      .where('beerPost.id = :beerId', { beerId: req.params.beerId });
+
+    const paginateQuery = paginated && page_size && page_num;
+    const allComments = paginateQuery
+      ? await queryBase
+          .take(page_size)
+          .skip(page_num === 1 ? 0 : page_num * page_size)
+          .getMany()
+      : await queryBase.getMany();
 
     const { newAccessToken } = req;
-    const successResponse = new SuccessResponse(
-      'Getting all comments.',
-      200,
-      allComments,
-      newAccessToken,
-    );
+
+    const message = paginateQuery
+      ? `Getting page ${page_num} of comments.`
+      : 'Getting all comments.';
+
+    const payload = paginateQuery
+      ? { page_num, page_size, beerComments: allComments }
+      : allComments;
+
+    const successResponse = new SuccessResponse(message, 200, payload, newAccessToken);
     next(successResponse);
   } catch (e) {
-    if (e instanceof Error) {
-      next(e);
-      return;
-    }
-    next(new ServerError('something went wrong', 500));
+    next(e);
   }
 };
 

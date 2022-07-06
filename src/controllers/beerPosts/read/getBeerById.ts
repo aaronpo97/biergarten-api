@@ -21,12 +21,12 @@ const getBeerById: BeerByIdRequestHandler = async (req, res, next) => {
       throw new ServerError('Could not get a beer with that id as it is invalid.', 400);
     }
 
-    /** @todo Fix this query so user details are not exposed. */
     const queriedBeer = await AppDataSource.getRepository(BeerPost)
       .createQueryBuilder('beer')
-      .leftJoinAndSelect('beer.postedBy', 'user')
+      .select(['beer', 'user.username', 'user.id', 'brewery.name', 'brewery.id'])
+      .leftJoin('beer.postedBy', 'user')
+      .leftJoin('beer.brewery', 'brewery')
       .where('beer.id = :beerId', { beerId })
-      .leftJoinAndSelect('beer.brewery', 'brewery')
       .getOne();
 
     if (!queriedBeer) {

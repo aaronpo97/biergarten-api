@@ -29,7 +29,7 @@ export type getAllCommentsT = RequestHandler<
   /** Request body */
   {},
   /** Request query params */
-  { page_num?: string; page_size?: string }
+  { page_num?: number; page_size?: number; paginated?: boolean }
 >;
 
 /**

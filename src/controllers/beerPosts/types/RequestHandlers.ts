@@ -47,7 +47,7 @@ export type BeerRequestHandler = RequestHandler<
   /** Request body */
   {},
   /** Request query */
-  { page_num?: string; page_size?: string }
+  { page_num?: number; page_size?: number; paginated?: boolean }
 >;
 
 /**

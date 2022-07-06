@@ -38,7 +38,15 @@ const getCommentById: getCommentByIdT = async (req, res, next) => {
     }
     const comment = await AppDataSource.getRepository(BeerComment)
       .createQueryBuilder('beerComment')
-      .leftJoinAndSelect('beerComment.beerPost', 'beerPost')
+      .select([
+        'beerComment',
+        'beerPost.name',
+        'beerPost.id',
+        'postedBy.username',
+        'postedBy.id',
+      ])
+      .innerJoin('beerComment.beerPost', 'beerPost')
+      .innerJoin('beerComment.postedBy', 'postedBy')
       .where('beerPost.id = :beerId', { beerId: req.params.beerId })
       .andWhere('beerComment.id = :commentId', { commentId })
       .getOne();
