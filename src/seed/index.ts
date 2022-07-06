@@ -1,5 +1,8 @@
 import { exit } from 'process';
 
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { faker } from '@faker-js/faker';
+
 import AppDataSource from '../database/AppDataSource';
 import logger from '../util/logger';
 
@@ -14,12 +17,31 @@ import User from '../database/model/User';
 import createFakeUser from './util/createFakeUser';
 import createBreweryReview from './util/createBreweryReview';
 import BreweryReview from '../database/model/BreweryReview';
+import BeerType from '../database/model/BeerType';
 
 const userPromises: Array<Promise<User>> = [];
 const beerPromises: Array<Promise<BeerPost>> = [];
 const breweryReviewPromises: Array<Promise<BreweryReview>> = [];
 const breweryPromises: Array<Promise<void>> = [];
 
+const generateBeerTypes = async (adminUser: User) => {
+  const beerTypes = ['stout', 'porter', 'cream ale', 'lager', 'IPA', 'amber ale'];
+  const typePromises: Promise<BeerType>[] = [];
+
+  beerTypes.forEach((type) => {
+    const newBeerType = new BeerType();
+
+    newBeerType.name = type;
+    newBeerType.description = faker.lorem.paragraph();
+    newBeerType.createdAt = new Date(Date.now());
+    newBeerType.postedBy = adminUser;
+
+    typePromises.push(newBeerType.save());
+  });
+
+  const allBeerTypes = await Promise.all(typePromises);
+  return allBeerTypes;
+};
 const seedDatabase = async () => {
   await AppDataSource.initialize();
 
@@ -43,7 +65,9 @@ const seedDatabase = async () => {
   const adminUser = await createAdminUser();
   const allUsers = await Promise.all(userPromises);
 
-  generateSeedData(13).forEach((rawBreweryData) => {
+  const beerTypes = await generateBeerTypes(adminUser);
+
+  generateSeedData(13, beerTypes).forEach((rawBreweryData) => {
     breweryPromises.push(
       (async () => {
         logger.info(`Creating brewery ${rawBreweryData.name}`);

@@ -11,6 +11,7 @@ import {
 
 import BeerComment from './BeerComment';
 import BeerImage from './BeerImage';
+import BeerType from './BeerType';
 import BreweryPost from './BreweryPost';
 
 import Profile from './Profile';
@@ -27,8 +28,9 @@ export default class BeerPost extends BaseEntity {
   @Column()
   description!: string;
 
-  @Column()
-  type!: string;
+  @JoinColumn()
+  @ManyToOne(() => BeerType, (beerType) => beerType.beerPosts, { onDelete: 'CASCADE' })
+  type!: BeerType;
 
   @Column('float')
   abv!: number;

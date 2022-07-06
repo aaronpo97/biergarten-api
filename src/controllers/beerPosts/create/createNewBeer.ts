@@ -6,6 +6,7 @@ import SuccessResponse from '../../../util/response/SuccessResponse';
 
 import BeerPost from '../../../database/model/BeerPost';
 import BreweryPost from '../../../database/model/BreweryPost';
+import BeerType from '../../../database/model/BeerType';
 
 /**
  * Business logic for creating a new brewery.
@@ -24,12 +25,13 @@ import BreweryPost from '../../../database/model/BreweryPost';
 
 const createNewBeer: CreateBeerRequestHandler = async (req, res, next): Promise<void> => {
   try {
-    const { description, name, abv, ibu, breweryId, type } = req.body;
+    const { description, name, abv, ibu, breweryId, typeId } = req.body;
 
-    if (!(name && description && abv && ibu && breweryId && type))
+    if (!(name && description && abv && ibu && breweryId && typeId))
       throw new ServerError('Missing params in request body.', 400);
 
     const breweryIdIsValid = checkIfValidUuid(breweryId);
+    const typeIdIsValid = checkIfValidUuid(typeId);
 
     if (!breweryIdIsValid) {
       throw new ServerError(
@@ -37,11 +39,22 @@ const createNewBeer: CreateBeerRequestHandler = async (req, res, next): Promise<
         400,
       );
     }
+
+    if (!typeIdIsValid) {
+      throw new ServerError(
+        'Cannot create a new beer resource as the given type id is invalid.',
+        400,
+      );
+    }
     const newBeer = BeerPost.create();
     const brewery = await BreweryPost.findOneBy({ id: breweryId });
+    const type = await BeerType.findOneBy({ id: typeId });
 
     if (!brewery) {
       throw new ServerError('Could not find the brewery for posted beer.', 404);
+    }
+    if (!type) {
+      throw new ServerError('Could not find the type for the posted beer.', 404);
     }
 
     const { currentUser } = req;
@@ -60,7 +73,7 @@ const createNewBeer: CreateBeerRequestHandler = async (req, res, next): Promise<
 
     await newBeer.save();
 
-    const newAccessToken = req.newAccessToken as string | undefined;
+    const { newAccessToken } = req;
 
     const routeResponse = new SuccessResponse(
       'Created a new beer.',
@@ -70,15 +83,7 @@ const createNewBeer: CreateBeerRequestHandler = async (req, res, next): Promise<
     );
     next(routeResponse);
   } catch (e) {
-    if (e instanceof Error) {
-      const errorResponse = new ErrorResponse(
-        e.message,
-        e instanceof ServerError ? e.status : 500,
-        e.stack,
-      );
-      next(errorResponse);
-    }
-    next();
+    next(e);
   }
 };
 

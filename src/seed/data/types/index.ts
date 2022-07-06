@@ -1,6 +1,8 @@
+import BeerType from '../../../database/model/BeerType';
+
 export interface IRawBeerData {
   name: string;
-  type: string;
+  typeId: string;
   description: string;
   abv?: number;
   ibu?: number;

@@ -23,9 +23,18 @@ const getBeerById: BeerByIdRequestHandler = async (req, res, next) => {
 
     const queriedBeer = await AppDataSource.getRepository(BeerPost)
       .createQueryBuilder('beer')
-      .select(['beer', 'user.username', 'user.id', 'brewery.name', 'brewery.id'])
-      .leftJoin('beer.postedBy', 'user')
-      .leftJoin('beer.brewery', 'brewery')
+      .select([
+        'beer',
+        'user.id',
+        'user.username',
+        'brewery.name',
+        'brewery.id',
+        'beerType.name',
+        'beerType.id',
+      ])
+      .innerJoin('beer.postedBy', 'user')
+      .innerJoin('beer.brewery', 'brewery')
+      .innerJoin('beer.type', 'beerType')
       .where('beer.id = :beerId', { beerId })
       .getOne();
 

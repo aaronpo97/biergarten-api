@@ -17,7 +17,7 @@ export type CreateBeerRequestHandler = RequestHandler<
     abv?: number;
     ibu?: number;
     breweryId?: string;
-    type?: string;
+    typeId?: string;
   }
 >;
 

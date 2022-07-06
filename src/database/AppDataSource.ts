@@ -10,6 +10,7 @@ import BeerComment from './model/BeerComment';
 import BeerImage from './model/BeerImage';
 import BreweryImage from './model/BreweryImage';
 import BreweryReview from './model/BreweryReview';
+import BeerType from './model/BeerType';
 
 dotenv.config();
 const { LOCAL_DB_CONNECTION_STRING, CLOUD_DB_CONNECTION_STRING, NODE_ENV } = process.env;
@@ -31,6 +32,7 @@ const entities = [
   BeerImage,
   BreweryImage,
   BreweryReview,
+  BeerType,
 ];
 
 const LocalAppDataSource = new DataSource({

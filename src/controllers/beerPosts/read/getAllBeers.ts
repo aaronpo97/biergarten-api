@@ -11,9 +11,18 @@ const getAllBeers: BeerRequestHandler = async (req, res, next): Promise<void> =>
 
     const queryBase = AppDataSource.getRepository(BeerPost)
       .createQueryBuilder('beer')
-      .select(['beer', 'user.id', 'user.username', 'brewery.name', 'brewery.id'])
+      .select([
+        'beer',
+        'user.id',
+        'user.username',
+        'brewery.name',
+        'brewery.id',
+        'beerType.name',
+        'beerType.id',
+      ])
       .innerJoin('beer.postedBy', 'user')
-      .innerJoin('beer.brewery', 'brewery');
+      .innerJoin('beer.brewery', 'brewery')
+      .innerJoin('beer.type', 'beerType');
 
     const paginateQuery = paginated && page_num && page_size;
 

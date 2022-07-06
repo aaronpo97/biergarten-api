@@ -16,7 +16,8 @@
 		"body": [
 			"import { RequestHandler } from 'express-serve-static-core';",
 			"",
-			"const $TM_FILENAME_BASE: RequestHandler<{},{},{}> = async (req, res, next) => {", 
+			"type ${TM_FILENAME_BASE}Function = RequestHandler<{},{},{},{}>",
+			"const $TM_FILENAME_BASE: ${TM_FILENAME_BASE}Function = async (req, res, next) => {", 
 			"",
 			"}",
 			"export default $TM_FILENAME_BASE"
