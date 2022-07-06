@@ -13,21 +13,31 @@ const getAllBreweryReviews: getAllBreweryReviewsFn = async (req, res, next) => {
       throw new ServerError('The provided brewery id is invalid.', 400);
     }
 
-    const pageNum = Math.abs(parseInt(req.query.page_num || '1', 10));
-    const pageSize = Math.abs(parseInt(req.query.page_size || '5', 10));
+    const { paginated, page_num, page_size } = req.query;
 
-    const allReviews = await AppDataSource.getRepository(BreweryReview)
+    const queryBase = AppDataSource.getRepository(BreweryReview)
       .createQueryBuilder('breweryReview')
-      .leftJoin('breweryReview.breweryPost', 'brewery')
-      .where('breweryReview.breweryPost = :breweryId', { breweryId })
-      .take(pageSize)
-      .skip(pageNum === 1 ? 0 : pageNum * pageSize)
-      .getMany();
+      .select(['breweryReview', 'brewery', 'user.username', 'user.id'])
+      .innerJoin('breweryReview.breweryPost', 'brewery')
+      .innerJoin('breweryReview.postedBy', 'user')
+      .where('breweryReview.breweryPost = :breweryId', { breweryId });
 
-    const successResponse = new SuccessResponse<ReadonlyArray<BreweryReview>>(
+    const paginateQuery = paginated && page_size && page_num;
+
+    const allReviews = paginateQuery
+      ? await queryBase
+          .take(page_size)
+          .skip(page_num === 1 ? 0 : page_num * page_size)
+          .getMany()
+      : await queryBase.getMany();
+
+    const { newAccessToken } = req;
+
+    const successResponse = new SuccessResponse<BreweryReview[]>(
       `Getting all reviews for brewery: ${breweryId}`,
       200,
       allReviews,
+      newAccessToken,
     );
     next(successResponse);
   } catch (error) {

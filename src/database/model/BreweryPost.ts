@@ -32,6 +32,9 @@ export default class BreweryPost extends BaseEntity {
   @Column({ nullable: true, type: 'timestamp' })
   modifiedAt!: Date | null;
 
+  @Column()
+  phoneNumber!: string;
+
   @JoinColumn()
   @ManyToOne(() => User, (user) => user.breweryPosts)
   postedBy!: User;

@@ -1,4 +1,8 @@
-import { generateConfirmationToken } from '../../../util/auth/generateTokens';
+import {
+  generateAccessToken,
+  generateRefreshToken,
+  generateConfirmationToken,
+} from '../../../util/auth/generateTokens';
 import AppDataSource from '../../../database/AppDataSource';
 import User from '../../../database/model/User';
 import { checkIfUserExists } from '../../../util/auth/checkUserFns';
@@ -10,20 +14,12 @@ import { RegisterUserRequestHandler } from '../types/RequestHandlers';
 import sendConfirmationEmail from '../../../util/userRegistration/sendConfirmationEmail';
 import inProductionMode from '../../../util/environment/inProductionMode';
 
-/**
- * Business logic for registering a user.
- *
- * Will throw an error if it is not the case that the username, email, date of birth, and
- * password are provided. Performs a check to see if whether or not the user exists, and
- * will throw an error if true. Invokes a function to hash the given password with its
- * returned value (i.e. the hashed password) being stored in the database.
- */
-
+/** Business logic for registering a user. */
 const registerUser: RegisterUserRequestHandler = async (req, res, next) => {
   try {
-    const { username, email, dateOfBirth, password } = req.body;
+    const { username, email, dateOfBirth, password, firstName, lastName } = req.body;
 
-    if (!(username && email && dateOfBirth && password)) {
+    if (!(username && email && dateOfBirth && password && firstName && lastName)) {
       throw new ServerError('Missing parameters.', 400);
     }
 
@@ -32,7 +28,7 @@ const registerUser: RegisterUserRequestHandler = async (req, res, next) => {
     if (userExists) {
       throw new ServerError(
         'A user with the given username or email is already registered.',
-        400,
+        409,
       );
     }
 
@@ -46,16 +42,19 @@ const registerUser: RegisterUserRequestHandler = async (req, res, next) => {
     userToRegister.joinedDate = new Date(Date.now());
     userToRegister.hash = hash;
     userToRegister.accountConfirmed = false;
+    userToRegister.firstName = firstName;
+    userToRegister.lastName = lastName;
 
     await AppDataSource.manager.save(userToRegister);
 
     const confirmationToken = await generateConfirmationToken(userToRegister);
+    const refreshToken = await generateRefreshToken(userToRegister);
+    const accessToken = await generateAccessToken(refreshToken);
 
-    const successResponse = new SuccessResponse<{
-      registeredUser: User;
-      confirmationToken?: string;
-    }>('Successfully registered user.', 201, {
-      registeredUser: userToRegister,
+    const successResponse = new SuccessResponse('Successfully registered user.', 201, {
+      user: { id: userToRegister.id, username: userToRegister.username },
+      refreshToken,
+      accessToken,
       confirmationToken: !inProductionMode ? confirmationToken : undefined,
     });
 

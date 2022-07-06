@@ -4,7 +4,12 @@ export type getAllBreweryReviewsFn = RequestHandler<
   { breweryId: string },
   {},
   {},
-  { page_num?: string; page_size?: string }
+  {
+    page_num?: number;
+    page_size?: number;
+
+    paginated?: boolean;
+  }
 >;
 
 export type breweryReviewByIdFn = RequestHandler<{

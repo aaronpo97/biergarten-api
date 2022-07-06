@@ -9,7 +9,8 @@ const createBrewery = async (brewery: IRawBreweryData, adminUser: User) => {
   breweryToAdd.location = brewery.location;
   breweryToAdd.description = brewery.description;
   breweryToAdd.postedBy = adminUser;
-  breweryToAdd.createdAt = new Date(Date.now())
+  breweryToAdd.createdAt = new Date(Date.now());
+  breweryToAdd.phoneNumber = brewery.phone_number;
 
   return breweryToAdd.save();
 };

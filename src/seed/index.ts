@@ -4,12 +4,12 @@ import AppDataSource from '../database/AppDataSource';
 import logger from '../util/logger';
 
 import BeerPost from '../database/model/BeerPost';
-import seedData from './data/seedData';
+import generateSeedData from './data/generateSeedData';
 
 import createAdminUser from './util/createAdminUser';
 import createBrewery from './util/createBrewery';
 import createBeer from './util/createBeer';
-import fakeUserData from './data/fakeUserData';
+import generateUserData from './data/generateUserData';
 import User from '../database/model/User';
 import createFakeUser from './util/createFakeUser';
 import createBreweryReview from './util/createBreweryReview';
@@ -36,20 +36,23 @@ const seedDatabase = async () => {
 
   logger.info('Seeding database. This will take a bit of time...');
 
-  fakeUserData.forEach((rawUserData) => {
+  generateUserData(100).forEach((rawUserData) => {
     userPromises.push(createFakeUser(rawUserData));
   });
 
   const adminUser = await createAdminUser();
+  const allUsers = await Promise.all(userPromises);
 
-  seedData.forEach((rawBreweryData) => {
+  generateSeedData(13).forEach((rawBreweryData) => {
     breweryPromises.push(
       (async () => {
         logger.info(`Creating brewery ${rawBreweryData.name}`);
         const newBrewery = await createBrewery(rawBreweryData, adminUser);
 
-        for (let i = 0; i < 30; i++)
-          breweryReviewPromises.push(createBreweryReview(newBrewery, adminUser));
+        for (let i = 0; i < 30; i++) {
+          const randomUser = allUsers[Math.floor(Math.random() * allUsers.length)];
+          breweryReviewPromises.push(createBreweryReview(newBrewery, randomUser));
+        }
 
         rawBreweryData.beers.forEach((beer) => {
           beerPromises.push(createBeer(beer, newBrewery, adminUser));
@@ -59,7 +62,7 @@ const seedDatabase = async () => {
   });
 
   await Promise.all(breweryPromises);
-  await Promise.all([...beerPromises, ...userPromises, ...breweryReviewPromises]);
+  await Promise.all([...beerPromises, ...breweryReviewPromises]);
 };
 
 seedDatabase().then(() => {

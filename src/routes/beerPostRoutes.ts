@@ -1,7 +1,5 @@
 import { Router } from 'express';
 
-import { createValidator } from 'express-joi-validation';
-
 /* Controllers */
 import createNewBeer from '../controllers/beerPosts/create/createNewBeer';
 import deleteBeerById from '../controllers/beerPosts/delete/deleteBeerById';

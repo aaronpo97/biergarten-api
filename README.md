@@ -6,11 +6,11 @@ This is a 'revamped' version of my [Biergarten App](https://github.com/aaronpo97
 
 I am writing this app in an effort to continue learning about Typescript, Node, Express, and Postgres/TypeORM. The idea of writing a beer related app comes from my current job working in the retail operations of a brewery. It just so happens that I really enjoy beer as well!
 
-I aim to rewrite the app using Postgres as my database rather than MongoDB as in the first version. I aim to only rewrite the server code with the aim of possibility of using this API for a mobile application sometime in the future.
-
-This application uses Typescript with the Express framework in addition to TypeORM for the data service layer. It incorporates the Cloudinary API for image upload to the cloud, as well as the Sparkpost API for email services.
+I aim to rewrite the app using Postgres as my database rather than MongoDB as in the first version. This application uses Typescript with the Express framework in addition to TypeORM for the data service layer. It incorporates the Cloudinary API for image upload to the cloud, as well as the Sparkpost API for email services.
 
 I am making this code public in the hopes that this content will be useful for anyone wanting to learn TypeORM, Typescript, or any other tools I use in this project. For those reading this code, I have annotated my files with JSDoc to describe exactly what I aim to do with each code snippet.
+
+I am currently developing a client side application for API using React. The repository can be found [here](https://github.com/aaronpo97/biergarten-client).
 
 ### Some beer terminology
 

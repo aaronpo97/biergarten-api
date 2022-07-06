@@ -14,7 +14,7 @@ export type BreweryRequestHandler = RequestHandler<
   /** Response body */
   {},
   /** Request query */
-  { page_num?: string; page_size?: string }
+  { page_num?: number; page_size?: number; paginated?: boolean }
 >;
 
 /**
@@ -57,5 +57,5 @@ export type CreateBreweryRequestHandler = RequestHandler<
   /** Request body */
   {},
   /** Response body */
-  { description?: string; name?: string; location?: string }
+  { description?: string; name?: string; location?: string; phoneNumber?: string }
 >;
