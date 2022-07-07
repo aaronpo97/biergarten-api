@@ -48,14 +48,9 @@ const getAllBeers: BeerRequestHandler = async (req, res, next): Promise<void> =>
 
     const payload = paginateQuery
       ? { page_num, page_size, sorted_by: sort, beer_posts: allBeers }
-      : {beer_posts: allBeers, sorted_by: sort};
+      : { beer_posts: allBeers, sorted_by: sort };
 
-    const successResponse = new SuccessResponse(
-      message,
-      200,
-      payload,
-      newAccessToken,
-    );
+    const successResponse = new SuccessResponse(message, 200, payload, newAccessToken);
 
     next(successResponse);
   } catch (e) {

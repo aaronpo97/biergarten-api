@@ -1,9 +1,9 @@
 import Joi from 'joi';
 import paginationQueryValidationSchema from '../paginationQueryValidationSchema';
 
-const getAllBeerPostsQueryValidationSchema = Joi.object({
+const getAllBeerPostsQueryJoiSchema = Joi.object({
   ...paginationQueryValidationSchema,
   sort: Joi.string().valid('type', 'name', 'abv', 'ibu'),
 });
 
-export default getAllBeerPostsQueryValidationSchema;
+export default getAllBeerPostsQueryJoiSchema;

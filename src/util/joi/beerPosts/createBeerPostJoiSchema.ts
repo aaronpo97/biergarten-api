@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-const createBeerPostValidationSchema = Joi.object({
+const createBeerPostJoiSchema = Joi.object({
   name: Joi.string().required().max(40),
   description: Joi.string().required().max(500),
   typeId: Joi.string().uuid().required(),
@@ -9,4 +9,4 @@ const createBeerPostValidationSchema = Joi.object({
   breweryId: Joi.string().uuid().required(),
 });
 
-export default createBeerPostValidationSchema;
+export default createBeerPostJoiSchema;

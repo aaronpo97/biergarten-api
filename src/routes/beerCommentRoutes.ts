@@ -16,8 +16,8 @@ import getCurrentUser from '../middleware/auth/getCurrentUser';
 /* Utils */
 import notAllowedError from '../util/error/notAllowedError';
 import requestValidator from '../util/validation/requestValidator';
-import createBeerCommentValidationSchema from '../util/joi/beerComments/createBeerCommentValidationSchema';
-import updateBeerCommentValidationSchema from '../util/joi/beerComments/updateBeerCommentValidationSchema';
+import createBeerCommentJoiSchema from '../util/joi/beerComments/createBeerCommentJoiSchema';
+import updateBeerCommentJoiSchema from '../util/joi/beerComments/updateBeerCommentJoiSchema';
 import getResourceQueryValidator from '../util/joi/getResourceQueryValidator';
 
 const commentRoutes = Router({ mergeParams: true });
@@ -35,7 +35,7 @@ commentRoutes
     checkTokens,
     getCurrentUser,
     checkIfUserIsConfirmed,
-    requestValidator.body(createBeerCommentValidationSchema),
+    requestValidator.body(createBeerCommentJoiSchema),
     createNewComment,
   )
   .all((req, res, next) => {
@@ -51,7 +51,7 @@ commentRoutes
     getCurrentUser,
     checkIfUserIsConfirmed,
     checkIfBeerCommentOwner,
-    requestValidator.body(updateBeerCommentValidationSchema),
+    requestValidator.body(updateBeerCommentJoiSchema),
     editCommentById,
   )
   .delete(
