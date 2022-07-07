@@ -15,10 +15,11 @@ import getCurrentUser from '../middleware/auth/getCurrentUser';
 
 /* Utils */
 import notAllowedError from '../util/error/notAllowedError';
-import createBeerPostValidationSchema from '../util/joi/beerPosts/createBeerPostValidationSchema';
-import getResourceQueryValidator from '../util/joi/getResourceQueryValidator';
-import updateBeerPostValidationSchema from '../util/joi/beerPosts/updateBeerPostValidationSchema';
 import requestValidator from '../util/validation/requestValidator';
+
+import createBeerPostJoiSchema from '../util/joi/beerPosts/createBeerPostJoiSchema';
+import updateBeerPostJoiSchema from '../util/joi/beerPosts/updateBeerPostJoiSchema';
+import getAllBeerPostsQueryJoiSchema from '../util/joi/beerPosts/getAllBeerPostsQueryJoiSchema';
 
 /** Route handler for '/api/beers'. */
 const beerPostRoutes = Router();
@@ -28,14 +29,14 @@ beerPostRoutes
   .get(
     checkTokens,
     getCurrentUser,
-    requestValidator.query(getResourceQueryValidator),
+    requestValidator.query(getAllBeerPostsQueryJoiSchema),
     getAllBeers,
   )
   .post(
     checkTokens,
     getCurrentUser,
     checkIfUserIsConfirmed,
-    requestValidator.body(createBeerPostValidationSchema),
+    requestValidator.body(createBeerPostJoiSchema),
     createNewBeer,
   )
   .all((req, res, next) => {
@@ -51,7 +52,7 @@ beerPostRoutes
     getCurrentUser,
     checkIfUserIsConfirmed,
     checkIfBeerPostOwner,
-    requestValidator.body(updateBeerPostValidationSchema),
+    requestValidator.body(updateBeerPostJoiSchema),
     updateBeerById,
   )
   .delete(

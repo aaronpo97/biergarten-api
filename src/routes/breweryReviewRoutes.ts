@@ -14,8 +14,8 @@ import checkTokens from '../middleware/auth/checkTokens';
 import getCurrentUser from '../middleware/auth/getCurrentUser';
 
 /* Utils */
-import createBreweryReviewValidationSchema from '../util/joi/breweryReview/createBreweryReviewValidationSchema';
-import editBreweryReviewValidationSchema from '../util/joi/breweryReview/editBreweryReviewValidationSchema';
+import createBreweryReviewJoiSchema from '../util/joi/breweryReview/createBreweryReviewJoiSchema';
+import editBreweryReviewJoiSchema from '../util/joi/breweryReview/editBreweryReviewJoiSchema';
 import getResourceQueryValidator from '../util/joi/getResourceQueryValidator';
 import notAllowedError from '../util/error/notAllowedError';
 import requestValidator from '../util/validation/requestValidator';
@@ -35,7 +35,7 @@ breweryReviewRoutes
     checkTokens,
     getCurrentUser,
     checkIfUserIsConfirmed,
-    requestValidator.body(createBreweryReviewValidationSchema),
+    requestValidator.body(createBreweryReviewJoiSchema),
     createNewBreweryReview,
   )
   .all((req, res, next) => {
@@ -58,7 +58,7 @@ breweryReviewRoutes
     getCurrentUser,
     checkIfUserIsConfirmed,
     checkIfBreweryReviewOwner,
-    requestValidator.body(editBreweryReviewValidationSchema),
+    requestValidator.body(editBreweryReviewJoiSchema),
     editBreweryReviewById,
   )
   .all((req, res, next) => {

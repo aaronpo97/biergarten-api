@@ -19,6 +19,7 @@ import { sendErrorResponse, sendSuccessResponse } from './middleware/response';
 import inProductionMode from './util/environment/inProductionMode';
 import requestLogger from './util/logger/utils/requestLogger';
 import ServerError from './util/error/ServerError';
+import beerTypeRoutes from './routes/beerTypeRoutes';
 
 const app = express();
 
@@ -29,6 +30,7 @@ if (inProductionMode) {
 }
 
 app.get('/api/teapot', teapotRoute);
+app.use('/api/beers/types', beerTypeRoutes);
 app.use('/api/beers/:beerId/comments', beerCommentRoutes);
 app.use('/api/beers/:beerId/images', beerImageRoutes);
 app.use('/api/beers/', beerPostRoutes);

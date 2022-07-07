@@ -18,11 +18,11 @@ import showPublicUserInfo from '../controllers/users/read/showPublicUserInfo';
 /* Utils */
 import notAllowedError from '../util/error/notAllowedError';
 import requestValidator from '../util/validation/requestValidator';
-import registerUserValidationSchema from '../util/joi/users/registerUserValidationSchema';
-import loginUserValidationSchema from '../util/joi/users/loginUserValidationSchema';
-import confirmUserValidationSchema from '../util/joi/users/confirmUserValidationSchema';
-import editUsernameValidationSchema from '../util/joi/users/editUsernameValidationSchema';
-import editEmailValidationSchema from '../util/joi/users/editEmailValidationSchema';
+import registerUserJoiSchema from '../util/joi/users/registerUserJoiSchema';
+import loginUserJoiSchema from '../util/joi/users/loginUserJoiSchema';
+import confirmUserJoiSchema from '../util/joi/users/confirmUserJoiSchema';
+import editUsernameJoiSchema from '../util/joi/users/editUsernameJoiSchema';
+import editEmailJoiSchema from '../util/joi/users/editEmailJoiSchema';
 import getAuthenticatedUser from '../controllers/users/read/getAuthenticatedUser';
 import checkIfEmailExists from '../controllers/users/read/checkIfEmailExists';
 import checkIfUsernameExists from '../controllers/users/read/checkIfUsernameExists';
@@ -55,7 +55,7 @@ userRoutes
 
 userRoutes
   .route('/register')
-  .post(requestValidator.body(registerUserValidationSchema), registerUser)
+  .post(requestValidator.body(registerUserJoiSchema), registerUser)
   .all((req, res, next) => {
     res.set('Allow', 'POST');
     next(notAllowedError);
@@ -63,7 +63,7 @@ userRoutes
 
 userRoutes
   .route('/login')
-  .post(requestValidator.body(loginUserValidationSchema), loginUser)
+  .post(requestValidator.body(loginUserJoiSchema), loginUser)
   .all((req, res, next) => {
     res.set('Allow', 'POST');
     next(notAllowedError);
@@ -72,7 +72,7 @@ userRoutes
 userRoutes
   .route('/confirm-user')
   .put(
-    requestValidator.body(confirmUserValidationSchema),
+    requestValidator.body(confirmUserJoiSchema),
     checkTokens,
     getCurrentUser,
     confirmUser,
@@ -102,7 +102,7 @@ userRoutes
 userRoutes
   .route('/:userId/edit-username')
   .put(
-    requestValidator.body(editUsernameValidationSchema),
+    requestValidator.body(editUsernameJoiSchema),
     checkTokens,
     getCurrentUser,
     checkIfCurrentUser,
@@ -116,7 +116,7 @@ userRoutes
 userRoutes
   .route('/:userId/edit-email')
   .put(
-    requestValidator.body(editEmailValidationSchema),
+    requestValidator.body(editEmailJoiSchema),
     checkTokens,
     getCurrentUser,
     checkIfCurrentUser,
