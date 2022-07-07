@@ -18,6 +18,8 @@ import createFakeUser from './util/createFakeUser';
 import createBreweryReview from './util/createBreweryReview';
 import BreweryReview from '../database/model/BreweryReview';
 import BeerType from '../database/model/BeerType';
+import capitalizeSentence from './util/capitalizeSentence';
+import beerTypeNames from './util/beerTypeNames';
 
 const userPromises: Array<Promise<User>> = [];
 const beerPromises: Array<Promise<BeerPost>> = [];
@@ -25,13 +27,12 @@ const breweryReviewPromises: Array<Promise<BreweryReview>> = [];
 const breweryPromises: Array<Promise<void>> = [];
 
 const generateBeerTypes = async (adminUser: User) => {
-  const beerTypes = ['stout', 'porter', 'cream ale', 'lager', 'IPA', 'amber ale'];
   const typePromises: Promise<BeerType>[] = [];
 
-  beerTypes.forEach((type) => {
+  beerTypeNames.forEach((type) => {
     const newBeerType = new BeerType();
 
-    newBeerType.name = type;
+    newBeerType.name = capitalizeSentence(type);
     newBeerType.description = faker.lorem.paragraph();
     newBeerType.createdAt = new Date(Date.now());
     newBeerType.postedBy = adminUser;
@@ -67,19 +68,20 @@ const seedDatabase = async () => {
 
   const beerTypes = await generateBeerTypes(adminUser);
 
-  generateSeedData(13, beerTypes).forEach((rawBreweryData) => {
+  generateSeedData(20, beerTypes).forEach((rawBreweryData) => {
     breweryPromises.push(
       (async () => {
         logger.info(`Creating brewery ${rawBreweryData.name}`);
-        const newBrewery = await createBrewery(rawBreweryData, adminUser);
+        const randomUser = allUsers[Math.floor(Math.random() * allUsers.length)];
+
+        const newBrewery = await createBrewery(rawBreweryData, randomUser);
 
         for (let i = 0; i < 30; i++) {
-          const randomUser = allUsers[Math.floor(Math.random() * allUsers.length)];
           breweryReviewPromises.push(createBreweryReview(newBrewery, randomUser));
         }
 
         rawBreweryData.beers.forEach((beer) => {
-          beerPromises.push(createBeer(beer, newBrewery, adminUser));
+          beerPromises.push(createBeer(beer, newBrewery, randomUser));
         });
       })(),
     );

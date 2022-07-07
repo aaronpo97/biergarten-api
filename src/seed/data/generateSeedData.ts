@@ -1,21 +1,23 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { faker } from '@faker-js/faker/locale/en_CA';
 import BeerType from '../../database/model/BeerType';
-import User from '../../database/model/User';
 
 import capitalizeSentence from '../util/capitalizeSentence';
 import { IRawBeerData, IRawBreweryData } from './types';
 
-const generateSeedData = (breweryCount: number, beerTypes: BeerType[]) => {
+/**
+ * @param breweryCount The number of breweries you wish to generate.
+ * @param beerTypes A list of beer types already registered in the database.
+ * @returns {IRawBreweryData[]}
+ */
+const generateSeedData = (
+  breweryCount: number,
+  beerTypes: BeerType[],
+): IRawBreweryData[] => {
   const breweries: IRawBreweryData[] = [];
   const beers: IRawBeerData[] = [];
 
-  type nameSuffixes =
-    | 'brewing company'
-    | 'brewery'
-    | 'brewing cooperative'
-    | 'brew house';
-  const nameSuffix: readonly nameSuffixes[] = [
+  const nameSuffix: readonly string[] = [
     'brewing company',
     'brewery',
     'brewing cooperative',

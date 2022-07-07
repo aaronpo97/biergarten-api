@@ -19,6 +19,7 @@ import createBeerPostValidationSchema from '../util/joi/beerPosts/createBeerPost
 import getResourceQueryValidator from '../util/joi/getResourceQueryValidator';
 import updateBeerPostValidationSchema from '../util/joi/beerPosts/updateBeerPostValidationSchema';
 import requestValidator from '../util/validation/requestValidator';
+import getAllBeerPostsQueryValidationSchema from '../util/joi/beerPosts/getAllBeerPostsQueryValidationSchema';
 
 /** Route handler for '/api/beers'. */
 const beerPostRoutes = Router();
@@ -28,7 +29,7 @@ beerPostRoutes
   .get(
     checkTokens,
     getCurrentUser,
-    requestValidator.query(getResourceQueryValidator),
+    requestValidator.query(getAllBeerPostsQueryValidationSchema),
     getAllBeers,
   )
   .post(
