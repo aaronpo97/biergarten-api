@@ -1,6 +1,7 @@
 import User from '../../database/model/User';
 import { hashPassword } from '../../util/auth/passwordFns';
 
+/** Helper function to create an admin user for interaction with the API. */
 const createAdminUser = async () => {
   const adminUser = new User();
 
@@ -12,9 +13,8 @@ const createAdminUser = async () => {
   adminUser.hash = await hashPassword('password');
   adminUser.firstName = 'Jane';
   adminUser.lastName = 'Doe';
-  await adminUser.save();
 
-  return adminUser;
+  return adminUser.save();
 };
 
 export default createAdminUser;

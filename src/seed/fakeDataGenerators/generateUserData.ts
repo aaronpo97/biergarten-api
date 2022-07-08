@@ -1,10 +1,10 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { faker } from '@faker-js/faker';
 
-import { IRawFakeUserData } from './types/index';
+import { RawFakeUserData } from './types/index';
 
-const generateUserData = (userCount: number): IRawFakeUserData[] => {
-  const fakeUsers: IRawFakeUserData[] = [];
+const generateUserData = (userCount: number): RawFakeUserData[] => {
+  const fakeUsers: RawFakeUserData[] = [];
 
   for (let i = 0; i < userCount; i++) {
     const firstName = faker.name.firstName();

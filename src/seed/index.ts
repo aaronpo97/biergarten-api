@@ -1,48 +1,34 @@
 import { exit } from 'process';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { faker } from '@faker-js/faker';
-
-import AppDataSource from '../database/AppDataSource';
 import logger from '../util/logger';
 
+import AppDataSource from '../database/AppDataSource';
+import BeerComment from '../database/model/BeerComment';
 import BeerPost from '../database/model/BeerPost';
-import generateSeedData from './data/generateSeedData';
-
-import createAdminUser from './util/createAdminUser';
-import createBrewery from './util/createBrewery';
-import createBeer from './util/createBeer';
-import generateUserData from './data/generateUserData';
-import User from '../database/model/User';
-import createFakeUser from './util/createFakeUser';
-import createBreweryReview from './util/createBreweryReview';
+import BreweryPost from '../database/model/BreweryPost';
 import BreweryReview from '../database/model/BreweryReview';
-import BeerType from '../database/model/BeerType';
-import capitalizeSentence from './util/capitalizeSentence';
-import beerTypeNames from './util/beerTypeNames';
+import User from '../database/model/User';
 
-const userPromises: Array<Promise<User>> = [];
-const beerPromises: Array<Promise<BeerPost>> = [];
-const breweryReviewPromises: Array<Promise<BreweryReview>> = [];
-const breweryPromises: Array<Promise<void>> = [];
+import createAdminUser from './dataCreation/createAdminUser';
+import createBeer from './dataCreation/createBeer';
+import createBeerComment from './dataCreation/createBeerComment';
+import createBrewery from './dataCreation/createBrewery';
+import createBreweryReview from './dataCreation/createBreweryReview';
+import createFakeUser from './dataCreation/createFakeUser';
 
-const generateBeerTypes = async (adminUser: User) => {
-  const typePromises: Promise<BeerType>[] = [];
+import generateBeerData from './fakeDataGenerators/generateBeerData';
+import generateBeerTypes from './fakeDataGenerators/generateBeerTypes';
+import generateBreweryData from './fakeDataGenerators/generateBreweryData';
+import generateUserData from './fakeDataGenerators/generateUserData';
 
-  beerTypeNames.forEach((type) => {
-    const newBeerType = new BeerType();
+import getRandomArrayElement from './seedUtil/getRandomArrayElement';
 
-    newBeerType.name = capitalizeSentence(type);
-    newBeerType.description = faker.lorem.paragraph();
-    newBeerType.createdAt = new Date(Date.now());
-    newBeerType.postedBy = adminUser;
+const userPromises: Promise<User>[] = [];
+const beerPromises: Promise<BeerPost>[] = [];
+const beerCommentPromises: Promise<BeerComment>[] = [];
+const breweryReviewPromises: Promise<BreweryReview>[] = [];
+const breweryPromises: Promise<BreweryPost>[] = [];
 
-    typePromises.push(newBeerType.save());
-  });
-
-  const allBeerTypes = await Promise.all(typePromises);
-  return allBeerTypes;
-};
 const seedDatabase = async () => {
   await AppDataSource.initialize();
 
@@ -57,41 +43,68 @@ const seedDatabase = async () => {
     `,
   );
 
-  logger.info('Seeding database. This will take a bit of time...');
+  logger.info('Seeding database. This will take a bit of time.');
 
-  generateUserData(100).forEach((rawUserData) => {
+  generateUserData(1000).forEach((rawUserData) => {
     userPromises.push(createFakeUser(rawUserData));
   });
 
   const adminUser = await createAdminUser();
   const allUsers = await Promise.all(userPromises);
-
   const beerTypes = await generateBeerTypes(adminUser);
 
-  generateSeedData(20, beerTypes).forEach((rawBreweryData) => {
-    breweryPromises.push(
-      (async () => {
-        logger.info(`Creating brewery ${rawBreweryData.name}`);
-        const randomUser = allUsers[Math.floor(Math.random() * allUsers.length)];
+  logger.info('Saving all users.');
 
-        const newBrewery = await createBrewery(rawBreweryData, randomUser);
-
-        for (let i = 0; i < 30; i++) {
-          breweryReviewPromises.push(createBreweryReview(newBrewery, randomUser));
-        }
-
-        rawBreweryData.beers.forEach((beer) => {
-          beerPromises.push(createBeer(beer, newBrewery, randomUser));
-        });
-      })(),
-    );
+  generateBreweryData(100).forEach((rawBreweryData) => {
+    const randomUser = getRandomArrayElement(allUsers);
+    breweryPromises.push(createBrewery(rawBreweryData, randomUser));
   });
 
-  await Promise.all(breweryPromises);
-  await Promise.all([...beerPromises, ...breweryReviewPromises]);
+  logger.info('Creating and saving all brewery posts...');
+  const breweryPosts = await Promise.all(breweryPromises);
+
+  breweryPosts.forEach((breweryPost) => {
+    const randomUser = getRandomArrayElement(allUsers);
+
+    breweryReviewPromises.push(createBreweryReview(breweryPost, randomUser));
+  });
+
+  generateBeerData(beerTypes, 5000).forEach((rawBeerData) => {
+    const randomBrewery = getRandomArrayElement(breweryPosts);
+    const randomUser = getRandomArrayElement(allUsers);
+    beerPromises.push(createBeer(rawBeerData, randomBrewery, randomUser));
+  });
+
+  logger.info('Creating and saving all beer posts...');
+  const beerPosts = await Promise.all(beerPromises);
+
+  beerPosts.forEach((beerPost) => {
+    for (let i = 0; i < 10; i++) {
+      const randomUser = getRandomArrayElement(allUsers);
+      beerCommentPromises.push(createBeerComment(beerPost, randomUser));
+    }
+  });
+
+  breweryPosts.forEach((breweryPost) => {
+    for (let i = 0; i < 10; i++) {
+      const randomUser = getRandomArrayElement(allUsers);
+      breweryReviewPromises.push(createBreweryReview(breweryPost, randomUser));
+    }
+  });
+
+  logger.info('Creating and saving all beer comments...');
+  await Promise.all(beerCommentPromises);
+
+  logger.info('Creating all brewery reviews...');
+
+  await Promise.all(breweryReviewPromises);
 };
 
+const startTime = performance.now();
 seedDatabase().then(() => {
+  const endTime = performance.now();
+
   logger.info('Database seeded.');
+  logger.info(`That took ${endTime - startTime} milliseconds.`);
   exit(0);
 });

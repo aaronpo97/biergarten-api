@@ -19,6 +19,7 @@ import createBeerTypeJoiSchema from '../util/joi/beerTypes/createBeerTypeJoiSche
 import getBeerTypeById from '../controllers/beerTypes/read/getBeerTypeById';
 import checkIfBeerTypeOwner from '../middleware/auth/checkIfBeerTypeOwner';
 import deleteBeerTypeById from '../controllers/beerTypes/delete/deleteBeerTypeById';
+
 import updateBeerTypeById from '../controllers/beerTypes/update/updateBeerTypeById';
 import updateBeerTypeJoiSchema from '../util/joi/beerTypes/updateBeerTypeJoiSchema';
 
