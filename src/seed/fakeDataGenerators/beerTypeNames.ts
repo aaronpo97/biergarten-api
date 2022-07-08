@@ -1,3 +1,4 @@
+/** A list of beer types/styles for use in fake data creation. */
 const beerTypeNames: readonly string[] = [
   'American Amber Ale',
   'American Pale Ale',

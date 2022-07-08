@@ -1,20 +1,17 @@
-import BeerType from '../../../database/model/BeerType';
-
-export interface IRawBeerData {
+export interface RawBeerData {
   name: string;
   typeId: string;
   description: string;
   abv?: number;
   ibu?: number;
 }
-export interface IRawBreweryData {
+export interface RawBreweryData {
   name: string;
   description: string;
   location: string;
-  beers: readonly IRawBeerData[];
   phone_number: string;
 }
-export interface IRawFakeUserData {
+export interface RawFakeUserData {
   username: string;
   email: string;
   dateOfBirth: string;
