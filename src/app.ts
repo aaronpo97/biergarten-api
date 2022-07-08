@@ -30,9 +30,9 @@ if (inProductionMode) {
 }
 
 app.get('/api/teapot', teapotRoute);
-app.use('/api/beers/types', beerTypeRoutes);
 app.use('/api/beers/:beerId/comments', beerCommentRoutes);
 app.use('/api/beers/:beerId/images', beerImageRoutes);
+app.use('/api/beers/types', beerTypeRoutes);
 app.use('/api/beers/', beerPostRoutes);
 
 app.use('/api/breweries/:breweryId/reviews', breweryReviewRoutes);
