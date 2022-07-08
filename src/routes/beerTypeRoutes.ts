@@ -20,6 +20,9 @@ import getBeerTypeById from '../controllers/beerTypes/read/getBeerTypeById';
 import checkIfBeerTypeOwner from '../middleware/auth/checkIfBeerTypeOwner';
 import deleteBeerTypeById from '../controllers/beerTypes/delete/deleteBeerTypeById';
 
+import updateBeerTypeById from '../controllers/beerTypes/update/updateBeerTypeById';
+import updateBeerTypeJoiSchema from '../util/joi/beerTypes/updateBeerTypeJoiSchema';
+
 /** Route handler for '/api/beer-types'. */
 const beerTypeRoutes = Router();
 
@@ -47,7 +50,13 @@ beerTypeRoutes
   .route('/:id')
   .get(checkTokens, getCurrentUser, getBeerTypeById)
   .delete(checkTokens, getCurrentUser, checkIfBeerTypeOwner, deleteBeerTypeById)
-
+  .put(
+    checkTokens,
+    getCurrentUser,
+    checkIfBeerTypeOwner,
+    requestValidator.body(updateBeerTypeJoiSchema),
+    updateBeerTypeById,
+  )
   .all((req, res, next) => {
     res.set('Allow', 'GET, POST');
     next(notAllowedError);
