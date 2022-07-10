@@ -6,15 +6,15 @@ import AppDataSource from '../../../database/AppDataSource';
 import getPageCount from '../../../util/pagination/getPageCount';
 import getBeerPostSortingMethod from '../../../util/sorting/getBeerPostSortingMethod';
 
-/** Business logic for retrieving beer posts from the database and sending it to the client. */
+/** Business logic for retrieving beerPost posts from the database and sending it to the client. */
 const getAllBeers: BeerRequestHandler = async (req, res, next): Promise<void> => {
   try {
     const { paginated = false, page_num, page_size, sort } = req.query;
 
     const queryBase = AppDataSource.getRepository(BeerPost)
-      .createQueryBuilder('beer')
+      .createQueryBuilder('beerPost')
       .select([
-        'beer',
+        'beerPost',
         'user.id',
         'user.username',
         'brewery.name',
@@ -22,9 +22,9 @@ const getAllBeers: BeerRequestHandler = async (req, res, next): Promise<void> =>
         'beerType.name',
         'beerType.id',
       ])
-      .innerJoin('beer.postedBy', 'user')
-      .innerJoin('beer.brewery', 'brewery')
-      .innerJoin('beer.type', 'beerType')
+      .innerJoin('beerPost.postedBy', 'user')
+      .innerJoin('beerPost.brewery', 'brewery')
+      .innerJoin('beerPost.type', 'beerType')
       .orderBy(getBeerPostSortingMethod(sort));
 
     const paginateQuery = paginated && page_num && page_size;

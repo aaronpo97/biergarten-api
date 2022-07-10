@@ -6,7 +6,7 @@ import { RequestHandler } from 'express-serve-static-core';
  * Used for routes that do not have content in the Request or Response body. Mainly used
  * for the GET /breweries route.
  */
-export type BreweryRequestHandler = RequestHandler<
+export type GetAllBreweriesRequestHandler = RequestHandler<
   /** Request params */
   {},
   /** Request body */

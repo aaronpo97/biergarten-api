@@ -4,14 +4,27 @@ import ServerError from '../../util/error/ServerError';
 import isValidUuid from '../../util/validation/isValidUuid';
 import { BreweryPostMiddlewareFn } from './types/authMiddlewareTypes';
 
+/**
+ * Middleware function to check if the currently authenticated user is the resource owner.
+ *
+ * This function must be invoked after the checkTokens, getCurrentUser, and
+ * checkIfUserIsConfirmed functions. Otherwise the server will throw an error.
+ *
+ * @throws ServerError with status 400 (Bad Request) when the provided brewery_post id is
+ *   not a UUID.
+ * @throws ServerError with status 403 (Forbidden) when currentUser.id !==
+ *   queriedBrewery.postedBy.id. This means the currently authenticated user is not
+ *   authorized to modify the resource.
+ */
+
 const checkIfBreweryPostOwner: BreweryPostMiddlewareFn = async (req, res, next) => {
   try {
     const { breweryId } = req.params;
 
     if (!isValidUuid(breweryId)) {
       throw new ServerError(
-        'Could not find a brewery with that that id as it is invalid',
-        404,
+        'Could not find a brewery with that id as it is invalid',
+        400,
       );
     }
 
@@ -27,7 +40,7 @@ const checkIfBreweryPostOwner: BreweryPostMiddlewareFn = async (req, res, next) 
 
     const { currentUser } = req;
     if (!currentUser) {
-      throw new ServerError('Please reauthenticate your request.', 401);
+      throw new ServerError('You must authenticate your request.', 401);
     }
 
     const isBreweryPostOwner = currentUser.id === queriedBrewery.postedBy.id;
@@ -38,10 +51,7 @@ const checkIfBreweryPostOwner: BreweryPostMiddlewareFn = async (req, res, next) 
 
     next();
   } catch (err) {
-    if (err instanceof Error) {
-      next(err);
-    }
-    next(new ServerError('Something went wrong', 404));
+    next(err);
   }
 };
 

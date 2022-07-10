@@ -8,6 +8,11 @@ import { verifyAccessToken } from '../../util/auth/verifyTokenHelperFns';
 /**
  * Middleware to first check an access token to see if it is valid, and if it is expired,
  * will trigger a function to regenerate the access token with the given refresh token.
+ *
+ * @throws ServerError with status 401 if the x-access-token (i.e. the access token) was
+ *   not provided with the request headers.
+ * @throws ServerError with status 401 if the x-auth-token (i.e. the refresh token)was not
+ *   provided with the request headers.
  */
 const checkTokens: MiddlewareFn = async (req, res, next) => {
   try {
@@ -15,10 +20,7 @@ const checkTokens: MiddlewareFn = async (req, res, next) => {
     if (!accessToken) {
       throw new ServerError('The access token was not provided.', 401);
     }
-    const decodedAccessToken = await verifyAccessToken(accessToken);
-
-    req.decodedAccessToken = decodedAccessToken;
-
+    req.decodedAccessToken = await verifyAccessToken(accessToken);
     next();
   } catch (error) {
     try {
@@ -27,7 +29,7 @@ const checkTokens: MiddlewareFn = async (req, res, next) => {
         if (!refreshToken) {
           throw new ServerError(
             'No refresh token was provided. Authentication failed.',
-            400,
+            401,
           );
         }
 
@@ -42,7 +44,7 @@ const checkTokens: MiddlewareFn = async (req, res, next) => {
       }
       throw error;
     } catch (err) {
-      next(err instanceof Error ? err : new ServerError('Something went wrong', 500));
+      next(err);
     }
   }
 };

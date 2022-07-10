@@ -4,7 +4,7 @@ import { exit, env } from 'process';
 
 import AppDataSource from './database/AppDataSource';
 import logger from './util/logger';
-import app from './app';
+import expressApp from './expressApp';
 import inProductionMode from './util/environment/inProductionMode';
 
 dotenv.config();
@@ -17,11 +17,10 @@ if (!(PORT && BASE_URL)) {
 
 const port = parseInt(PORT, 10);
 
-app.listen(port, () => {
+expressApp.listen(port, () => {
   (async () => {
     try {
       if (!inProductionMode) {
-        // eslint-disable-next-line no-console
         console.clear();
       }
       await AppDataSource.initialize();

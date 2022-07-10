@@ -6,44 +6,45 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
+import { sendErrorResponse, sendSuccessResponse } from './middleware/response';
+
 import beerCommentRoutes from './routes/beerCommentRoutes';
 import beerImageRoutes from './routes/beerImageRoutes';
 import beerPostRoutes from './routes/beerPostRoutes';
+import beerTypeRoutes from './routes/beerTypeRoutes';
 import breweryPostRoutes from './routes/breweryPostRoutes';
 import breweryReviewRoutes from './routes/breweryReviewRoutes';
 import teapotRoute from './routes/teapotRoute';
 import userRoutes from './routes/userRoutes';
 
-import { sendErrorResponse, sendSuccessResponse } from './middleware/response';
-
 import inProductionMode from './util/environment/inProductionMode';
 import requestLogger from './util/logger/utils/requestLogger';
 import ServerError from './util/error/ServerError';
-import beerTypeRoutes from './routes/beerTypeRoutes';
 
-const app = express();
+/** An express application. */
+const expressApp = express();
 
-app.use(bodyParser.json());
+expressApp.use(bodyParser.json());
 
 if (inProductionMode) {
-  app.use(requestLogger);
+  expressApp.use(requestLogger);
 }
 
-app.get('/api/teapot', teapotRoute);
-app.use('/api/beers/:beerId/comments', beerCommentRoutes);
-app.use('/api/beers/:beerId/images', beerImageRoutes);
-app.use('/api/beers/types', beerTypeRoutes);
-app.use('/api/beers/', beerPostRoutes);
+expressApp.get('/api/teapot', teapotRoute);
+expressApp.use('/api/beers/:beerId/comments', beerCommentRoutes);
+expressApp.use('/api/beers/:beerId/images', beerImageRoutes);
+expressApp.use('/api/beers/types', beerTypeRoutes);
+expressApp.use('/api/beers/', beerPostRoutes);
 
-app.use('/api/breweries/:breweryId/reviews', breweryReviewRoutes);
-app.use('/api/breweries/', breweryPostRoutes);
-app.use('/api/users/', userRoutes);
+expressApp.use('/api/breweries/:breweryId/reviews', breweryReviewRoutes);
+expressApp.use('/api/breweries/', breweryPostRoutes);
+expressApp.use('/api/users/', userRoutes);
 
-app.all('*', () => {
+expressApp.all('*', () => {
   throw new ServerError('404 Not Found', 404);
 });
 
-app.use(sendSuccessResponse);
-app.use(sendErrorResponse);
+expressApp.use(sendSuccessResponse);
+expressApp.use(sendErrorResponse);
 
-export default app;
+export default expressApp;

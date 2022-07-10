@@ -9,14 +9,15 @@ import { BreweryByIdRequestHandler } from '../types/RequestHandlers';
 /**
  * Business logic for getting a brewery by its id.
  *
- * The req.params will contain the brewery id as a string, called breweryIdString.
+ * @throws ServerError with status 400 if the client provided brewery post id is invalid.
+ * @throws ServerError with status 404 if the server could not locate a brewery post with that id.
  */
 const getBreweryById: BreweryByIdRequestHandler = async (req, res, next) => {
   try {
     const { breweryId } = req.params;
 
     if (!isValidUuid(breweryId)) {
-      throw new ServerError('Could not get a brewery with that id as it is invalid', 400);
+      throw new ServerError('The provided brewery post id is invalid.', 400);
     }
 
     const queriedBrewery = await AppDataSource.getRepository(BreweryPost)
