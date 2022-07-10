@@ -6,14 +6,15 @@ import BreweryPost from '../../../database/model/BreweryPost';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 
-/** Business logic for creating a new brewery. */
+/**
+ * Business logic for creating a new brewery.
+ *
+ * @throws ServerError with status 401 if there is no authenticated user appended to the
+ *   request body.
+ */
 const createNewBrewery: CreateBreweryRequestHandler = async (req, res, next) => {
   try {
     const { description, name, location, phoneNumber } = req.body;
-
-    if (!(name && description && location && phoneNumber)) {
-      throw new ServerError('Missing params in request body.', 400);
-    }
 
     const { currentUser } = req;
     if (!currentUser) {

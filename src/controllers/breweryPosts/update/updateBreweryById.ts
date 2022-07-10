@@ -7,8 +7,12 @@ import { UpdateBreweryRequestHandler } from '../types/RequestHandlers';
 /**
  * Business logic for updating a brewery by its id.
  *
- * Takes in the brewery id as the req params. If the brewery id is not a valid UUID it
- * will throw ServerError with code 400.
+ * Takes in the brewery id as the req params.
+ *
+ * @throws ServerError with status 400 (Bad Request) if the client provided brewery id is
+ *   not a valid UUID.
+ * @throws SeverError with status 404 (Not Found) if a brewery_post with the client
+ *   provided id could not be found.
  */
 const updateBreweryById: UpdateBreweryRequestHandler = async (req, res, next) => {
   try {

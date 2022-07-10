@@ -1,11 +1,11 @@
-import { BreweryRequestHandler } from '../types/RequestHandlers';
+import { GetAllBreweriesRequestHandler } from '../types/RequestHandlers';
 
 import SuccessResponse from '../../../util/response/SuccessResponse';
 import BreweryPost from '../../../database/model/BreweryPost';
 import AppDataSource from '../../../database/AppDataSource';
 
 /** Business logic for retrieving brewery data from the database and sending it to the client. */
-const getAllBreweries: BreweryRequestHandler = async (req, res, next): Promise<void> => {
+const getAllBreweries: GetAllBreweriesRequestHandler = async (req, res, next) => {
   try {
     const { paginated = false, page_num, page_size } = req.query;
     const queryBase = AppDataSource.getRepository(BreweryPost)

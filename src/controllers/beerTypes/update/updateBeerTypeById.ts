@@ -30,12 +30,12 @@ const updateBeerTypeById: updateBeerTypeByIdFunction = async (req, res, next) =>
       );
     }
 
-    if(descriptionUpdate){
-      beerTypeToUpdate.description = descriptionUpdate
+    if (descriptionUpdate) {
+      beerTypeToUpdate.description = descriptionUpdate;
     }
 
-    if (nameUpdate){
-      beerTypeToUpdate.name = nameUpdate
+    if (nameUpdate) {
+      beerTypeToUpdate.name = nameUpdate;
     }
 
     const successResponse = new SuccessResponse(``, 204, undefined);
