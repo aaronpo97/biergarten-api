@@ -20,6 +20,10 @@ type TeapotRequestHandler = RequestHandler<
  * Will set the status code to 418 and trigger an error response.
  *
  * Mainly an easter egg. Serves no actual purpose for the application other than being nice to have.
+ *
+ * @returns {never} This middleware function will always throw an error.
+ * @throws ServerError with status 418. This occurs 100% of the time the middleware
+ *   function is invoked.
  */
 const teapotRoute: TeapotRequestHandler = (): never => {
   throw new ServerError(`I cannot brew coffee, I'm a teapot!`, 418);
