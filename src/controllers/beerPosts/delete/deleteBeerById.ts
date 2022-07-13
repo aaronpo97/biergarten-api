@@ -4,7 +4,6 @@ import BeerPost from '../../../database/model/BeerPost';
 import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 import AppDataSource from '../../../database/AppDataSource';
-import logger from '../../../util/logger';
 
 /**
  * Business logic for deleting a beer post by its id.

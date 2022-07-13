@@ -1,4 +1,3 @@
-import { RequestHandler } from 'express-serve-static-core';
 import AppDataSource from '../../../database/AppDataSource';
 import BeerImage from '../../../database/model/BeerImage';
 import ServerError from '../../../util/error/ServerError';
@@ -6,7 +5,14 @@ import SuccessResponse from '../../../util/response/SuccessResponse';
 import isValidUuid from '../../../util/validation/isValidUuid';
 import { ImageByIdFn } from '../types/RequestHandlers';
 
-/** Business logic for getting an image by its id */
+/**
+ * Business logic for getting an image by its id.
+ *
+ * @throws ServerError with status 400 if the client provided beer post id is invalid.
+ * @throws ServerError with status 400 if the client provided beer image id is invalid.
+ * @throws ServerError with status 404 if the server could not locate a beer image with
+ *   the client provided id.
+ */
 const getBeerImageById: ImageByIdFn = async (req, res, next) => {
   try {
     const { beerId, imageId } = req.params;

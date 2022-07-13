@@ -10,10 +10,12 @@ import { ProcessNewImagesFn } from '../types/RequestHandlers';
 /**
  * Business logic for processing image data from multer into the database.
  *
- * Takes in the beer id as a request parameter. If the provided beer id is invalid, the
- * server will throw status 400. Additionally, if no files are included in the request,
- * the server will also throw status 400. If a beer post with the provided id could not be
- * found, the server will throw status 401.
+ * Takes in the beer post id as a request parameter.
+ *
+ * @throws ServerError with status 400 if there are no files included in the request body.
+ * @throws ServerError with status 400 if the client provided beer post id is invalid.
+ * @throws ServerError with status 404 if the server cannot find a beer post with the
+ *   client provided id.
  */
 const processImageData: ProcessNewImagesFn = async (req, res, next) => {
   try {

@@ -5,6 +5,13 @@ import SuccessResponse from '../../../util/response/SuccessResponse';
 import isValidUuid from '../../../util/validation/isValidUuid';
 import { getAllImagesFn } from '../types/RequestHandlers';
 
+/**
+ * Business logic for getting all images for a particular beer post.
+ *
+ * @throws ServerError with status 400 if the client provided beer post id is invalid.
+ * @throws ServerError with status 404 if the server could not find images for the beer
+ *   post with the client provided id.
+ */
 const getAllBeerImages: getAllImagesFn = async (req, res, next) => {
   try {
     const { beerId } = req.params;

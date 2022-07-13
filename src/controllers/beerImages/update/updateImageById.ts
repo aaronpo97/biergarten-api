@@ -4,6 +4,15 @@ import SuccessResponse from '../../../util/response/SuccessResponse';
 import isValidUuid from '../../../util/validation/isValidUuid';
 import { EditBeerImageFn } from '../types/RequestHandlers';
 
+/**
+ * Business logic for updating a beer image by id.
+ *
+ * @throws ServerError with status 400 if the client provided beer post id is invalid.
+ * @throws ServerError with status 400 if the client provided beer image id is invalid.
+ * @throws ServerError with status 404 if the server could not locate a beer image with
+ *   the client provided id.
+ */
+
 const updateImageById: EditBeerImageFn = async (req, res, next) => {
   try {
     const { beerId, imageId } = req.params;
@@ -20,7 +29,10 @@ const updateImageById: EditBeerImageFn = async (req, res, next) => {
     const { updatedCaption } = req.body;
 
     if (!updatedCaption) {
-      throw new ServerError('No updates were provided to the server.', 200);
+      next(
+        new SuccessResponse('No updates were provided to the server.', 200, undefined),
+      );
+      return;
     }
 
     const beerImage = await BeerImage.findOne({ where: { id: imageId } });
