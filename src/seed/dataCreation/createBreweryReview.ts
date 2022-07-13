@@ -7,10 +7,11 @@ import BreweryPost from '../../database/model/BreweryPost';
 
 /**
  * Helper function to create a new brewery review resource.
- * 
- * @param breweryPost An instance of BreweryPost in which the created brewery review will be linked to.
+ *
+ * @param breweryPost An instance of BreweryPost in which the created brewery review will
+ *   be linked to.
  * @param user An instance of User in which will be the author of the newly created resource.
- * @returns 
+ * @returns
  */
 const createBreweryReview = async (
   breweryPost: BreweryPost,

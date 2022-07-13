@@ -40,8 +40,10 @@ export const verifyRefreshToken = async (refreshToken: string) => {
 };
 
 /**
- * @param confirmationToken The JWT you wish to verify against the confirmation token secret stored in the environment variables.
- * @throws SeverError with status 500 if there is no confirmation token secret stored in the environment variables.
+ * @param confirmationToken The JWT you wish to verify against the confirmation token
+ *   secret stored in the environment variables.
+ * @throws SeverError with status 500 if there is no confirmation token secret stored in
+ *   the environment variables.
  */
 export const verifyConfirmationToken = async (confirmationToken: string) => {
   if (!CONFIRMATION_TOKEN_SECRET) {

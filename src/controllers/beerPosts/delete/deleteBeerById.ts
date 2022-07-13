@@ -9,9 +9,9 @@ import logger from '../../../util/logger';
 /**
  * Business logic for deleting a beer post by its id.
  *
- * Takes in the beer post id as part of the request params and will throw error 400 if a
- * beer post with the provided id is invalid. Will also throw error 404 if a beer post
- * with the provided id could not be found.
+ * @throws ServerError with status 400 if the client provided beer id is invalid.
+ * @throws ServerError with status 404 if a beer post with the client provided id could
+ *   not be found.
  */
 const deleteBeerById: BeerByIdRequestHandler = async (req, res, next) => {
   try {
