@@ -27,9 +27,9 @@ export const verifyAccessToken = async (accessToken: string) => {
  * environment variables.
  *
  * @param refreshToken The JWT you wish to verify against the refresh token secret.
+ * @returns A payload containing the decoded values (i.e. user id) from the JWT.
  * @throws ServerError with status 500 if there is no refresh token secret stored in the
  *   environment variables.
- * @returns A payload containing the decoded values (i.e. user id) from the JWT.
  */
 export const verifyRefreshToken = async (refreshToken: string) => {
   if (!REFRESH_TOKEN_SECRET) {

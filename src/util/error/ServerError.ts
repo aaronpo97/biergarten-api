@@ -4,6 +4,10 @@ import HTTPStatusCodes from '../types/HTTPStatusCodes';
 export default class ServerError extends Error {
   status: HTTPStatusCodes;
 
+  /**
+   * @param message The error message to be sent.
+   * @param status A valid HTTP status code.
+   */
   constructor(message: string, status: HTTPStatusCodes) {
     super();
     this.message = message;

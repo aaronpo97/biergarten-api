@@ -1,6 +1,5 @@
 import AppDataSource from '../../database/AppDataSource';
 import BeerPost from '../../database/model/BeerPost';
-
 import ServerError from '../../util/error/ServerError';
 import isValidUuid from '../../util/validation/isValidUuid';
 import { BeerPostMiddlewareFn } from './types/authMiddlewareTypes';

@@ -1,6 +1,5 @@
 import AppDataSource from '../../../database/AppDataSource';
 import BeerComment from '../../../database/model/BeerComment';
-import ServerError from '../../../util/error/ServerError';
 import SuccessResponse from '../../../util/response/SuccessResponse';
 
 import { getAllCommentsT } from '../types/RequestHandlers';

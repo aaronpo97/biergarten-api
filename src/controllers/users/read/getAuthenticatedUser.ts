@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express-serve-static-core';
-import ServerError from '../../../util/error/ServerError';
+
 import SuccessResponse from '../../../util/response/SuccessResponse';
 
 const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
