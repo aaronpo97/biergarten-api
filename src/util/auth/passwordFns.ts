@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import argon2 from 'argon2';
 
 import { checkIfValidPasswordFn, hashPasswordFn } from './types';
 
@@ -11,7 +11,7 @@ import { checkIfValidPasswordFn, hashPasswordFn } from './types';
  * @param password A plain text password to be hashed.
  * @returns The hashed password.
  */
-export const hashPassword: hashPasswordFn = async (password) => bcrypt.hash(password, 15);
+export const hashPassword: hashPasswordFn = async (password) => argon2.hash(password);
 
 /**
  * Basic helper function that will compare a password with a hash.
@@ -24,4 +24,4 @@ export const hashPassword: hashPasswordFn = async (password) => bcrypt.hash(pass
  * @returns A boolean representation of whether or not the password matches the stored hash.
  */
 export const checkIfValidPassword: checkIfValidPasswordFn = async (hash, password) =>
-  bcrypt.compare(password, hash);
+  argon2.verify(hash, password);
