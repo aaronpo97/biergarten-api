@@ -9,11 +9,8 @@ import isValidUuid from '../../../util/validation/isValidUuid';
  * Takes in the beer id as part of request params and an option updated description, name,
  * abv, or ibu as part of the request body.
  *
- * If the provided beer post id is invalid, the server will throw error 400. Additionally,
- * the server will throw error 404 if a beer with the provided id could not be located.
- *
- * If the request body is empty, then the server will throw error 400 citing that no
- * updated params were given to the server and could not complete the request.
+ * @throws ServerError with code 400 if the client provided beer post id is invalid.
+ * @throws ServerError with code 404 if a beer post with the client provided id could not be found.
  */
 const updateBeerById: UpdateBeerRequestHandler = async (req, res, next) => {
   try {

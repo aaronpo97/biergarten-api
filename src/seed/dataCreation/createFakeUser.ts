@@ -4,8 +4,9 @@ import { RawFakeUserData } from '../fakeDataGenerators/types';
 
 /**
  * Helper function to create a fake user.
- * 
- * @param rawUserData An instance of RawFakeUserData to facilitate the creation of a fake user account.
+ *
+ * @param rawUserData An instance of RawFakeUserData to facilitate the creation of a fake
+ *   user account.
  */
 const createFakeUser = async (rawUserData: RawFakeUserData) => {
   const { username, email, dateOfBirth, firstName, lastName } = rawUserData;

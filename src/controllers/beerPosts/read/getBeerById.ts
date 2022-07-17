@@ -9,9 +9,9 @@ import { BeerByIdRequestHandler } from '../types/RequestHandlers';
 /**
  * Business logic for getting a beer post by its id.
  *
- * Takes in the beer post id as part of the request params and will throw error 400 if the
- * provided id is invalid. The server will also throw error 404 if a beer with the
- * provided id could not be found.
+ * @throws ServerError with status 400 if the client provided beer post id is invalid.
+ * @throws ServerError with status 404 if a beer post with the client provided beer post
+ *   id could not be found.
  */
 const getBeerById: BeerByIdRequestHandler = async (req, res, next) => {
   try {

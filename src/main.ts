@@ -21,6 +21,7 @@ expressApp.listen(port, () => {
   (async () => {
     try {
       if (!inProductionMode) {
+        // eslint-disable-next-line no-console
         console.clear();
       }
       await AppDataSource.initialize();

@@ -11,6 +11,13 @@ export default class SuccessResponse<PayloadType> extends Response {
 
   newAccessToken?: string;
 
+  /**
+   * @param message The success message to be sent to the client.
+   * @param status A valid HTTP status code.
+   * @param payload A payload to be sent to the client.
+   * @param newAccessToken A regenerated access token if the one sent by the client has
+   *   expired. Defaults to undefined.
+   */
   constructor(
     message: string,
     status: HTTPStatusCodes,

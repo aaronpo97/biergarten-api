@@ -1,6 +1,3 @@
-import multer from 'multer';
-
-/* eslint-disable camelcase */
 import { v2 as cloudinary } from 'cloudinary';
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
 
@@ -24,6 +21,7 @@ cloudinary.config({ cloud_name, api_key, api_secret });
 // @ts-expect-error
 const storage = new CloudinaryStorage({ cloudinary, params: { folder: 'BeerApp' } });
 
+/** Configuration object for Cloudinary image upload. */
 const cloudinaryConfig = { cloudinary, storage };
 
 export default cloudinaryConfig;

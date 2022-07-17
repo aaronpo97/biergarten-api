@@ -4,7 +4,7 @@ import { RawBreweryData } from '../fakeDataGenerators/types';
 
 /**
  * Helper function to create a new brewery resource.
- * 
+ *
  * @param brewery An object with fake brewery data (i.e. an instance of RawBreweryData).
  * @param postedBy An instance of User to act as the author of the resource to be created.
  */

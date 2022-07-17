@@ -35,7 +35,7 @@ export const sendErrorResponse: ErrorResponseT = (err, req, res, next) => {
 
   const { message } = err;
   const status = 'status' in err ? err.status : 500;
-  const stack = inProductionMode ? err.stack : undefined;
+  const stack = !inProductionMode ? err.stack : undefined;
   const response = new ErrorResponse(message, status, stack);
   res.status(status).json(response);
 };

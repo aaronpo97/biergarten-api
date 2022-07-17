@@ -2,7 +2,6 @@ import { ImageByIdFn } from '../../controllers/beerImages/types/RequestHandlers'
 import AppDataSource from '../../database/AppDataSource';
 import BeerImage from '../../database/model/BeerImage';
 import ServerError from '../../util/error/ServerError';
-import logger from '../../util/logger';
 import isValidUuid from '../../util/validation/isValidUuid';
 
 const checkIfBeerImageOwner: ImageByIdFn = async (req, res, next) => {

@@ -6,6 +6,15 @@ import SuccessResponse from '../../../util/response/SuccessResponse';
 import isValidUuid from '../../../util/validation/isValidUuid';
 import { ImageByIdFn } from '../types/RequestHandlers';
 
+/**
+ * Business logic for deleting a beer image by its id.
+ *
+ * @throws ServerError with status 400 if the client provided beer post id is invalid.
+ * @throws ServerError with status 400 if the client provided beer image id is invalid.
+ * @throws ServerError with status 404 if the a beer image with the client provided beer
+ *   id could not be found.
+ */
+
 const deleteImageById: ImageByIdFn = async (req, res, next) => {
   try {
     const { beerId, imageId } = req.params;
