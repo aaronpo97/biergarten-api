@@ -12,7 +12,7 @@ type deleteBeerTypeByIdFunction = RequestHandler<{ id: string }, {}, {}, {}>;
 const deleteBeerTypeById: deleteBeerTypeByIdFunction = async (req, res, next) => {
   const { id } = req.params;
 
-await AppDataSource.createQueryBuilder()
+  await AppDataSource.createQueryBuilder()
     .delete()
     .from(BeerType)
     .where('id = :id', { id })
