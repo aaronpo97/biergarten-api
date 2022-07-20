@@ -15,7 +15,7 @@ import getCurrentUser from '../middleware/auth/getCurrentUser';
 
 /* Utils */
 import createBreweryJoiSchema from '../util/joi/breweryPosts/createBreweryJoiSchema';
-import editBreweryPostJoiSchema from '../util/joi/breweryPosts/editBreweryPostJoiSchema';
+import updateBreweryPostJoiSchema from '../util/joi/breweryPosts/updateBreweryPostJoiSchema';
 import getResourceQueryValidator from '../util/joi/getResourceQueryValidator';
 import notAllowedError from '../util/error/notAllowedError';
 import requestValidator from '../util/validation/requestValidator';
@@ -57,7 +57,7 @@ breweryPostRoutes
     getCurrentUser,
     checkIfUserIsConfirmed,
     checkIfBreweryPostOwner,
-    requestValidator.body(editBreweryPostJoiSchema),
+    requestValidator.body(updateBreweryPostJoiSchema),
     updateBreweryById,
   )
   .all((req, res, next) => {

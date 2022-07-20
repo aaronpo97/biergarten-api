@@ -11,8 +11,8 @@ const getAllBreweries: GetAllBreweriesRequestHandler = async (req, res, next) =>
     const queryBase = AppDataSource.getRepository(BreweryPost)
       .createQueryBuilder('brewery')
       .select(['brewery', 'beer.name', 'beer.id', 'user.id', 'user.username'])
-      .innerJoin('brewery.beers', 'beer')
-      .innerJoin('brewery.postedBy', 'user');
+      .leftJoin('brewery.beers', 'beer')
+      .leftJoin('brewery.postedBy', 'user');
 
     const paginateQuery = paginated && page_num && page_size;
     const allBreweries = paginateQuery
@@ -29,8 +29,8 @@ const getAllBreweries: GetAllBreweriesRequestHandler = async (req, res, next) =>
       : 'Getting all breweries.';
 
     const payload = paginateQuery
-      ? { page_num, page_size, breweryPosts: allBreweries }
-      : allBreweries;
+      ? { page_num, page_size, brewery_posts: allBreweries }
+      : { brewery_posts: allBreweries };
 
     const routeResponse = new SuccessResponse(message, 200, payload, newAccessToken);
     next(routeResponse);

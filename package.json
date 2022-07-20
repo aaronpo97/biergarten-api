@@ -9,8 +9,8 @@
     "prestart": "npx tsc",
     "start": "NODE_ENV=production node ./dist/main.js",
     "dev": "nodemon --transpile-only ./src/main.ts ",
-    "test": "jest --coverage",
-    "test:watch": "jest --watch",
+    "test": "NODE_ENV=testing jest",
+    "test:watch": "NODE_ENV=testing jest --watch",
     "format": "npx prettier --write ./src",
     "seed": "npx ts-node ./src/seed/index.ts"
   },
@@ -34,6 +34,9 @@
     },
     "transformIgnorePatterns": [
       "node_modules/(?!variables/.*)"
+    ],
+    "testPathIgnorePatterns" : [
+      "./__tests__/utils" 
     ]
   },
   "dependencies": {
@@ -48,11 +51,11 @@
     "express-pino-logger": "^7.0.0",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
-    "multer": "1.4.4-lts.1",
+    "multer": "1.4.5-lts.1",
     "multer-storage-cloudinary": "^4.0.0",
     "pg": "^8.7.3",
-    "pino": "^7.11.0",
-    "pino-pretty": "^7.6.1",
+    "pino": "^8.2.0",
+    "pino-pretty": "^8.1.0",
     "reflect-metadata": "^0.1.13",
     "sparkpost": "^2.1.4",
     "typeorm": "^0.3.6",
@@ -65,7 +68,7 @@
     "@types/express": "^4.17.13",
     "@types/express-pino-logger": "^4.0.3",
     "@types/express-serve-static-core": "^4.17.28",
-    "@types/jest": "^27.4.1",
+    "@types/jest": "^28.1.6",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/morgan": "^1.9.3",
     "@types/multer": "^1.4.7",
@@ -87,7 +90,7 @@
     "supertest": "^6.2.4",
     "ts-jest": "^28.0.4",
     "ts-node": "^10.8.1",
-    "typescript": "^4.7.3"
+    "typescript": "^4.7.4"
   },
   "repository": {
     "type": "git",
