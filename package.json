@@ -10,7 +10,7 @@
     "start": "NODE_ENV=production node ./dist/main.js",
     "dev": "nodemon --transpile-only ./src/main.ts ",
     "test": "NODE_ENV=testing jest",
-    "test:watch": "jest --watch",
+    "test:watch": "NODE_ENV=testing jest --watch",
     "format": "npx prettier --write ./src",
     "seed": "npx ts-node ./src/seed/index.ts"
   },

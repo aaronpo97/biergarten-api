@@ -31,6 +31,9 @@ const getAllBreweryReviews: getAllBreweryReviewsFn = async (req, res, next) => {
           .getMany()
       : await queryBase.getMany();
 
+    if (!allReviews.length) {
+      throw new ServerError('Could not find any brewery reviews for that id.', 404);
+    }
     const { newAccessToken } = req;
 
     const successResponse = new SuccessResponse<BreweryReview[]>(

@@ -1,12 +1,12 @@
-import crypto from 'crypto';
 import request from 'supertest';
 
 import { beforeAll, describe, expect, test } from '@jest/globals';
 import { NIL } from 'uuid';
-import AppDataSource from '../../database/AppDataSource';
-import AuthConfig from '../utils/AuthConfig';
-import expressApp from '../../expressApp';
-import isValidUuid from '../../util/validation/isValidUuid';
+import AppDataSource from '../../../database/AppDataSource';
+import AuthConfig from '../../utils/AuthConfig';
+import expressApp from '../../../expressApp';
+import isValidUuid from '../../../util/validation/isValidUuid';
+import getInvalidId from '../../utils/getInvalidId';
 
 const userOneAuthConfig = AuthConfig.initialize();
 const userTwoAuthConfig = AuthConfig.initialize();
@@ -48,6 +48,26 @@ describe('GET /api/beers', () => {
 
     expect(response.statusCode).toBe(200);
     expect(response.body.payload).toHaveProperty('beer_posts');
+  });
+
+  test('Responds with the appropriate page length when requesting the resource to be paginated.', async () => {
+    const options = {
+      page_size: 5,
+      page_num: 1,
+      paginated: true,
+    };
+
+    const response = await request(expressApp)
+      .get(
+        `/api/beers?paginated=${options.paginated}&page_size=${options.page_size}&page_num=${options.page_num}`,
+      )
+      .set(userOneAuthConfig.getTokens());
+
+    expect(response.body).toHaveProperty('payload');
+    expect(response.body.payload).toHaveProperty('page_num', options.page_num);
+    expect(response.body.payload).toHaveProperty('page_size', options.page_size);
+    expect(response.body.payload).toHaveProperty('beer_posts');
+    expect(response.body.payload.beer_posts).toHaveLength(options.page_size);
   });
 });
 
@@ -116,7 +136,7 @@ describe('POST /api/beers', () => {
 describe('GET /api/beers/:id', () => {
   test('When given an invalid id (i.e. not a UUID) it will give a 400 status code.', async () => {
     const getResponse = await request(expressApp)
-      .get(`/api/beers/${crypto.randomBytes(10).toString('hex')}`)
+      .get(`/api/beers/${getInvalidId()}`)
       .set(userOneAuthConfig.getTokens())
       .send();
 
@@ -148,7 +168,7 @@ describe('GET /api/beers/:id', () => {
 describe('PUT /api/beers/:id', () => {
   test('When given an invalid id (i.e. not a UUID) it will give a 400 status code.', async () => {
     const getResponse = await request(expressApp)
-      .put(`/api/beers/${crypto.randomBytes(10).toString('hex')}`)
+      .put(`/api/beers/${getInvalidId()}`)
       .set(userOneAuthConfig.getTokens())
       .send();
 
@@ -217,21 +237,20 @@ describe('PUT /api/beers/:id', () => {
 
     expect(getUpdatedResourceResponse.body).toHaveProperty('payload');
     expect(getUpdatedResourceResponse.body).toHaveProperty('success', true);
-    expect(getUpdatedResourceResponse.body.payload).toHaveProperty('id', beerId);
-    expect(getUpdatedResourceResponse.body.payload).toHaveProperty('name', updatedName);
-    expect(getUpdatedResourceResponse.body.payload).toHaveProperty(
-      'description',
-      updatedDescription,
-    );
-    expect(getUpdatedResourceResponse.body.payload).toHaveProperty('abv', updatedAbv);
-    expect(getUpdatedResourceResponse.body.payload).toHaveProperty('ibu', updatedIbu);
+
+    const { payload } = getUpdatedResourceResponse.body;
+    expect(payload).toHaveProperty('id', beerId);
+    expect(payload).toHaveProperty('name', updatedName);
+    expect(payload).toHaveProperty('description', updatedDescription);
+    expect(payload).toHaveProperty('abv', updatedAbv);
+    expect(payload).toHaveProperty('ibu', updatedIbu);
   });
 });
 
 describe('DELETE /api/beers/:id', () => {
   test('When given an invalid id (i.e. not a UUID) it will give a 400 status code.', async () => {
     const getResponse = await request(expressApp)
-      .delete(`/api/beers/${crypto.randomBytes(10).toString('hex')}`)
+      .delete(`/api/beers/${getInvalidId()}`)
       .set(userOneAuthConfig.getTokens())
       .send();
 
@@ -262,7 +281,7 @@ describe('DELETE /api/beers/:id', () => {
       .send();
 
     expect(putResponse.status).toEqual(403);
-    expect(putResponse.body.success).toEqual(false);
+    expect(putResponse.body).toHaveProperty('success', false);
   });
 
   test('When given proper credentials, the server will delete the beer_post resource.', async () => {

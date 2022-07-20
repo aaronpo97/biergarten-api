@@ -10,8 +10,6 @@ seedDatabase().then(() => {
   const endTime = performance.now();
 
   logger.info('Database seeded.');
-  logger.info(
-    `That took ${formatDistanceStrict(endTime, startTime)}.`,
-  );
+  logger.info(`That took ${formatDistanceStrict(endTime, startTime)}.`);
   exit(0);
 });
